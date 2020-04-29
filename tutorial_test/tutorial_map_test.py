@@ -34,7 +34,7 @@ while True:
     for i in range(10):
         screen.blit(map_tut_small, (70*(3+i), 420))
     screen.blit(map_tut_small, (820, 210))
-
+#-----------------------------------------------------------------------------------------------------
     # 7. 화면을 다시 그린다.
     pygame.display.flip()
 
