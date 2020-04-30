@@ -11,6 +11,11 @@ BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
+#(qaz), (wsx), (edc), (rfv) : map tile(big, small_top, small_bottom)
+
+map = ["tut_map.txt", "stage1_map.txt"]
+mapTxt = [("q", "a", "z"), ("q", "a", "z")] # (big, small_top, small_bottom, shadow)
+mapImage = [("tutMapBig", "tutMapStop", "tutMapSbot"), ("s1MapBig", "s1MapStop", "s1MapSbot")] # (big, small_top, small_bottom)
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -32,25 +37,25 @@ while True:
     # screen.fill(WHITE)
     # draw_grid()
 
+    #change index == change stage map
     map_data = []
-    #read map_file
-    tut_map = "tut_map.txt"
-    with open(tut_map, 'r') as file:
+    map_name = map[0] #tutorial map
+    with open(map_name, 'r') as file:
         for line in file:
             map_data.append(line.strip('\n').split(' '))
 
-    for col in range(0, len(map_data)):
-        for row in range(0, len(map_data[col])):
-            print('map_data[col][row]', map_data[col][row])
-            if map_data[col][row] == "b":
-                tut_big = tut_tile_big(col, row)
-                sprit_group.add(tut_big)
-            if map_data[col][row] == "t":
-                tut_small_top = tut_tile_small_top(col, row)
-                sprit_group.add(tut_small_top)
-            if map_data[col][row] == "s":
-                tut_small_bot = tut_tile_small_bot(col, row)
-                sprit_group.add(tut_small_bot)
+    for col in range(0, len(map_data)): #세로
+        for row in range(0, len(map_data[col])): #가로
+            if map_data[col][row] == mapTxt[0][0]:
+                map_big = Map(mapImage[0][0], col, row)
+                sprit_group.add(map_big)
+            if map_data[col][row] == mapTxt[0][1]:
+                map_small_top = Map(mapImage[0][1], col, row)
+                sprit_group.add(map_small_top)
+            if map_data[col][row] == mapTxt[0][2]:
+                map_small_bot = Map(mapImage[0][2], col, row)
+                sprit_group.add(map_small_bot)
+            # shadow 넣는거 추가
     sprit_group.draw(screen)
 
     pygame.display.flip() # 화면 다시 그리기
