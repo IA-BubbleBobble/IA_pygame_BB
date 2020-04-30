@@ -4,6 +4,7 @@ from os import path
 WIDTH = 1100
 HEIGHT = 700
 fps = 60
+
 #define colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
