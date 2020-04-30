@@ -39,7 +39,7 @@
   * stage number => stage only
 
 ### 구현해야할 것
-  * map(map:1050*700, image:70*70)
+  * map(map:1050\*700, image:70\*70)
   * jump - character(막대기 위에서만 or 맨 밑으로 떨어짐)
   * move - character, monster(막대기 위에서만), bubble
   * bubbled 몬스터 움직임
