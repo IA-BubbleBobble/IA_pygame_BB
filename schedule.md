@@ -15,6 +15,7 @@
 영상)https://www.youtube.com/watch?v=wA89xLQknKA
 
 <hr>
+
 ### 시작화면
   * high score
   * logo
