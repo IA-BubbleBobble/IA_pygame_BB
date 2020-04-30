@@ -41,9 +41,11 @@
 ### 구현해야할 것
   * map(map:1050\*700, image:70\*70)
   * jump - character(막대기 위에서만 or 맨 밑으로 떨어짐)
-  * move - character, monster(막대기 위에서만), bubble
+  * move - character(무작위로, ), monster(막대기 위에서만), bubble(항상위로)
   * bubbled 몬스터 움직임
 
 ### 더 생각해야 할 것
   * stage별 몇초
   * stage통과기준
+  * bubble 쏘는 거리
+  * 몬스터 bubble 탈출시간
