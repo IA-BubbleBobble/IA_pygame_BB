@@ -7,6 +7,7 @@ FPS = 60
 TILESIZE = 70
 
 #Font
+BUBBLE_FONT = "PressStart2P.ttf"
 #Player properties
 
 #define colors
@@ -38,6 +39,14 @@ tutMapS = "tutMapS.PNG" # only small red block
 s1MapBig = "s1MapBig.PNG"
 s1MapStop = "s1MapStop.PNG"
 s1MapSbot = "s1MapSbot.PNG"
+
+YELLOW_BUBBLE = "./image/yellow_bubble.png"
+PINK_BUBBLE = "./image/pink_bubble.png"
+YELLOW_SUPERBUBBLE = "./image/yellow_superbubble.png"
+PINK_SUPERBUBBLE = "./image/pink_superbubble.png"
+START_SCREEND = "./image/start.png"
+ENDING_IMAGE = "./image/end.png"
+
 
 # about map
 mapFile = ["map/tut_map.txt", "map/stage1_map.txt"]
