@@ -27,7 +27,7 @@ class Game():
         self.playing = True
         while self.playing:
             self.clock.tick(FPS)
-            self.screen.blit(self.character, char_pos)
+            self.screen.blit(self.character.initImage, char_pos)
             self.events()
             self.update()
             self.draw()
