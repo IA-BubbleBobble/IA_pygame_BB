@@ -26,7 +26,12 @@
   * Score
   * Restart button
   * Exit button
-  
+### Stage 화면
+  * Round 1
+    Ready!!
+  * Game over!(RED) + Score:??
+    Go to start page
+  *
 ### 필요한 image
   * Bubble(green) - 캐릭터가 버블쏘면
   * Bubble(red) - 캐릭터가 버블 쏜 후 터지기 직전(몬스터가 들어있지 않을 때)
