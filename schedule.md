@@ -26,7 +26,7 @@
   * bubble(green) - 캐릭터가 버블쏘면
   * bubble(red) - 캐릭터가 버블 쏜 후 터지기 직전(몬스터가 들어있지 않을 때)
   * bubble(pop) - bubble 터질때(몬스터가 들어있는거&빨간풍선)
-  * monster(single)
+  * monster(single) - blue, red(bubble 갇혔다가 나오면)
   * monster(group)
   * monster(bubbled) - 캐릭터가 몬스터 향해서 버블쏘면 갇힘
   * fruite
