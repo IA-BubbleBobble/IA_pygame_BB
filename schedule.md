@@ -30,7 +30,7 @@
     Ready!!
   * Game over!(RED) + Score:??
     Go to start page
-  *
+  * 목숨
 ### 필요한 image
   * Bubble(green) - 캐릭터가 버블쏘면
   * Bubble(red) - 캐릭터가 버블 쏜 후 터지기 직전(몬스터가 들어있지 않을 때)
@@ -41,9 +41,9 @@
   * Fruit
 
 ### letter (글씨체 적용 필요)
-  * Score - fruit먹으면 fruit별 점수 상승, (몬스터 터뜨려도?)
-  * How to shot bubble - ex)push space bar => tutorial only
-  * How to move (방향키) - left, right, up, down
+  * Score - fruit먹으면 fruit별 점수 상승(죽인 몬스터 갯수별 과일 다르게 나옴)
+  * How to shot bubble - push space bar => tutorial에 적어주기
+  * How to move (방향키) - left, right, up(jump)
   * Fruit(score) - 캐릭터가 먹으면 점수로 바뀜 (+score 올리기)
   * Stage number => Only appear on the stage page
 
