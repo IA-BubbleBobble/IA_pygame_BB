@@ -23,7 +23,7 @@ class Player(pygame.sprite.Sprite): # character는 단일 객체
         self.rect = self.image.get_rect()
         self.rect.x = player_pos[0]
         self.rect.y = player_pos[1]
-        self.pos = vec(player_pos[0], player_pos[1])
+        self.pos = vec(player_pos[0]+20, player_pos[1]+20)
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
 
@@ -34,28 +34,29 @@ class Player(pygame.sprite.Sprite): # character는 단일 객체
         self.rect.y -= 0.1
         if hits:
             print("hits!===============")
-            self.vel.y = -20
+            self.vel.y = -17.5 # 점프 높이
 
     def update(self):
         self.acc = vec(0, PLAYER_GRAVITY)
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
-            player_pos[0] = player_pos[0] - 20
-            if (player_pos[0]) <= 70:
-                player_pos[0] = 70
+            self.acc.x = -PLAYER_ACC
         if keys[pygame.K_RIGHT]:
-            player_pos[0] = player_pos[0] + 20
-            if (player_pos[0]) >= 70 * 14:
-                player_pos[0] = 70 * 14
+            self.acc.x = PLAYER_ACC
 
         self.acc.x += self.vel.x * PLAYER_FRICTION
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
 
-        if self.pos.x >= WIDTH:
-            self.pos.x = WIDTH
-        if self.pos.x <= 70:
+        if self.pos.x >= WIDTH-140:
+            self.pos.x = WIDTH-140
+        elif self.pos.x <= 70:
             self.pos.x = 70
+        if self.pos.y >= HEIGHT-68:
+            self.pos.y = HEIGHT-68
+        elif self.pos.y <= 150:
+            self.pos.y = 150
+
 
         self.rect.x = self.pos.x
         self.rect.y = self.pos.y
