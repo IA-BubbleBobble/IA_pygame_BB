@@ -29,7 +29,7 @@
 <hr>
 
 ##### 20200501 update(youjin)
-### Start page
+### ~~Start page~~
   * Logo ---ok
   * Tutorial button (how to를 tutorial로 변경!!)->튜토리얼 화면으로 넘어가기 ---ok
   * Game start button->stage1 화면으로 넘어가기 ---ok
