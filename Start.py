@@ -34,7 +34,7 @@ class Game():
         self.platform() # making tutorial map method
         self.run() # run game method
 
-    def platform(self): # maker tutorial map
+    def platform(self): # make tutorial map
         for i in range(15): #  맨 윗줄
             p = Platform(tutMapStop, PLATFORM_LIST[0][0]+70*i, PLATFORM_LIST[0][1], PLATFORM_LIST[0][2], PLATFORM_LIST[0][3])
             self.all_sprites.add(p)
@@ -64,6 +64,9 @@ class Game():
             self.all_sprites.add(p)
             self.platforms.add(p)
 
+    def platform1(self): # make stage1 map
+        pass
+
     def run(self): #게임 갱신
         print("run function")
         # game loop
@@ -82,7 +85,7 @@ class Game():
             hits = pygame.sprite.spritecollide(self.player, self.platforms, False)
             if hits:
                 print("hits!============================")
-                self.player.pos.y = hits[0].rect.top + 0.1
+                self.player.pos.y = hits[0].rect.y-45 + 0.1 # 벽돌위로
                 self.player.vel.y = 0
 
     def events(self): #Event 처리에 대한
