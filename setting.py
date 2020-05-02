@@ -35,12 +35,14 @@ charL1 = "charL1.png" # character 왼쪽 이동시 움직임1
 charL2 = "charL2.png" # character 왼쪽 이동시 움직임2
 charL3 = "charL3.png" # character 왼쪽 이동시 움직임3
 tutMapBig = "tutMapBig.PNG" # tutorial map big block
-tutMapSbot = "tutMapSbot.PNG" # tutorial map small block(아래쪽이 검은색)
 tutMapStop = "tutMapStop.PNG" # tutorial map small block(위쪽이 검은색)
 tutMapS = "tutMapS.PNG" # only small red block
 s1MapBig = "s1MapBig.PNG"
 s1MapStop = "s1MapStop.PNG"
-s1MapSbot = "s1MapSbot.PNG"
+s1MapS = "s1MapS.PNG"
+s2MapBig = "s2MapBig.PNG"
+s2MapStop = "s2MapStop.PNG"
+s2MapS = "s2MapS.PNG"
 
 YELLOW_BUBBLE = "./image/yellow_bubble.png"
 PINK_BUBBLE = "./image/pink_bubble.png"
@@ -53,6 +55,10 @@ ENDING_IMAGE = "./image/end.png"
 # about map
 mapFile = ["map/tut_map.txt", "map/stage1_map.txt"]
 mapTxt = [("q", "a", "z"), ("q", "a", "z")] # (big, small_top, small_bottom, shadow)
-mapImage = [(tutMapBig, tutMapStop, tutMapS), (s1MapBig, s1MapStop, s1MapSbot)] # (big, small_top, small_bottom)
+mapImage = [(tutMapBig, tutMapStop, tutMapS), (s1MapBig, s1MapStop, s1MapS)] # (big, small_top, small_bottom)
 PLATFORM_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14,140, TILESIZE, TILESIZE), (70, 675, 70, 25),
-                 (70*3, 70*9-35, 70, 25), (70*3, 70*6, 70, 25), (70*10, 70*4, 70, 25)] # tutorial map
+                 (70*3, 70*8, 70, 25), (70*3, 70*6+25, 70, 25), (70*10, 70*4+35, 70, 25)] # tutorial map
+PLATFORM1_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14,140, TILESIZE, TILESIZE), (70, 675, 70, 25),
+                 (70, 70*8, 70, 25), (70, 70*6+25, 70, 25), (70, 70*4+35, 70, 25)] # stage1 map
+PLATFORM2_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14,140, TILESIZE, TILESIZE), (70, 675, 70, 25),
+                 (70, 70*9-45, 70, 25), (70, 70*7-35, 70, 25), (70, 70*5, 70, 25), (70, 70*4-35, 70, 25)] # stage1 map

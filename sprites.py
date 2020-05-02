@@ -34,7 +34,7 @@ class Player(pygame.sprite.Sprite): # character는 단일 객체
         self.rect.y -= 0.1
         if hits:
             print("hits!===============")
-            self.vel.y = -17.5 # 점프 높이
+            self.vel.y = -15.5 # 점프 높이
 
     def update(self):
         self.acc = vec(0, PLAYER_GRAVITY)
@@ -48,8 +48,8 @@ class Player(pygame.sprite.Sprite): # character는 단일 객체
         self.vel += self.acc
         self.pos += self.vel + 0.5 * self.acc
 
-        if self.pos.x >= WIDTH-140:
-            self.pos.x = WIDTH-140
+        if self.pos.x >= WIDTH-130:
+            self.pos.x = WIDTH-130
         elif self.pos.x <= 70:
             self.pos.x = 70
         if self.pos.y >= HEIGHT-68:
