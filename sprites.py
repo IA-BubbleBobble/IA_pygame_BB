@@ -11,20 +11,6 @@ class Platform(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-#
-#
-# class TutMap(pygame.sprite.Sprite):
-#     def __init__(self, game, image, col, row):
-#         self.mapName = mapFile[0]
-#         self.mapKey = mapTxt[0]
-#         self.groups = game.all_sprites, game.tutMap
-#         pygame.sprite.Sprite.__init__(self, self.groups)
-#         self.grid_x = row * TILESIZE
-#         self.grid_y = col * TILESIZE
-#         self.image = pygame.image.load("image/"+image).convert_alpha()
-#         self.rect = self.image.get_rect()
-#         self.rect.x = self.grid_x
-#         self.rect.y = self.grid_y
 
 class Player(pygame.sprite.Sprite): # character는 단일 객체
     def __init__(self, game):
@@ -47,6 +33,7 @@ class Player(pygame.sprite.Sprite): # character는 단일 객체
         hits = pygame.sprite.spritecollide(self, self.game.platforms, False)
         self.rect.y -= 0.1
         if hits:
+            print("hits!===============")
             self.vel.y = -20
 
     def update(self):
@@ -54,12 +41,12 @@ class Player(pygame.sprite.Sprite): # character는 단일 객체
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
             player_pos[0] = player_pos[0] - 20
-            if(player_pos[0]) <= 70:
+            if (player_pos[0]) <= 70:
                 player_pos[0] = 70
         if keys[pygame.K_RIGHT]:
             player_pos[0] = player_pos[0] + 20
-            if (player_pos[0]) >= 70*14:
-                player_pos[0] = 70*14
+            if (player_pos[0]) >= 70 * 14:
+                player_pos[0] = 70 * 14
 
         self.acc.x += self.vel.x * PLAYER_FRICTION
         self.vel += self.acc

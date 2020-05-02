@@ -24,39 +24,39 @@ class Game():
         print("new function")
         # sprite group
         self.all_sprites = pygame.sprite.Group()
-        self.platforms = pygame.sprite.Group()  # platform sprite group 생성
+        self.platforms = pygame.sprite.Group()  # platform(tutorial map) sprite group 생성
         self.player = Player(self)  # self.character, Character 객체 생성
         self.all_sprites.add(self.player)
         # self.monsters = pygame.sprite.Group()  # monster sprite group 생성
-        self.platform()
-        self.run()
+        self.platform() # making tutorial map method
+        self.run() # run game method
 
-    def platform(self):
-        for i in range(15):
+    def platform(self): # maker tutorial map
+        for i in range(15): #  맨 윗줄
             p = Platform(tutMapStop, PLATFORM_LIST[0][0]+70*i, PLATFORM_LIST[0][1], PLATFORM_LIST[0][2], PLATFORM_LIST[0][3])
             self.all_sprites.add(p)
             self.platforms.add(p)
-        for i in range(8):
+        for i in range(8): # 왼쪽 기둥
             p = Platform(tutMapBig, PLATFORM_LIST[1][0], PLATFORM_LIST[1][1]+70*i, PLATFORM_LIST[1][2], PLATFORM_LIST[1][3])
             self.all_sprites.add(p)
             self.platforms.add(p)
-        for i in range(8):
+        for i in range(8): # 오른쪽 기둥
             p = Platform(tutMapBig, PLATFORM_LIST[2][0], PLATFORM_LIST[2][1] +70*i, PLATFORM_LIST[2][2], PLATFORM_LIST[2][3])
             self.all_sprites.add(p)
             self.platforms.add(p)
-        for i in range(14):
+        for i in range(14): # 맨 밑줄
             p = Platform(tutMapS, PLATFORM_LIST[3][0] + 70 * i, PLATFORM_LIST[3][1], PLATFORM_LIST[3][2],PLATFORM_LIST[3][3])
             self.all_sprites.add(p)
             self.platforms.add(p)
-        for i in range(2):
+        for i in range(2): # 1번째 줄(밑에서)
             p = Platform(tutMapS, PLATFORM_LIST[4][0] + 70 * i, PLATFORM_LIST[4][1], PLATFORM_LIST[4][2],PLATFORM_LIST[4][3])
             self.all_sprites.add(p)
             self.platforms.add(p)
-        for i in range(9):
+        for i in range(9): # 2번째 줄
             p = Platform(tutMapS, PLATFORM_LIST[5][0] + 70 * i, PLATFORM_LIST[5][1], PLATFORM_LIST[5][2],PLATFORM_LIST[5][3])
             self.all_sprites.add(p)
             self.platforms.add(p)
-        for i in range(2):
+        for i in range(2): # 3번째 줄
             p = Platform(tutMapS, PLATFORM_LIST[6][0] + 70 * i, PLATFORM_LIST[6][1], PLATFORM_LIST[6][2],PLATFORM_LIST[6][3])
             self.all_sprites.add(p)
             self.platforms.add(p)
