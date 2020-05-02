@@ -27,10 +27,45 @@ class Game():
         print("new function")
         # sprite group
         self.all_sprites = pygame.sprite.Group()
-        self.monsters = pygame.sprite.Group() # monster sprite group 생성
-        self.TutMap = pygame.sprite.Group() #map sprite group 생성
-        self.character = Character(self) # self.character, Character 객체 생성
-        self.start_tick = pygame.time.get_ticks()
+        self.platforms = pygame.sprite.Group()  # platform(tutorial map) sprite group 생성
+        self.player = Player(self)  # self.character, Character 객체 생성
+        self.all_sprites.add(self.player)
+        # self.monsters = pygame.sprite.Group()  # monster sprite group 생성
+        self.platform() # making tutorial map method
+        self.run() # run game method
+
+    def platform(self): # make tutorial map
+        for i in range(15): #  맨 윗줄
+            p = Platform(tutMapStop, PLATFORM_LIST[0][0]+70*i, PLATFORM_LIST[0][1], PLATFORM_LIST[0][2], PLATFORM_LIST[0][3])
+            self.all_sprites.add(p)
+            self.platforms.add(p)
+        for i in range(8): # 왼쪽 기둥
+            p = Platform(tutMapBig, PLATFORM_LIST[1][0], PLATFORM_LIST[1][1]+70*i, PLATFORM_LIST[1][2], PLATFORM_LIST[1][3])
+            self.all_sprites.add(p)
+            self.platforms.add(p)
+        for i in range(8): # 오른쪽 기둥
+            p = Platform(tutMapBig, PLATFORM_LIST[2][0], PLATFORM_LIST[2][1] +70*i, PLATFORM_LIST[2][2], PLATFORM_LIST[2][3])
+            self.all_sprites.add(p)
+            self.platforms.add(p)
+        for i in range(14): # 맨 밑줄
+            p = Platform(tutMapS, PLATFORM_LIST[3][0] + 70 * i, PLATFORM_LIST[3][1], PLATFORM_LIST[3][2],PLATFORM_LIST[3][3])
+            self.all_sprites.add(p)
+            self.platforms.add(p)
+        for i in range(2): # 1번째 줄(밑에서)
+            p = Platform(tutMapS, PLATFORM_LIST[4][0] + 70 * i, PLATFORM_LIST[4][1], PLATFORM_LIST[4][2],PLATFORM_LIST[4][3])
+            self.all_sprites.add(p)
+            self.platforms.add(p)
+        for i in range(9): # 2번째 줄
+            p = Platform(tutMapS, PLATFORM_LIST[5][0] + 70 * i, PLATFORM_LIST[5][1], PLATFORM_LIST[5][2],PLATFORM_LIST[5][3])
+            self.all_sprites.add(p)
+            self.platforms.add(p)
+        for i in range(2): # 3번째 줄
+            p = Platform(tutMapS, PLATFORM_LIST[6][0] + 70 * i, PLATFORM_LIST[6][1], PLATFORM_LIST[6][2],PLATFORM_LIST[6][3])
+            self.all_sprites.add(p)
+            self.platforms.add(p)
+
+    def platform1(self): # make stage1 map
+        pass
 
     def run(self): #게임 갱신
         print("run function")
@@ -39,59 +74,40 @@ class Game():
         self.playing = True
         while self.playing:
             self.clock.tick(FPS)
-            self.screen.fill(BLACK)
             self.events()
             self.update()
             self.draw()
-            pygame.display.flip()
 
     def update(self):
         print("update function")
         self.all_sprites.update()
-        self.TutMap.update()
-
-        # ==========================tutorial map=============================
-        if(self.tutorial == True):
-            map_data = []
-            with open(mapFile[0], 'r') as file:
-                for line in file:
-                    map_data.append(line.strip('\n').split(' '))
-
-            for col in range(0, len(map_data)):  # 세로
-                for row in range(0, len(map_data[col])):  # 가로
-                    if (col == len(map_data) - 1):
-                        if map_data[col][row] == mapTxt[0][0]:
-                            map_big = Game(self, tutMapBig, col, row)
-                            self.TutMap.add(map_big)
-                        if map_data[col][row] == mapTxt[0][1]:
-                            map_small_top = Game(self, tutMapStop, col, row)
-                            self.TutMap.add(map_small_top)
-                        if map_data[col][row] == mapTxt[0][2]:
-                            map_small_bot = Game(self, tutMapS, 9.65, row)
-                            self.TutMap.add(map_small_bot)
-                    else:
-                        if map_data[col][row] == mapTxt[0][0]:
-                            map_big = Game(self, tutMapBig, col, row)
-                            self.TutMap.add(map_big)
-                        if map_data[col][row] == mapTxt[0][1]:
-                            map_small_top = Game(self, tutMapStop, col, row)
-                            self.TutMap.add(map_small_top)
-                        if map_data[col][row] == mapTxt[0][2]:
-                            map_small_bot = Game(self, tutMapS, col, row)
-                            self.TutMap.add(map_small_bot)
-
-        #hits -> sprite collide method 사용하여 충돌체크
+        if self.player.vel.y > 0:
+            hits = pygame.sprite.spritecollide(self.player, self.platforms, False)
+            if hits:
+                print("hits!============================")
+                self.player.pos.y = hits[0].rect.y-45 + 0.1 # 벽돌위로
+                self.player.vel.y = 0
 
     def events(self): #Event 처리에 대한
         print("event function")
-        self.wait_for_keys()
-
+        for event in pygame.event.get():
+            # check for closing window
+            if event.type == pygame.QUIT:
+                if self.playing:
+                    pygame.quit()
+                    self.playing = False
+                    exit()  # exit while loop
+                self.running = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    self.player.jump()
 
     def draw(self): #화면에 그려주는 함수
         print('draw function')
-        self.TutMap.draw(self.screen)
-        self.screen.blit(self.character.initImage, char_pos)
-
+        self.screen.fill(BLACK)
+        self.all_sprites.draw(self.screen)
+        #self.screen.blit(self.player.image, player_pos)
+        pygame.display.flip()  # 화면 초기화
 
 # ============================START=============================
     def printword_white(self,size, word,location): # making letter white function
@@ -255,7 +271,7 @@ class Game():
                     keys[0] = True
                 elif event.key == pygame.K_LEFT:  # 왼쪽 방향키가 눌려지면
                     keys[1] = True
-                if event.key == pygame.K_DOWN:  # 아래쪽 방향키가 눌려지면
+                if event.key == pygame.K_SPACE:  # 스페이스키가 눌려지면
                     keys[2] = True
                 if event.key == pygame.K_RIGHT:  # 오른쪽 방향키가 눌려지면
                     keys[3] = True
@@ -264,20 +280,21 @@ class Game():
                     keys[0] = False
                 elif event.key == pygame.K_LEFT:  # 왼쪽 방향키를 떼면
                     keys[1] = False
-                if event.key == pygame.K_DOWN:  # 아래쪽 방향키를 떼면
+                if event.key == pygame.K_SPACE:  # 스페이스키를 떼면
                     keys[2] = False
                 if event.key == pygame.K_RIGHT:  # 오른쪽 방향키를 떼면
                     keys[3] = False
         if keys[0]:
-            char_pos[1] = char_pos[1] - 20  # y값 감소 -> 위로이동
-        elif keys[2]:
-            char_pos[1] = char_pos[1] + 20  # y값 증가 -> 아래로 이동
+            #char_jump() # 캐릭터 점프
+            player_pos[1] = player_pos[1] // 2
+        # elif keys[2]:
+        #     shoot_bubble()
         if keys[1]:
-            char_pos[0] = char_pos[0] - 20  # x값 감소 -> 왼쪽으로 이동
-            if (char_pos[0] <= 70):
-                char_pos[0] = 70
+            player_pos[0] = player_pos[0] - 20  # x값 감소 -> 왼쪽으로 이동
+            if (player_pos[0] <= 70):
+                player_pos[0] = 70
         elif keys[3]:
-            char_pos[0] = char_pos[0] + 20  # x값 증가 -> 오른쪽으로 이동
+            player_pos[0] = player_pos[0] + 20  # x값 증가 -> 오른쪽으로 이동
 
 g = Game()
 while g.start:
@@ -285,5 +302,4 @@ while g.start:
     g.show_go_screen()
     while g.running:
         g.new()
-        g.run()
 pygame.quit()
