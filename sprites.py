@@ -7,7 +7,7 @@ vec = pygame.math.Vector2
 class Platform(pygame.sprite.Sprite):
     def __init__(self, image, x, y, w, h): # (x좌표, y좌표, width, height)
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load("image/"+image).convert_alpha()
+        self.image = pygame.image.load(image).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -19,7 +19,10 @@ class Player(pygame.sprite.Sprite): # character는 단일 객체
         # self.grid_x = player_pos[0]
         # self.grid_y = player_pos[1]
         self.game = game
-        self.image = pygame.transform.scale(pygame.image.load("image/charR.png"), (45, 45)).convert_alpha()
+        self.imageLNum = 0
+        self.imageRNum = 0
+        self.imageLoad = charR[self.imageRNum]
+        self.image = pygame.transform.scale(pygame.image.load(self.imageLoad), (45, 45)).convert_alpha()
         self.rect = self.image.get_rect()
         self.rect.x = player_pos[0]
         self.rect.y = player_pos[1]
@@ -28,6 +31,7 @@ class Player(pygame.sprite.Sprite): # character는 단일 객체
         self.acc = vec(0, 0)
 
     def jump(self):
+        print("class Player jump fucntion")
         # jump only if standing on a platform
         self.rect.y += 0.1
         hits = pygame.sprite.spritecollide(self, self.game.platforms, False)
@@ -37,11 +41,22 @@ class Player(pygame.sprite.Sprite): # character는 단일 객체
             self.vel.y = -15.5 # 점프 높이
 
     def update(self):
+        print("class Player update function")
         self.acc = vec(0, PLAYER_GRAVITY)
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
+            self.imageLoad = charL[self.imageLNum]
+            self.imageLNum += 1
+            if (self.imageLNum >= 3):
+                self.imageLNum = 0
+            self.image = pygame.transform.scale(pygame.image.load(self.imageLoad), (45, 45)).convert_alpha()
             self.acc.x = -PLAYER_ACC
         if keys[pygame.K_RIGHT]:
+            self.imageLoad = charR[self.imageRNum]
+            self.imageRNum += 1
+            if (self.imageRNum >= 3):
+                self.imageRNum = 0
+            self.image = pygame.transform.scale(pygame.image.load(self.imageLoad), (45, 45)).convert_alpha()
             self.acc.x = PLAYER_ACC
 
         self.acc.x += self.vel.x * PLAYER_FRICTION

@@ -1,3 +1,5 @@
+import pygame
+
 #base properties
 TITLE = "Bubble Bobble"
 WIDTH = 1050
@@ -31,18 +33,25 @@ PLAYER_GRAVITY = 0.8
 PLAYER_JUMP = 15.5
 
 # Image
-charL1 = "charL1.png" # character 왼쪽 이동시 움직임1
-charL2 = "charL2.png" # character 왼쪽 이동시 움직임2
-charL3 = "charL3.png" # character 왼쪽 이동시 움직임3
-tutMapBig = "tutMapBig.PNG" # tutorial map big block
-tutMapStop = "tutMapStop.PNG" # tutorial map small block(위쪽이 검은색)
-tutMapS = "tutMapS.PNG" # only small red block
-s1MapBig = "s1MapBig.PNG"
-s1MapStop = "s1MapStop.PNG"
-s1MapS = "s1MapS.PNG"
-s2MapBig = "s2MapBig.PNG"
-s2MapStop = "s2MapStop.PNG"
-s2MapS = "s2MapS.PNG"
+charL1 = "image/charL1.png" # character 왼쪽 이동시 움직임1
+charL2 = "image/charL2.png" # character 왼쪽 이동시 움직임2
+charL3 = "image/charL3.png" # character 왼쪽 이동시 움직임3
+charL4 = "image/charL4.png" # character 왼쪽 이동시 움직임4
+charR1 = "image/charR1.png" # character 왼쪽 이동시 움직임1
+charR2 = "image/charR2.png" # character 왼쪽 이동시 움직임2
+charR3 = "image/charR3.png" # character 왼쪽 이동시 움직임3
+charR4 = "image/charR4.png" # character 왼쪽 이동시 움직임4
+tutMapBig = "image/tutMapBig.PNG" # tutorial map big block
+tutMapStop = "image/tutMapStop.PNG" # tutorial map small block(위쪽이 검은색)
+tutMapS = "image/tutMapS.PNG" # only small red block
+s1MapBig = "image/s1MapBig.PNG"
+s1MapStop = "image/s1MapStop.PNG"
+s1MapS = "image/s1MapS.PNG"
+s2MapBig = "image/s2MapBig.PNG"
+s2MapStop = "image/s2MapStop.PNG"
+s2MapS = "image/s2MapS.PNG"
+charL = [charL1, charL2, charL3, charL3]
+charR = [charR1, charR2, charR3, charR3]
 
 YELLOW_BUBBLE = "./image/yellow_bubble.png"
 PINK_BUBBLE = "./image/pink_bubble.png"
@@ -50,6 +59,12 @@ YELLOW_SUPERBUBBLE = "./image/yellow_superbubble.png"
 PINK_SUPERBUBBLE = "./image/pink_superbubble.png"
 START_SCREEND = "./image/start.png"
 ENDING_IMAGE = "./image/end.png"
+
+#sound
+pygame.mixer.init() # to use music
+mainTheme = pygame.mixer.Sound("sound/MainTheme.ogg")
+playerJump = pygame.mixer.Sound("sound/playerJump.wav")
+gameStart = pygame.mixer.Sound("sound/GameStart.ogg")
 
 
 # about map

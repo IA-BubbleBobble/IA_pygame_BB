@@ -7,7 +7,6 @@ class Game():
         print("Game init function")
         pygame.init()
         pygame.display.init()
-        pygame.mixer.init() # to use music
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT)) # screen 크기 지정
         pygame.display.set_caption(TITLE) # 게임 창 제목표시줄에 쓰여질 문구
         self.clock = pygame.time.Clock() # 객체를 사용하여 이후 초당 프레임 설정 시 사용
@@ -18,9 +17,7 @@ class Game():
         self.stage2 = False # stage2 실행 여부
         self.start_playing = True
         self.score = 0
-        self.start_music = pygame.mixer.Sound("MainTheme.ogg")
         self._display_start = None
-        #self.display_start = pygame.display.set_mode((WIDTH, HEIGHT), pygame.HWSURFACE | pygame.DOUBLEBUF) #display_surf를 start로 변경
 
     def new(self): #game start
         print("new function")
@@ -36,7 +33,7 @@ class Game():
         self.player = Player(self)  # self.character, Character 객체 생성
         self.all_sprites.add(self.player)
         # self.monsters = pygame.sprite.Group()  # monster sprite group 생성
-
+        gameStart.play(-1)
         self.run() # run game method
 
     def platform(self): # make tutorial map
@@ -167,7 +164,9 @@ class Game():
                 self.running = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
+                    playerJump.play()
                     self.player.jump()
+
 
     def draw(self): #화면에 그려주는 함수
         print('draw function')
@@ -189,7 +188,7 @@ class Game():
     def show_start_screen(self): # music play and call start_run function
         print('show_start_screen function')
         #self.running = True
-        self.start_music.play()
+        mainTheme.play()
         self.start_run()
 
     def start_run(self):
@@ -243,12 +242,12 @@ class Game():
                         break
 
             if (self.tutorial): # tutorial을 실행 할 차례면
-                self.start_music.stop() # start 음악을 멈추고
+                mainTheme.stop() # start 음악을 멈추고
                 self.start_playing = False # start screen을 띄우는 while loop를 벗어난다
                 break
 
             elif (self.stage1):
-                self.start_music.stop()  # start 음악을 멈추고
+                mainTheme.stop()  # start 음악을 멈추고
                 self.start_playing = False  # start screen을 띄우는 while loop를 벗어난다
                 break
 
