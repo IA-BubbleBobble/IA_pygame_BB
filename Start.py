@@ -29,8 +29,15 @@ class Game():
         self.all_sprites = pygame.sprite.Group()
         self.platforms = pygame.sprite.Group()  # platform(tutorial map) sprite group 생성
         self.player = Player(self)  # self.character, Character 객체 생성
-        self.all_sprites.add(self.player)
-        # self.monsters = pygame.sprite.Group()  # monster sprite group 생성
+        self.all_sprites.add(self.player) # monster sprite group 생성
+
+        self.monsters = pygame.sprite.Group()
+        monster_x = 700
+        for i in range(3):
+            self.monstar = Monstar(self,(monster_x,200),'left')
+            monster_x -= 50
+            self.monsters.add(self.monstar)
+            self.all_sprites.add(self.monstar)
         self.platform() # making tutorial map method
         self.run() # run game method
 
@@ -81,12 +88,15 @@ class Game():
     def update(self):
         print("update function")
         self.all_sprites.update()
+        print('finish player in update')
         if self.player.vel.y > 0:
             hits = pygame.sprite.spritecollide(self.player, self.platforms, False)
             if hits:
                 print("hits!============================")
                 self.player.pos.y = hits[0].rect.y-45 + 0.1 # 벽돌위로
                 self.player.vel.y = 0
+        
+
 
     def events(self): #Event 처리에 대한
         print("event function")
@@ -106,6 +116,7 @@ class Game():
         print('draw function')
         self.screen.fill(BLACK)
         self.all_sprites.draw(self.screen)
+        self.monsters.draw(self.screen)
         #self.screen.blit(self.player.image, player_pos)
         pygame.display.flip()  # 화면 초기화
 

@@ -30,6 +30,10 @@ PLAYER_FRICTION = -0.2
 PLAYER_GRAVITY = 0.8
 PLAYER_JUMP = 15.5
 
+#Monstar properties
+MONSTAR_ACC = 1.3
+MONSTAR_FRICTION = -0.2
+
 # Image
 charL1 = "charL1.png" # character 왼쪽 이동시 움직임1
 charL2 = "charL2.png" # character 왼쪽 이동시 움직임2
@@ -56,6 +60,10 @@ S_YELLOW_HEART = "./image/s_yellow_last.png"
 S_ORANGE_HEART = "./image/s_orange_last.png"
 S_RED_HEART = "./image/s_red_last.png"
 S_PINK_HEART = "./image/s_pink_last.png"
+monstarLD = './image/monstarLD.png' # 몬스터가 왼쪽으로 움직일 때 움직임 1
+monstarLU = './image/monstarLU.png' # 몬스터가 왼쪽으로 움직일 때 움직임 2
+monstarRD = "./image/monstarRD.png" # 몬스터가 오른쪽으로 움직일 때 움직임 1
+monstarRU = "./image/monstarRU.png" # 몬스터가 오른쪽으로 움직일 때 움직임 2
 
 
 # about map
