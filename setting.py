@@ -46,9 +46,18 @@ YELLOW_SUPERBUBBLE = "./image/yellow_superbubble.png"
 PINK_SUPERBUBBLE = "./image/pink_superbubble.png"
 START_SCREEND = "./image/start.png"
 ENDING_IMAGE = "./image/end.png"
+YELLOW_HEART = "./image/yellow_last.png"
+ORANGE_HEART = "./image/orange_last.png"
+RED_HEART = "./image/red_last.png"
+PINK_HEART = "./image/pink_last.png"
+S_YELLOW_HEART = "./image/s_yellow_last.png"
+S_ORANGE_HEART = "./image/s_orange_last.png"
+S_RED_HEART = "./image/s_red_last.png"
+S_PINK_HEART = "./image/s_pink_last.png"
 
 
 # about map
 mapFile = ["map/tut_map.txt", "map/stage1_map.txt"]
 mapTxt = [("q", "a", "z"), ("q", "a", "z")] # (big, small_top, small_bottom, shadow)
 mapImage = [(tutMapBig, tutMapStop, tutMapS), (s1MapBig, s1MapStop, s1MapSbot)] # (big, small_top, small_bottom)
+PLATFORM_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14,140, TILESIZE, TILESIZE), (70, 675, 70, 25), (70*3, 70*9-35, 70, 25), (70*3, 70*7, 70, 25), (70*10, 70*5, 70, 25)]

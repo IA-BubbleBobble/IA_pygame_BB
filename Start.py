@@ -1,6 +1,7 @@
 import pygame
 from setting import *
 from sprites import *
+import time
 
 class Game():
     def __init__(self):
@@ -16,8 +17,10 @@ class Game():
         self.tutorial = False
         self.start_playing = True
         self.score = 0
+        self.high_score = 0
         self.start_music = pygame.mixer.Sound("MainTheme.ogg")
         self._display_start = None
+        self.end_music = pygame.mixer.Sound("./music/GameEnding.ogg")
         #self.display_start = pygame.display.set_mode((WIDTH, HEIGHT), pygame.HWSURFACE | pygame.DOUBLEBUF) #display_surf를 start로 변경
 
     def new(self): #game start
@@ -58,23 +61,23 @@ class Game():
                 for row in range(0, len(map_data[col])):  # 가로
                     if (col == len(map_data) - 1):
                         if map_data[col][row] == mapTxt[0][0]:
-                            map_big = TutMap(self, tutMapBig, col, row)
+                            map_big = Game(self, tutMapBig, col, row)
                             self.TutMap.add(map_big)
                         if map_data[col][row] == mapTxt[0][1]:
-                            map_small_top = TutMap(self, tutMapStop, col, row)
+                            map_small_top = Game(self, tutMapStop, col, row)
                             self.TutMap.add(map_small_top)
                         if map_data[col][row] == mapTxt[0][2]:
-                            map_small_bot = TutMap(self, tutMapS, 9.65, row)
+                            map_small_bot = Game(self, tutMapS, 9.65, row)
                             self.TutMap.add(map_small_bot)
                     else:
                         if map_data[col][row] == mapTxt[0][0]:
-                            map_big = TutMap(self, tutMapBig, col, row)
+                            map_big = Game(self, tutMapBig, col, row)
                             self.TutMap.add(map_big)
                         if map_data[col][row] == mapTxt[0][1]:
-                            map_small_top = TutMap(self, tutMapStop, col, row)
+                            map_small_top = Game(self, tutMapStop, col, row)
                             self.TutMap.add(map_small_top)
                         if map_data[col][row] == mapTxt[0][2]:
-                            map_small_bot = TutMap(self, tutMapS, col, row)
+                            map_small_bot = Game(self, tutMapS, col, row)
                             self.TutMap.add(map_small_bot)
 
         #hits -> sprite collide method 사용하여 충돌체크
@@ -115,6 +118,11 @@ class Game():
 
     def start_draw(self): #START 화면
         print("start_draw function")
+        # 재시작하였을 때 다시 시작하기 전 점수를 high_score에 넣어준다.
+        if(self.score> self.high_score):
+            self.high_score = self.score
+        #재시작하는 경우를 생각해서 score를 초기화 시켜준다.
+        self.score = 0
         color = 1
         progress_sec = 0
         while (True):
@@ -122,24 +130,29 @@ class Game():
             self.screen.fill(WHITE)
             self.loadimage(START_SCREEND, (0, 0))
             string_score = "00"
-            if (self.score != 0):
+            string_high_score = "00"
+            # 만약에 self.score가 0이면 00을 print 해주기 위해서 비교
+            if(self.score !=0):
                 string_score = str(self.score)
-            self.printword_white(18, string_score, (175, 56))
-            self.printword_white(18, "A.START            B.TUTORIAL", (273, 600))
-            # self.printword_white(18,string_score,(490,56))
-            if (progress_sec > 60):
-                if (color == 1):
-                    self.loadimage(PINK_SUPERBUBBLE, (260, 70))
+            if(self.high_score !=0):
+                string_high_score = str(self.high_score)
+            self.printword_white(18,string_score,(175,56))
+            self.printword_white(18,"A.START            B.TUTORIAL",(273,600))
+            self.printword_white(18,str(string_high_score),(490,56))
+            #color 변수를 사용하여 두개의 이미지를 번갈아가면 수행시켜 준다
+            if(progress_sec>60):
+                if(color == 1):
+                    self.loadimage(PINK_SUPERBUBBLE,(260,70))
                     color = 0
                 else:
-                    self.loadimage(YELLOW_SUPERBUBBLE, (260, 70))
+                    self.loadimage(YELLOW_SUPERBUBBLE,(260,70))
                     color = 1
             else:
-                if (color == 1):
-                    self.loadimage(PINK_BUBBLE, (260, 70))
+                if(color == 1):
+                    self.loadimage(PINK_BUBBLE,(260,70))
                     color = 0
                 else:
-                    self.loadimage(YELLOW_BUBBLE, (260, 70))
+                    self.loadimage(YELLOW_BUBBLE,(260,70))
                     color = 1
             pygame.display.flip()
             self.clock.tick(FPS)
@@ -167,6 +180,64 @@ class Game():
 
     def show_go_screen(self): #game over, continue 화면
         print('show_go_screen fuction')
+        # 시작 7초후에 continue화면을 띄워주기 위해 시작할 때 현재 시간 저장
+        self.start_playing = False #재시작 할 때 True로 바꾸기 위해
+        start_time = time.time()
+        self.end_music.play() 
+
+        color = 1
+        while(True):
+            now_time = time.time()
+            progress_sec = now_time - start_time
+            self.screen.fill(WHITE)
+            self.loadimage(ENDING_IMAGE,(0,0))
+            # 4개의 이미지를 반복적으로 수행
+            if(color % 4 == 1) :
+                self.loadimage(YELLOW_HEART,(360,155))
+                self.loadimage(S_YELLOW_HEART,(0,580))
+            elif(color % 4 ==2):
+                self.loadimage(ORANGE_HEART,(360,155))
+                self.loadimage(S_ORANGE_HEART,(0,580))
+            elif(color % 4 ==3):
+                self.loadimage(RED_HEART,(360,155))
+                self.loadimage(S_RED_HEART,(0,580))
+            else:
+                self.loadimage(PINK_HEART,(360,155))
+                self.loadimage(S_PINK_HEART,(0,580))
+            color += 1
+            string_score = "00"
+            # 만약에 self.score가 0이면 00을 print 해주기 위해서 비교
+            if(self.score !=0):
+                string_score = str(self.score)
+            # 현재 플레이어의 점수 화면에 출력
+            self.printword_white(18,string_score,(175,56))
+            # 현재 플레이어의 최고 점수를 화면에 출력
+            self.printword_white(18,str(self.high_score),(490,56))
+            # 화면에 메인으로 보여질 점수를 가운데에 출력하기 위해 구하는 변수
+            word_location = 1050/2 - (len(string_score)/2)*70 +13
+            self.printword_white(36,string_score,(word_location,140))
+            #7초후부터 continue 화면 출력
+            if(progress_sec >= 7):
+                self.printword_white(22,"A.RESTART           B.EXIT",(249,640))
+            pygame.display.flip()
+            # 7초후부터 continue 화면에 대해서 a키를 누르면 시작화면으로, b키를 누르면 게임을 종료하게 된다.
+            if(progress_sec >= 7):
+                for event in pygame.event.get():
+                    if event.type == pygame.KEYDOWN:
+                        if(event.key ==pygame.K_a):
+                            self.start_playing = True # 재시작을 한다.
+                            print('a')
+                            break
+                        elif(event.key == pygame.K_b):
+                            print('b')
+                            self.end_music.stop()
+                            self.on_cleanup()
+                            break
+            
+            if(self.start_playing):
+                self.end_music.stop()
+                self.show_start_screen()
+                break
 
     def wait_for_keys(self):
         print('wait_for_keys function')
@@ -210,7 +281,8 @@ class Game():
 
 g = Game()
 while g.start:
-    g.show_start_screen()
+    #g.show_start_screen()
+    g.show_go_screen()
     while g.running:
         g.new()
         g.run()
