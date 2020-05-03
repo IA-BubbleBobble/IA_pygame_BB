@@ -18,6 +18,7 @@ class Game():
         self.tutorial = False # tutorial 실행 여부
         self.stage1 = False # stage1 실행 여부
         self.stage2 = False # stage2 실행 여부
+        self.stage3 = False # stage3 실행 여부
         self.start_playing = True
         self.score = 0
         self.lr = 1 # 0이면 player가 왼쪽보는거, 1이면 player가 오른쪽 보는거
@@ -39,7 +40,9 @@ class Game():
         elif(self.stage1 == True): # stage1을 실행 할 차례면 stage1 map을 만든다
             self.platform1()  # making stage1 map method
         elif(self.stage2 == True): # stage2 를 실행 할 차례면 stage2 map을 만든다
-            self.platform2()  # making stage1 map method
+            self.platform2()  # making stage2 map method
+        elif(self.stage3 == True): # stage3를 실행 할 차례면 stage3 map을 만든다
+            self.platform3() # making stage3 map method
         self.player = Player(self)  # self.character, Character 객체 생성
         self.all_sprites.add(self.bubble)
         self.all_sprites.add(self.player)
