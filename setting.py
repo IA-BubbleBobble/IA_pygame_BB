@@ -1,3 +1,5 @@
+import pygame
+
 #base properties
 TITLE = "Bubble Bobble"
 WIDTH = 1050
@@ -25,6 +27,7 @@ BROWN = (111, 109, 81)
 keys = [False, False, False, False, False] # [K_UP(jump), K_LEFT(move left), K_SPACE(shoot bubble), K_RIGHT(move right)]
 #Player properties
 player_pos = [70, 620]
+bubble_pos = [80, 630]
 PLAYER_ACC = 1.5
 PLAYER_FRICTION = -0.2
 PLAYER_GRAVITY = 0.8
@@ -35,16 +38,30 @@ MONSTAR_ACC = 1.3
 MONSTAR_FRICTION = -0.2
 
 # Image
-charL1 = "charL1.png" # character 왼쪽 이동시 움직임1
-charL2 = "charL2.png" # character 왼쪽 이동시 움직임2
-charL3 = "charL3.png" # character 왼쪽 이동시 움직임3
-tutMapBig = "tutMapBig.PNG" # tutorial map big block
-tutMapSbot = "tutMapSbot.PNG" # tutorial map small block(아래쪽이 검은색)
-tutMapStop = "tutMapStop.PNG" # tutorial map small block(위쪽이 검은색)
-tutMapS = "tutMapS.PNG" # only small red block
-s1MapBig = "s1MapBig.PNG"
-s1MapStop = "s1MapStop.PNG"
-s1MapSbot = "s1MapSbot.PNG"
+charL1 = "image/charL1.png" # character 왼쪽 이동시 움직임1
+charL2 = "image/charL2.png" # character 왼쪽 이동시 움직임2
+charL3 = "image/charL3.png" # character 왼쪽 이동시 움직임3
+charL4 = "image/charL4.png" # character 왼쪽 이동시 움직임4
+charR1 = "image/charR1.png" # character 왼쪽 이동시 움직임1
+charR2 = "image/charR2.png" # character 왼쪽 이동시 움직임2
+charR3 = "image/charR3.png" # character 왼쪽 이동시 움직임3
+charR4 = "image/charR4.png" # character 왼쪽 이동시 움직임4
+tutMapBig = "image/tutMapBig.PNG" # tutorial map big block
+tutMapStop = "image/tutMapStop.PNG" # tutorial map small block(위쪽이 검은색)
+tutMapS = "image/tutMapS.PNG" # only small red block
+s1MapBig = "image/s1MapBig.PNG"
+s1MapStop = "image/s1MapStop.PNG"
+s1MapS = "image/s1MapS.PNG"
+s2MapBig = "image/s2MapBig.PNG"
+s2MapStop = "image/s2MapStop.PNG"
+s2MapS = "image/s2MapS.PNG"
+charL = [charL1, charL2, charL3, charL3]
+charR = [charR1, charR2, charR3, charR3]
+bubble1 = "image/bubble1.png"
+bubble2 = "image/bubble2.png"
+bubble3 = "image/bubble3.png"
+bubble4 = "image/bubble4.png"
+# bubble = [bubble1, bubble2, bubble3, bubble4]
 
 YELLOW_BUBBLE = "./image/yellow_bubble.png"
 PINK_BUBBLE = "./image/pink_bubble.png"
@@ -73,10 +90,21 @@ monstarDR2 = "./image/monstarDR2.png" # 몬스터가 죽었을때 오른쪽을 �
 monstarDR3 = "./image/monstarDR3.png" # 몬스터가 죽었을때 오른쪽을 움직일 때 움직임 3"
 monstarDR4 = "./image/monstarDR4.png" # 몬스터가 죽었을때 오른쪽을 움직일 때 움직임 4"
 
+#sound
+pygame.mixer.init() # to use music
+mainTheme = pygame.mixer.Sound("sound/MainTheme.ogg")
+playerJump = pygame.mixer.Sound("sound/playerJump.wav")
+gameStart = pygame.mixer.Sound("sound/GameStart.ogg")
+shootBubble = pygame.mixer.Sound("sound/shootBubble.wav")
+
 
 # about map
 mapFile = ["map/tut_map.txt", "map/stage1_map.txt"]
 mapTxt = [("q", "a", "z"), ("q", "a", "z")] # (big, small_top, small_bottom, shadow)
-mapImage = [(tutMapBig, tutMapStop, tutMapS), (s1MapBig, s1MapStop, s1MapSbot)] # (big, small_top, small_bottom)
+mapImage = [(tutMapBig, tutMapStop, tutMapS), (s1MapBig, s1MapStop, s1MapS)] # (big, small_top, small_bottom)
 PLATFORM_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14,140, TILESIZE, TILESIZE), (70, 675, 70, 25),
-                 (70*3, 70*9-35, 70, 25), (70*3, 70*6, 70, 25), (70*10, 70*4, 70, 25)] # tutorial map
+                 (70*3, 70*8, 70, 25), (70*3, 70*6+25, 70, 25), (70*10, 70*4+35, 70, 25)] # tutorial map
+PLATFORM1_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14,140, TILESIZE, TILESIZE), (70, 675, 70, 25),
+                 (70, 70*8, 70, 25), (70, 70*6+25, 70, 25), (70, 70*4+35, 70, 25)] # stage1 map
+PLATFORM2_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14,140, TILESIZE, TILESIZE), (70, 675, 70, 25),
+                 (70, 70*9-45, 70, 25), (70, 70*7-35, 70, 25), (70, 70*5, 70, 25), (70, 70*4-35, 70, 25)] # stage1 map
