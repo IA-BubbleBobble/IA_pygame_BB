@@ -11,7 +11,6 @@ CHARSIZE = 45
 
 #Font
 BUBBLE_FONT = "PressStart2P.ttf"
-#Player properties
 
 #define colors
 WHITE = (255, 255, 255)
@@ -25,6 +24,7 @@ BROWN = (111, 109, 81)
 
 # key (pushed or not)
 keys = [False, False, False, False, False] # [K_UP(jump), K_LEFT(move left), K_SPACE(shoot bubble), K_RIGHT(move right)]
+
 #Player properties
 player_pos = [70, 620]
 bubble_pos = [80, 630]
@@ -64,7 +64,8 @@ bubble1 = "image/bubble1.png"
 bubble2 = "image/bubble2.png"
 bubble3 = "image/bubble3.png"
 bubble4 = "image/bubble4.png"
-# bubble = [bubble1, bubble2, bubble3, bubble4]
+plymonL = "image/plymonL.png"
+plymonR = "image/plymonR.png"
 
 YELLOW_BUBBLE = "./image/yellow_bubble.png"
 PINK_BUBBLE = "./image/pink_bubble.png"
@@ -99,6 +100,7 @@ mainTheme = pygame.mixer.Sound("sound/MainTheme.ogg")
 playerJump = pygame.mixer.Sound("sound/playerJump.wav")
 gameStart = pygame.mixer.Sound("sound/GameStart.ogg")
 shootBubble = pygame.mixer.Sound("sound/shootBubble.wav")
+gameOver = pygame.mixer.Sound("sound/GameOver.ogg")
 
 
 # about map
