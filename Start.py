@@ -4,7 +4,7 @@ from sprites import *
 import random
 
 import time
-
+    
 class Game():
     def __init__(self):
         print("Game init function")
@@ -150,8 +150,46 @@ class Game():
                 p = Platform(s2MapS, PLATFORM2_LIST[7][0] + 70 * i, PLATFORM2_LIST[7][1], PLATFORM2_LIST[7][2],PLATFORM2_LIST[7][3])
                 self.all_sprites.add(p)
                 self.platforms.add(p)
-
-
+    
+    def platform3(self): # make stage3 map
+        for i in range(15): # 맨 윗줄
+            p = Platform(s3MapStop, PLATFORM3_LIST[0][0]+70*i, PLATFORM1_LIST[0][1], PLATFORM1_LIST[0][2], PLATFORM1_LIST[0][3])
+            self.all_sprites.add(p)
+            self.platforms.add(p)
+        for i in range(8): # 왼쪽 기둥
+            p = Platform(s3MapBig, PLATFORM3_LIST[1][0], PLATFORM1_LIST[1][1]+70*i, PLATFORM1_LIST[1][2], PLATFORM1_LIST[1][3])
+            self.all_sprites.add(p)
+            self.platforms.add(p)
+        for i in range(8): # 오른쪽 기둥
+            p = Platform(s3MapBig, PLATFORM3_LIST[2][0], PLATFORM1_LIST[2][1] +70*i, PLATFORM1_LIST[2][2], PLATFORM1_LIST[2][3])
+            self.all_sprites.add(p)
+            self.platforms.add(p)
+        for i in range(13): # 맨 밑줄
+            p = Platform(s3MapS, PLATFORM3_LIST[3][0] + 70 * i, PLATFORM1_LIST[3][1], PLATFORM1_LIST[3][2],PLATFORM1_LIST[3][3])
+            self.all_sprites.add(p)
+            self.platforms.add(p)
+        for i in range(13):
+            if (for i in range(5) and for i in range(8, 13)): # 밑에서 첫번째
+                p = Platform(s3MapS, PLATFORM3_LIST[4][0] + 70 * i, PLATFORM3_LIST[4][1], PLATFORM3_LIST[4][2],PLATFORM3_LIST[4][3])
+                self.all_sprites.add(p)
+                self.platforms.add(p)
+            if (i != 0 and i != 1 and for i in range(4,9) and i != 11 and i != 12): # 밑에서 두번째
+                p = Platform(s3MapS, PLATFORM3_LIST[5][0] + 70 * i, PLATFORM3_LIST[5][1], PLATFORM3_LIST[5][2],PLATFORM3_LIST[5][3])
+                self.all_sprites.add(p)
+                self.platforms.add(p)
+            if (for i in range(1, 5) and for i in range(8, 12)):
+                p = Platform(s3MapS, PLATFORM3_LIST[6][0] + 70 * i, PLATFORM3_LIST[6][1], PLATFORM3_LIST[6][2],PLATFORM3_LIST[6][3])
+                self.all_sprites.add(p)
+                self.platforms.add(p)
+            if (i != 1 and i != 2 and for i in range(5, 8) and i != 10 and i != 11):
+                p = Platform(s3MapS, PLATFORM3_LIST[7][0] + 70 * i, PLATFORM3_LIST[7][1], PLATFORM3_LIST[7][2],PLATFORM3_LIST[7][3])
+                self.all_sprites.add(p)
+                uself.platforms.add(p)
+            if (for i in range(5) and for i in range(8,13)):
+                p = Platform(s3MapS, PLATFORM3_LIST[7][0] + 70 * i, PLATFORM3_LIST[7][1], PLATFORM3_LIST[7][2],PLATFORM3_LIST[7][3])
+                self.all_sprites.add(p)
+                self.platforms.add(p)
+    
     def run(self): #게임 갱신
         print("run function")
         # game loop
