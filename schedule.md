@@ -1,8 +1,8 @@
 # Bubble Bobble
 ## 2020/04/29
 ### <역할분담>
-  * 이유진 : 튜토리얼 맵 만들기<br>
-  * 이채영 : 시작화면 + 폰트다운받기<br>  
+  * 이유진 : 튜토리얼 맵 만들기 ---ok<br>
+  * 이채영 : 시작화면 + 폰트다운받기 ---ok<br>  
   * 신동현 : 캐릭터 & 과일 이미지 캡쳐<br><br>
 
 ### <일정>
@@ -16,8 +16,8 @@
 
 ## 2020/05/01
 ### <역할분담>
-  * 이유진 : 캐릭터 움직임 구현, 코드 합치기<br>
-  * 이채영 : 시작화면, 마지막 화면<br>  
+  * 이유진 : 캐릭터 움직임 구현, 코드 합치기 ---ok<br>
+  * 이채영 : 시작화면, 마지막 화면 ---ok<br>  
   * 신동현 : stage 2, 3 맵 만들기<br><br>
   
 ### <일정>
@@ -29,10 +29,10 @@
 <hr>
 
 ##### 20200501 update(youjin)
-### Start page
-  * Logo
-  * Tutorial button (how to를 tutorial로 변경!!)
-  * Game start button
+### ~~Start page~~
+  * Logo ---ok
+  * Tutorial button (how to를 tutorial로 변경!!)->튜토리얼 화면으로 넘어가기 ---ok
+  * Game start button->stage1 화면으로 넘어가기 ---ok
 ### Tutorial
   * key 조작법(글자로)
   * 몬스터 4마리만 출현
@@ -71,9 +71,9 @@
   * Stage number => Only appear on the stage page
 
 ### 구현해야할 것
-  * Map(map:1050\*700, image:70\*70)
-  * Jump - character(막대기 위에서만 or 맨 밑으로 떨어짐)
-  * Move - character(무작위로, ), monster(막대기 위에서만), bubble(항상위로)
+  * Map(map:1050\*700, image:70\*70) ---ok
+  * Jump - character(막대기 위에서만 or 맨 밑으로 떨어짐) ---ok
+  * Move - character(방향에 맞게 이미지 바꾸기)---ok, monster(막대기 위에서만), bubble(항상위로)
   * Bubbled 몬스터 움직임
   * 버블에 갇힌 몬스터는 5초후 탈출
   * 목숨 3개(몬스터와 부딪히면 줄어든다)
