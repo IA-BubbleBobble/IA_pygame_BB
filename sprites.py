@@ -3,6 +3,7 @@ import pygame
 import random
 from setting import *
 vec = pygame.math.Vector2
+import time
 
 class Player(pygame.sprite.Sprite): # character는 단일 객체
     def __init__(self, game):
@@ -13,9 +14,9 @@ class Player(pygame.sprite.Sprite): # character는 단일 객체
         self.imageLoad = charR[self.imageRNum]
         self.image = pygame.transform.scale(pygame.image.load(self.imageLoad), (45, 45)).convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = player_pos[0]
-        self.rect.y = player_pos[1]
-        self.pos = vec(player_pos[0]+20, player_pos[1]+20)
+        self.rect.x = 70
+        self.rect.y = 620
+        self.pos = vec(player_pos[0], player_pos[1])
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
 
@@ -63,10 +64,28 @@ class Player(pygame.sprite.Sprite): # character는 단일 객체
         elif self.pos.y <= 150:
             self.pos.y = 150
 
-
         self.rect.x = self.pos.x
         self.rect.y = self.pos.y
 
+        if(self.game.playerCollide == True):
+            if (self.game.lr == 0):  # left
+                self.game.player.kill()
+                self.game.player = Player(self.game)
+                self.game.player.imageLoad = charR[0]
+                self.game.player.rect.x = 70
+                self.game.player.rect.y = 620
+                self.game.all_sprites.add(self.game.player)
+                self.game.playerCollide = False
+            if (self.game.lr == 1):
+                self.game.player.kill()
+                self.game.player = Player(self.game)
+                self.game.player.imageLoad = charR[0]
+                self.game.player.rect.x = 70
+                self.game.player.rect.y = 620
+                self.game.all_sprites.add(self.game.player)
+                self.game.playerCollide = False
+
+        self.mask = pygame.mask.from_surface(self.image)
 
 class Platform(pygame.sprite.Sprite):
     def __init__(self, image, x, y, w, h): # (x좌표, y좌표, width, height)
@@ -75,21 +94,24 @@ class Platform(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.mask = pygame.mask.from_surface(self.image)
 
 class Bubble(pygame.sprite.Sprite):
-    def __init__(self, game, image, lr, x, y):
+    def __init__(self, game, lr, x, y):
         pygame.sprite.Sprite.__init__(self)
         self.game = game
-        self.imageLoad = image
-        self.image = pygame.transform.scale(pygame.image.load(image), (35, 35)).convert_alpha()
+        self.image = pygame.transform.scale(pygame.image.load(bubble4), (35, 35)).convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        self.tempXL = x - 300
-        self.tempXR = x + 300
-        self.speedyR = 10
-        self.speedyL = -10
         self.lr = lr
+        if(lr == 0): # left 일 때
+            self.rect.x = x-40
+        elif(lr == 1): # right 일 때
+            self.rect.x = x+40
+        self.rect.y = y
+        self.tempXL = x - 350 # 350만큼만 날아가도록
+        self.tempXR = x + 350
+        self.speedyR = 10 # 날아가는 속도
+        self.speedyL = -10
 
     def update(self):
         if(self.lr == 0): # left
@@ -104,91 +126,18 @@ class Bubble(pygame.sprite.Sprite):
                 self.kill()
             if self.rect.x >= WIDTH - 140:
                 self.kill()
-        # if(self.imageLoad == bubble1):
-        #     self.tempXL = self.rect.x - 70
-        #     self.tempXR = self.rect.x + 70
-        #     print("tempXL:", self.tempXL)
-        #     if(self.lr == 0): # plyaer가 왼쪽 보고있을 때
-        #         self.rect.x += self.speedyL
-        #         if self.rect.x < self.tempXL:
-        #             self.kill()
-        #         if self.rect.x <= 70:
-        #             self.kill()
-        #     elif(self.lr == 1): #player가 오른쪽 보고있을 때
-        #         self.rect.x += self.speedyR
-        #         if self.rect.x >= self.tempXR:
-        #             self.kill()
-        #         if self.rect.x >= WIDTH - 70:
-        #             self.kill()
-        #
-        # elif (self.imageLoad == bubble2):
-        #     self.rect.x += 70
-        #     self.tempXL = self.rect.x - 140
-        #     self.tempXR += self.rect.x + 140
-        #     print("tempXL:", self.tempXL)
-        #     if (self.lr == 0):  # plyaer가 왼쪽 보고있을 때
-        #         self.rect.x += self.speedyL
-        #         if self.rect.x < self.tempXL:
-        #             self.kill()
-        #         if self.rect.x <= 70:
-        #             self.kill()
-        #     elif (self.lr == 1):  # player가 오른쪽 보고있을 때
-        #         self.rect.x += self.speedyR
-        #         if self.rect.x >= self.tempXR:
-        #             self.kill()
-        #         if self.rect.x >= WIDTH - 70:
-        #             self.kill()
-        #
-        # elif (self.imageLoad == bubble3):
-        #     self.rect.x += 140
-        #     self.tempXL = self.rect.x - 210
-        #     self.tempXR = self.rect.x + 210
-        #     print("tempXL:", self.tempXL)
-        #     if (self.lr == 0):  # plyaer가 왼쪽 보고있을 때
-        #         self.rect.x += self.speedyL
-        #         if self.rect.x < self.tempXL:
-        #             self.kill()
-        #         if self.rect.x <= 70:
-        #             self.kill()
-        #     elif (self.lr == 1):  # player가 오른쪽 보고있을 때
-        #         self.rect.x += self.speedyR
-        #         if self.rect.x >= self.tempXR:
-        #             self.kill()
-        #         if self.rect.x >= WIDTH - 70:
-        #             self.kill()
-        #
-        # elif (self.imageLoad == bubble4):
-        #     self.rect.x += 210
-        #     self.tempXL = self.rect.x - 280
-        #     self.tempXR = self.rect.x + 280
-        #     if (self.lr == 0):  # plyaer가 왼쪽 보고있을 때
-        #         self.rect.x += self.speedyL
-        #         if self.rect.x < self.tempXL:
-        #             self.kill()
-        #         if self.rect.x <= 70:
-        #             self.kill()
-        #     elif (self.lr == 1):  # player가 오른쪽 보고있을 때
-        #         self.rect.x += self.speedyR
-        #         if self.rect.x >= self.tempXR:
-        #             self.kill()
-        #         if self.rect.x >= WIDTH - 70:
-        #             self.kill()
+        self.mask = pygame.mask.from_surface(self.image)
 
-class Monstar (pygame.sprite.Sprite):
-    def __init__(self, game,location,direction,state): # 맵마다 나타나는 몬스터의 위치가 달라 location이라는 변수를 넣어주었다.
+class Monster (pygame.sprite.Sprite):
+    def __init__(self, game, location, direction, state): # 맵마다 나타나는 몬스터의 위치가 달라 location이라는 변수를 넣어주었다.
         pygame.sprite.Sprite.__init__(self)
-        self.game = game 
+        self.game = game
         self.groups = game.all_sprites, game.platforms
-        # 몬스터의 상태가 bubble인지 확인한다
-        # 아마 몬스터가 버블에 닿아서 안으로 들어가면 True가 될 예정
-        self.monstar_bubble = False
-        #몬스터가 죽은 상태 인지 확인한다
-        self.monstar_dead = False
+        self.monster_bubble = False # monster가 버블에 닿아서 버블에 갇히면 True, 안갇혀 있으면 False
+        self.monster_dead = False #몬스터가 죽은 상태 인지 확인한다
         self.location = location
-        # 몬스터가 처음 맵에 나타날 때 보는 방향에 따라 다른 이미지를 불러준다.
-        self.direction = direction
-        #현재 몬스터의 상태가 살아있으면 live, bubble상태면 bubble, 죽은 상태면 dead
-        self.state = state
+        self.direction = direction # 몬스터가 처음 맵에 나타날 때 보는 방향에 따라 다른 이미지를 불러준다.
+        self.state = state # 현재 몬스터의 상태가 살아있으면 live, bubble상태면 bubble, 죽은 상태면 dead
         # 몬스터가 죽을 때 속도를 늦춰주기 위해 사용하는 변수
         self.slow = 0
         self.updown = 0
@@ -209,7 +158,7 @@ class Monstar (pygame.sprite.Sprite):
         self.rect.y = location[1]
         self.vel = vec(0,0)
         self.acc = vec(0,0)
-        
+
     def update(self):
         if(self.state == 'live'):
             self.acc = vec(0, PLAYER_GRAVITY)
@@ -217,7 +166,7 @@ class Monstar (pygame.sprite.Sprite):
                 self.acc.x = - MONSTAR_ACC
             elif(self.direction == 'right'):
                 self.acc.x = MONSTAR_ACC
-            
+
             if(self.direction == 'left'):
                 if(self.updown == 0) :
                     self.image = pygame.transform.scale(pygame.image.load(monstarLD), (45, 45)).convert_alpha()
@@ -233,7 +182,7 @@ class Monstar (pygame.sprite.Sprite):
             self.acc.x += self.vel.x * MONSTAR_FRICTION
             self.vel += self.acc
             self.pos += self.vel + 0.5 * self.acc
-    
+
             if self.pos.x >= WIDTH-140:
                 self.pos.x = WIDTH-140
                 self.direction = 'left'
@@ -278,12 +227,12 @@ class Monstar (pygame.sprite.Sprite):
                 if(self.direction == 'left') :
                     self.acc.x = - (MONSTAR_ACC+ 0.8)
                 elif(self.direction == 'right'):
-                    self.acc.x = (MONSTAR_ACC+0.8)   
-                    
+                    self.acc.x = (MONSTAR_ACC+0.8)
+
                 self.acc.x += self.vel.x * MONSTAR_FRICTION
                 self.vel += self.acc
                 self.pos += self.vel + 0.5 * self.acc
-            
+
                 if self.pos.x >= WIDTH-140:
                     self.pos.x = WIDTH-140
                 elif self.pos.x <= 70:
@@ -293,7 +242,7 @@ class Monstar (pygame.sprite.Sprite):
                     self.pos.y -= 50
                 elif (self.pos.y <= 150):
                     self.pos.y == 150
-                else : 
+                else :
                     self.pos.y -= 50
 
                 hits = pygame.sprite.spritecollide(self, self.game.platforms, False)
@@ -301,15 +250,15 @@ class Monstar (pygame.sprite.Sprite):
                     print("hits!============================")
                     self.pos.y = hits[0].rect.y-45
                     self.vel.y = 0
-                        
+
                 self.rect.x = self.pos.x
                 self.rect.y = self.pos.y
 
                 if(self.updown > 6):
-                    print('monstar kill')
+                    print('monster kill')
                     self.kill()
             self.slow += 1
         else:
             pass
             # monstar가 버블 상태이지만 죽지는 않았을 때
-            
+        self.mask = pygame.mask.from_surface(self.image)
