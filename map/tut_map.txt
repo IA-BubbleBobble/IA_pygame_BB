@@ -1,0 +1,10 @@
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+a a a a a a a a a a a a a a a
+q 0 0 0 0 0 0 0 0 0 0 0 0 0 q
+q 0 0 0 0 0 0 0 0 0 0 0 0 0 q
+q 0 0 0 0 0 0 0 0 z z 0 0 0 q
+q 0 0 0 0 0 0 0 0 0 0 0 0 0 q
+q 0 0 z z z z z z z z 0 0 0 q
+q 0 0 0 0 0 0 0 0 0 0 0 0 0 q
+q 0 0 z z 0 0 0 0 0 0 0 0 0 q
+q z z z z z z z z z z z z z q
