@@ -1,6 +1,7 @@
 import pygame
 from setting import *
 from sprites import *
+import time
 
 class Game():
     def __init__(self):
@@ -18,12 +19,14 @@ class Game():
         self.start_playing = True
         self.score = 0
         self._display_start = None
+        self.lr = 1 # 0이면 player가 왼쪽보는거, 1이면 player가 오른쪽 보는거
 
     def new(self): #game start
         print("new function")
         # sprite group
         self.all_sprites = pygame.sprite.Group()
         self.platforms = pygame.sprite.Group()  # platform(tutorial map) sprite group 생성
+        self.bubble = pygame.sprite.Group()  # platform(tutorial map) sprite group 생성
         if(self.tutorial == True): # 현재 tutorial 을 실행 할 차례면 tutorial map을 만든다
             self.platform() # making tutorial map method
         elif(self.stage1 == True): # stage1을 실행 할 차례면 stage1 map을 만든다
@@ -31,9 +34,11 @@ class Game():
         elif(self.stage2 == True): # stage2 를 실행 할 차례면 stage2 map을 만든다
             self.platform2()  # making stage1 map method
         self.player = Player(self)  # self.character, Character 객체 생성
+        self.all_sprites.add(self.bubble)
         self.all_sprites.add(self.player)
+        # self.all_sprites.add(self.bubble)
         # self.monsters = pygame.sprite.Group()  # monster sprite group 생성
-        gameStart.play(-1)
+        gameStart.play(-1) #음악 계속 실행
         self.run() # run game method
 
     def platform(self): # make tutorial map
@@ -166,6 +171,23 @@ class Game():
                 if event.key == pygame.K_UP:
                     playerJump.play()
                     self.player.jump()
+                if event.key == pygame.K_SPACE:
+                    shootBubble.play()
+                    bb = bb4 = Bubble(self, bubble4, self.lr, self.player.rect.x, self.player.rect.y) # 마지막 bubble
+                    self.all_sprites.add(bb4)
+                    self.bubble.add(bb4)
+                    # bb1 = Bubble(self, bubble1, self.lr, self.player.rect.x, self.player.rect.y) # 처음나간 bubble
+                    # self.all_sprites.add(bb1)
+                    # self.bubble.add(bb1)
+                    # bb2 = Bubble(self, bubble2, self.lr, self.player.rect.x, self.player.rect.y) # 좀더 커진 bubble
+                    # self.all_sprites.add(bb2)
+                    # self.bubble.add(bb2)
+                    # bb3 = Bubble(self, bubble3, self.lr, self.player.rect.x, self.player.rect.y) # 좀더 커진 bubble
+                    # self.all_sprites.add(bb3)
+                    # self.bubble.add(bb3)
+                    # bb4 = Bubble(self, bubble4, self.lr, self.player.rect.x, self.player.rect.y) # 마지막 bubble
+                    # self.all_sprites.add(bb4)
+                    # self.bubble.add(bb4)
 
 
     def draw(self): #화면에 그려주는 함수

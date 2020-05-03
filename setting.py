@@ -27,6 +27,7 @@ keys = [False, False, False, False, False] # [K_UP(jump), K_LEFT(move left), K_S
 
 #Player properties
 player_pos = [70, 620]
+bubble_pos = [80, 630]
 PLAYER_ACC = 1.5
 PLAYER_FRICTION = -0.2
 PLAYER_GRAVITY = 0.8
@@ -52,6 +53,11 @@ s2MapStop = "image/s2MapStop.PNG"
 s2MapS = "image/s2MapS.PNG"
 charL = [charL1, charL2, charL3, charL3]
 charR = [charR1, charR2, charR3, charR3]
+bubble1 = "image/bubble1.png"
+bubble2 = "image/bubble2.png"
+bubble3 = "image/bubble3.png"
+bubble4 = "image/bubble4.png"
+# bubble = [bubble1, bubble2, bubble3, bubble4]
 
 YELLOW_BUBBLE = "./image/yellow_bubble.png"
 PINK_BUBBLE = "./image/pink_bubble.png"
@@ -65,6 +71,7 @@ pygame.mixer.init() # to use music
 mainTheme = pygame.mixer.Sound("sound/MainTheme.ogg")
 playerJump = pygame.mixer.Sound("sound/playerJump.wav")
 gameStart = pygame.mixer.Sound("sound/GameStart.ogg")
+shootBubble = pygame.mixer.Sound("sound/shootBubble.wav")
 
 
 # about map
