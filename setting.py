@@ -89,6 +89,9 @@ monstarDR1 = "./image/monstarDR1.png" # 몬스터가 죽었을때 오른쪽을 �
 monstarDR2 = "./image/monstarDR2.png" # 몬스터가 죽었을때 오른쪽을 움직일 때 움직임 2"
 monstarDR3 = "./image/monstarDR3.png" # 몬스터가 죽었을때 오른쪽을 움직일 때 움직임 3"
 monstarDR4 = "./image/monstarDR4.png" # 몬스터가 죽었을때 오른쪽을 움직일 때 움직임 4"
+item_dic = {'banana':'./image/item_icon/banana.png', 'orange':'./image/item_icon/orange.png', 'strawberry':'./image/item_icon/strawberry.png',
+'watermelon':'./image/item_icon/watermelon.png', 'shell':'./image/item_icon/shell.png', 'pudding':'./image/item_icon/pudding.png'}
+EMPTY = "./image/empty.png" # item이 몬스터가 죽어서 날라가서 사라진후 나오기 위해 empty에서 item으로 바뀔 때 사용
 
 #sound
 pygame.mixer.init() # to use music

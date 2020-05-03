@@ -22,9 +22,10 @@ class Game():
         self.score = 0
         self.lr = 1 # 0이면 player가 왼쪽보는거, 1이면 player가 오른쪽 보는거
         self.high_score = 0
-        self.start_music = pygame.mixer.Sound("MainTheme.ogg")
+        self.start_music = pygame.mixer.Sound(mainTheme)
         self._display_start = None
         self.end_music = pygame.mixer.Sound("./music/GameEnding.ogg")
+        self.item_score = {'banana':500, 'orange':1000, 'strawberry':2000, 'watermelon':3000, 'shell':4000, 'pudding':5000}
         #self.display_start = pygame.display.set_mode((WIDTH, HEIGHT), pygame.HWSURFACE | pygame.DOUBLEBUF) #display_surf를 start로 변경
 
 
@@ -54,6 +55,7 @@ class Game():
             monster_x -= 50
             self.monsters.add(self.monstar)
             self.all_sprites.add(self.monstar)
+        self.items = pygame.sprite.Group()
         self.platform() # making tutorial map method
         self.run() # run game method
 
@@ -178,12 +180,30 @@ class Game():
         if(hit_bubble):
             self.monstars.monstar_bubble = True
             """
+        item_image = random.choice(list(self.item_score))
         # monstar가 죽었을 때 확인해 보려고 player랑 부딪치게 확인해봄
         hit_bubble = pygame.sprite.spritecollide(self.player,self.monsters, True)
         if(hit_bubble):
-            self.monstar = Monstar(self,(self.player.pos.x,self.player.pos.y),random.choice(['left','right']),'dead')
+            print('monstar dead')
+            self.score += 1000
+            monstar_dic = random.choice(['left','right'])
+            self.monstar = Monstar(self,(self.player.pos.x,self.player.pos.y),monstar_dic,'dead')
             self.monsters.add(self.monstar)
             self.all_sprites.add(self.monstar)
+            #몬스터가 죽으면 아이템 생성
+            x_plus = random.choice([i for i in range(12)]) #몬스터가 같은 곳에서 죽어서 같은 곳에 item이 생기는 것을 막기 위해서
+            if(monstar_dic == 'left'):
+                x_plus *= (-1)
+            item_location = self.cal_item_location(monstar_dic,(self.player.pos.x,self.player.pos.y))
+            self.item = Item(self,item_image,item_location,x_plus)
+            self.items.add(self.item)
+            self.all_sprites.add(self.items)
+
+        # item과 player가 충돌하면 사라지고 과일에 해당하는 점수가 추가되도록 하는 것
+        hit_item = pygame.sprite.spritecollide(self.player,self.items, True)
+        for i in hit_item:
+            self.score += self.item_score[i.type]
+            print(self.score)
         
     def events(self): #Event 처리에 대한
         print("event function")
@@ -375,6 +395,41 @@ class Game():
                 self.end_music.stop()
                 self.show_start_screen()
                 break
+
+    # 몬스터가 움직이며 죽다가 죽은 위치를 찾는 함수
+    def cal_item_location(self, dic, location):
+        pos = vec(location)
+        item_image = pygame.transform.scale(pygame.image.load(EMPTY), (45, 45)).convert_alpha()
+        rect = item_image.get_rect()
+        rect.x = location[0]
+        rect.y = location[1]
+        vel = vec(0,0)
+        acc = vec(0,0)
+        for i in range(7):
+            if(dic == 'left') :
+                acc.x = - (MONSTAR_ACC+ 0.8)
+            elif(dic == 'right'):
+                acc.x = (MONSTAR_ACC+0.8)   
+                    
+            acc.x += vel.x * MONSTAR_FRICTION
+            vel += acc
+            pos += vel + 0.5 * acc
+            
+            if pos.x >= WIDTH-140:
+                pos.x = WIDTH-140
+            elif pos.x <= 70:
+                pos.x = 70
+
+            if pos.y >= HEIGHT-68 :
+                pos.y -= 50
+            elif (pos.y <= 150):
+                pos.y == 150
+            else : 
+                pos.y -= 50
+            rect.x = pos.x
+            rect.y = pos.y
+        return (pos.x, pos.y)
+
 
 g = Game()
 while g.start:

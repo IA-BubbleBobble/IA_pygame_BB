@@ -219,12 +219,12 @@ class Monstar (pygame.sprite.Sprite):
                 self.acc.x = MONSTAR_ACC
             
             if(self.direction == 'left'):
-                if(self.updown == 0) :
+                if(self.updown % 2 == 0) :
                     self.image = pygame.transform.scale(pygame.image.load(monstarLD), (45, 45)).convert_alpha()
                 else:
                     self.image = pygame.transform.scale(pygame.image.load(monstarLU), (45, 45)).convert_alpha()
             else :
-                if(self.updown == 0) :
+                if(self.updown%2== 0) :
                     self.image = pygame.transform.scale(pygame.image.load(monstarRD), (45, 45)).convert_alpha()
                 else:
                     self.image = pygame.transform.scale(pygame.image.load(monstarRU), (45, 45)).convert_alpha()
@@ -254,7 +254,6 @@ class Monstar (pygame.sprite.Sprite):
 
         elif (self.state == 'dead'):
             if(self.slow %3 == 0) :
-                print(self.pos.y)
                 if(self.direction == 'left'):
                     if(self.updown % 4 == 1) :
                         self.image = pygame.transform.scale(pygame.image.load(monstarDL1), (45, 45)).convert_alpha()
@@ -312,4 +311,46 @@ class Monstar (pygame.sprite.Sprite):
         else:
             pass
             # monstar가 버블 상태이지만 죽지는 않았을 때
-            
+
+class Item(pygame.sprite.Sprite): # character는 단일 객체
+    def __init__(self, game,image,location,x_plus): 
+        pygame.sprite.Sprite.__init__(self)
+        self.game = game 
+        self.groups = game.all_sprites, game.platforms
+        self.location = location
+        self.count = 0 # 몬스터가 사라진 후에 나오기 위해서 21번 이상 돈 이후부터 나타나기 위핸 사용되는 변수
+        self.type = image # 나중에 image이름으로 점수를 더하기 위해 사용되는 변수
+        self.item_image = item_dic[image]
+        self.image = pygame.transform.scale(pygame.image.load(EMPTY), (45, 45)).convert_alpha()
+        self.rect = self.image.get_rect()
+        self.pos = vec(self.location)
+        self.rect.x = self.location[0]
+        self.rect.y = self.location[1]
+        self.vel = vec(0,0)
+        self.acc = vec(0,0)
+        self.hit = False # item이 내려 오다가 충돌하면 움직이지 않게 하기 위해서
+        self.plus = x_plus
+
+    def update(self):
+        if(self.count > 21):
+            if(not self.hit) :
+                self.image = pygame.transform.scale(pygame.image.load(self.item_image), (45, 45)).convert_alpha()
+                if self.pos.y >= HEIGHT-68 :
+                    self.pos.y = HEIGHT-68
+                elif self.pos.y <= 150:
+                    self.pos.y = 150
+                else:
+                    self.pos.y +=50
+                
+                hits = pygame.sprite.spritecollide(self, self.game.platforms, False)
+                if hits:
+                    print("hits!============================")
+                    self.pos.y = hits[0].rect.y-45 + 0.1 # 벽돌위로
+                    self.vel.y = 0
+                    self.hit = True
+            if(self.count == 22):
+                self.rect.x = self.pos.x + self.plus
+            self.rect.x = self.pos.x
+            self.rect.y = self.pos.y
+        self.count += 1
+
