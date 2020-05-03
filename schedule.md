@@ -72,6 +72,7 @@
 
 ### 구현해야할 것
   * Map(map:1050\*700, image:70\*70) ---ok
+  * Bubble - shoot bubble ---ok (bubble 점점커지게)
   * Jump - character(막대기 위에서만 or 맨 밑으로 떨어짐) ---ok
   * Move - character(방향에 맞게 이미지 바꾸기)---ok, monster(막대기 위에서만), bubble(항상위로)
   * Bubbled 몬스터 움직임
