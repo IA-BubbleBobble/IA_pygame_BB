@@ -1,6 +1,7 @@
 import pygame
 from setting import *
 from sprites import *
+import random
 import time
 
 class Game():
@@ -34,7 +35,7 @@ class Game():
         self.monsters = pygame.sprite.Group()
         monster_x = 700
         for i in range(3):
-            self.monstar = Monstar(self,(monster_x,200),'left')
+            self.monstar = Monstar(self,(monster_x,200),'left','live')
             monster_x -= 50
             self.monsters.add(self.monstar)
             self.all_sprites.add(self.monstar)
@@ -95,9 +96,18 @@ class Game():
                 print("hits!============================")
                 self.player.pos.y = hits[0].rect.y-45 + 0.1 # 벽돌위로
                 self.player.vel.y = 0
+        """버블 객체를 bubble이라고 가정했을떄
+        hit_bubble = pygame.sprite.spritecollide(self.monstar, self.bubble, False)
+        if(hit_bubble):
+            self.monstars.monstar_bubble = True
+            """
+        # monstar가 죽었을 때 확인해 보려고 player랑 부딪치게 확인해봄
+        hit_bubble = pygame.sprite.spritecollide(self.player,self.monsters, True)
+        if(hit_bubble):
+            self.monstar = Monstar(self,(self.player.pos.x,self.player.pos.y),random.choice(['left','right']),'dead')
+            self.monsters.add(self.monstar)
+            self.all_sprites.add(self.monstar)
         
-
-
     def events(self): #Event 처리에 대한
         print("event function")
         for event in pygame.event.get():

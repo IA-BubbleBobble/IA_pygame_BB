@@ -64,6 +64,14 @@ monstarLD = './image/monstarLD.png' # 몬스터가 왼쪽으로 움직일 때 �
 monstarLU = './image/monstarLU.png' # 몬스터가 왼쪽으로 움직일 때 움직임 2
 monstarRD = "./image/monstarRD.png" # 몬스터가 오른쪽으로 움직일 때 움직임 1
 monstarRU = "./image/monstarRU.png" # 몬스터가 오른쪽으로 움직일 때 움직임 2
+monstarDL1 = "./image/monstarDL1.png" # 몬스터가 죽었을때 왼쪽을 움직일 때 움직임 1"
+monstarDL2 = "./image/monstarDL2.png" # 몬스터가 죽었을때 왼쪽을 움직일 때 움직임 2"
+monstarDL3 = "./image/monstarDL3.png" # 몬스터가 죽었을때 왼쪽을 움직일 때 움직임 3"
+monstarDL4 = "./image/monstarDL4.png" # 몬스터가 죽었을때 왼쪽을 움직일 때 움직임 4"
+monstarDR1 = "./image/monstarDR1.png" # 몬스터가 죽었을때 오른쪽을 움직일 때 움직임 1"
+monstarDR2 = "./image/monstarDR2.png" # 몬스터가 죽었을때 오른쪽을 움직일 때 움직임 2"
+monstarDR3 = "./image/monstarDR3.png" # 몬스터가 죽었을때 오른쪽을 움직일 때 움직임 3"
+monstarDR4 = "./image/monstarDR4.png" # 몬스터가 죽었을때 오른쪽을 움직일 때 움직임 4"
 
 
 # about map
