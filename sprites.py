@@ -306,7 +306,6 @@ class Item(pygame.sprite.Sprite): # character는 단일 객체
         self.rect.x = self.location[0]
         self.rect.y = self.location[1]   
         self.time = 0
-
     def update(self):
         time += 1
         if (self.type == 'score'):
@@ -317,4 +316,4 @@ class Item(pygame.sprite.Sprite): # character는 단일 객체
             self.image = self.screen.bilt(self.t,self.location)
             if(self.time >4):
                 self.kill      """              
-        
+     
