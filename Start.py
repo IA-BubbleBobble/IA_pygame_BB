@@ -145,6 +145,14 @@ class Game():
                          PLATFORM_LIST[6][3])
             self.all_sprites.add(p)
             self.platforms.add(p)
+        for i in range(2): # 4번째 줄
+            p = Platform(tutMapS, PLATFORM_LIST[7][0] + 70 * i, PLATFORM_LIST[7][1], PLATFORM_LIST[7][2], PLATFORM_LIST[7][3])
+            self.all_sprites.add(p)
+            self.platforms.add(p)
+        for i in range(2): # 5번째 줄
+            p = Platform(tutMapS, PLATFORM_LIST[8][0] + 70 * i, PLATFORM_LIST[8][1], PLATFORM_LIST[8][2],PLATFORM_LIST[8][3])
+            self.all_sprites.add(p)
+            self.platforms.add(p)    
 
     def platform1(self):  # make stage1 map
         for i in range(15):  # 맨 윗줄
@@ -329,7 +337,6 @@ class Game():
             self.item = Item(self, item_image, item_location)
             self.items.add(self.item)
             self.all_sprites.add(self.items)
-
         # item과 player가 충돌하면 사라지고 과일에 해당하는 점수가 추가되도록 하는 것
         hit_item = pygame.sprite.spritecollide(self.player, self.items, True)
         for i in hit_item:

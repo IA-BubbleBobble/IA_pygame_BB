@@ -119,7 +119,7 @@ mapFile = ["map/tut_map.txt", "map/stage1_map.txt"]
 mapTxt = [("q", "a", "z"), ("q", "a", "z")] # (big, small_top, small_bottom, shadow)
 mapImage = [(tutMapBig, tutMapStop, tutMapS), (s1MapBig, s1MapStop, s1MapS), (s2MapBig, s2MapStop, s2MapS), (s3MapBig, s3MapStop, s3MapS)] # (big, small_top, small_bottom)
 PLATFORM_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14,140, TILESIZE, TILESIZE), (70, 675, 70, 25),
-                 (70*3, 70*8, 70, 25), (70*3, 70*6+25, 70, 25), (70*10, 70*4+35, 70, 25)] # tutorial map
+                 (70*3, 70*8, 70, 25), (70*3, 70*6+25, 70, 25), (70*10, 70*4+35, 70, 25),(70*6, 70*4, 70, 25), (70*3, 70*3, 70, 25)] # tutorial map
 PLATFORM1_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14,140, TILESIZE, TILESIZE), (70, 675, 70, 25),
                  (70, 70*8, 70, 25), (70, 70*6+25, 70, 25), (70, 70*4+35, 70, 25)] # stage1 map
 PLATFORM2_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14,140, TILESIZE, TILESIZE), (70, 675, 70, 25),
