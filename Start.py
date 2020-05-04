@@ -207,8 +207,8 @@ class Game():
                 self.all_sprites.add(p)
                 self.platforms.add(p)
             if (i != 5 and i != 6 and i != 7):
-                p = Platform(s3MapS, PLATFORM3_LIST[7][0] + 70 * i, PLATFORM3_LIST[7][1], PLATFORM3_LIST[7][2],
-                             PLATFORM3_LIST[7][3])
+                p = Platform(s3MapS, PLATFORM3_LIST[8][0] + 70 * i, PLATFORM3_LIST[8][1], PLATFORM3_LIST[8][2],
+                             PLATFORM3_LIST[8][3])
                 self.all_sprites.add(p)
                 self.platforms.add(p)
 
