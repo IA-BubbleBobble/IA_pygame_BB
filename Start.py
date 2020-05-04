@@ -35,6 +35,7 @@ class Game():
         # 스테이지별 몬스터 갯수
         self.monster_num = [3,3,4,10]
         self.stage_num = 0 # 몬스터 갯수를 찾을 때 쓰는 인덱스
+        self.stage3_grow = 2 # stage3에서 자가 증식을 2번하는데 그것을 하게 만들기 위한 변수
 
     def new(self): #game start
         print("new function")
@@ -95,6 +96,7 @@ class Game():
             self.all_sprites.add(m4)
         elif(self.stage3 == True):
             self.stage_time = 0 # 각 스테이지 시작할 때 round와 ready를 출력 후 지워주기 위해 초기회 시켜준다.
+            self.stage3_grow = 2 # 재시작하는 경우를 생각해서 초기화 시켜준다.
             self.stage_num =3
             self.stage3 = False
             m1 = Monster(self, (280,70),'left','live')
@@ -319,7 +321,19 @@ class Game():
             self.items.add(self.item)
             self.all_sprites.add(self.items)
             if(self.stage_num == 3):
-                if(self.monster_num[self.stage_num] >=4  and self.monster_num[self.stage_num] % 4 == 0):
+                if(self.monster_num[self.stage_num]<=8 and self.monster_num[self.stage_num]>6 and self.stage3_grow == 2):
+                    m1 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'live')
+                    m2 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'live')
+                    m3 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'jump')
+                    #자가 증식하지 않는 이유가 한번에 2개 먹으면 그 숫자부분에 증식을 못하기 때문이다.
+                    self.monster.add(m1)
+                    self.all_sprites.add(m1)
+                    self.monster.add(m2)
+                    self.all_sprites.add(m2)
+                    self.monster.add(m3)
+                    self.all_sprites.add(m3)
+                    self.stage3_grow -= 1
+                elif(self.monster_num[self.stage_num]>=6 and self.monster_num[self.stage_num]>=4 and self.stage3_grow >=1):
                     m1 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'live')
                     m2 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'live')
                     m3 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'jump')
@@ -329,6 +343,28 @@ class Game():
                     self.all_sprites.add(m2)
                     self.monster.add(m3)
                     self.all_sprites.add(m3)
+                    self.stage3_grow -= 1
+                else:
+                    if(self.stage3_grow ==1):
+                        m1 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'live')
+                        m2 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'live')
+                        m3 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'jump')
+                        #자가 증식하지 않는 이유가 한번에 2개 먹으면 그 숫자부분에 증식을 못하기 때문이다.
+                        self.monster.add(m1)
+                        self.all_sprites.add(m1)
+                        self.monster.add(m2)
+                        self.all_sprites.add(m2)
+                        self.monster.add(m3)
+                        self.all_sprites.add(m3)
+                        self.stage3_grow -= 1
+                    #자가 증식하지 않는 이유가 한번에 2개 먹으면 그 숫자부분에 증식을 못하기 때문이다.
+                        self.monster.add(m1)
+                        self.all_sprites.add(m1)
+                        self.monster.add(m2)
+                        self.all_sprites.add(m2)
+                        self.monster.add(m3)
+                        self.all_sprites.add(m3)
+                        self.stage3_grow -= 1
         self.monster.update(monbub)
 
         
@@ -360,7 +396,7 @@ class Game():
                     self.player.jump()
                 if event.key == pygame.K_SPACE:
                     shootBubble.play()
-                    bb = Bubble(self, self.lr, self.player.rect.x, self.player.rect.y) # 마지막 bubble
+                    bb = Bubble(self, self.lr, self.player.rect.x, self.player.rect.y) # 마지막 bubble 
                     self.all_sprites.add(self.bubble)
                     self.bubble.add(bb)
 
@@ -520,7 +556,7 @@ class Game():
             gameComplete.play() 
 
             color = 1
-            while (ending1):
+            while (self.ending1):
                 now_time = time.time()
                 progress_sec = now_time - start_time
                 self.screen.fill(WHITE)
@@ -544,44 +580,43 @@ class Game():
                 if(self.score !=0):
                     string_score = str(self.score)
                 # 현재 플레이어의 점수 화면에 출력
-                self.printword(18,string_score,(175,56),WHITE)
+                self.printword(18,string_score,(155,56),WHITE)
                 # 현재 플레이어의 최고 점수를 화면에 출력
                 self.printword(18,str(self.high_score),(490,56),WHITE)
                 # 화면에 메인으로 보여질 점수를 가운데에 출력하기 위해 구하는 변수
-                word_location = 1050/2 - (len(string_score)/2)*70 +13
+                word_location = 1050/2 - (len(string_score)/2)*70 +60
                 self.printword(36,string_score,(word_location,140),WHITE)
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         pygame.quit()
                         exit()
                 # 7초후부터 continue 화면 출력
-                if(progress_sec >= 7):
+                if(progress_sec >= 8):
                     self.printword(22,"A.RESTART           B.EXIT",(249,640),WHITE)
                 pygame.display.flip()
                 # 7초후부터 continue 화면에 대해서 a키를 누르면 시작화면으로, b키를 누르면 게임을 종료하게 된다.
-                if(progress_sec >= 7):
-                    for event in pygame.event.get():
-                        if event.type == pygame.QUIT:
-                          pygame.quit()
-                          exit()
-                        if event.type == pygame.KEYDOWN:
-                            if(event.key ==pygame.K_a):
-                                print("ending_a")
-                                self.start_playing = True # 재시작을 한다.
-                                break
-                            elif(event.key == pygame.K_b):
-                                print('ending_b')
-                                gameComplete.stop()
-                                pygame.quit()
-                                exit()
-                                break
-                if (self.start_playing):
-                    gameComplete.stop()
-                    self.ending = False
-                    self.ending1 = False
-                    print("self.ending", self.ending)
-                    self.running = False
-                    print("self.running", self.running)
+                
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                      pygame.quit()
+                      exit()
+                    if event.type == pygame.KEYDOWN:
+                        if(event.key ==pygame.K_a):
+                            print("ending_a")
+                            self.start_playing = True # 재시작을 한다.
+                            gameComplete.stop()
+                            self.ending = False
+                            self.ending1 = False
+                            print("self.ending", self.ending)
+                            self.running = False
+                            print("self.running", self.running)
+                            break
+                        elif(event.key == pygame.K_b):
+                            print('ending_b')
+                            gameComplete.stop()
+                            pygame.quit()
+                            exit()
+                            break
 
         elif(self.ending2 == True):
             gameOver.play()
