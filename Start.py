@@ -44,7 +44,7 @@ class Game():
             monster_x = 700
             for i in range(3): # tutorial에서는 monster 3마리만
                 m = Monster(self, (monster_x, 200), 'left', 'live')  # (game, location, direction, state)
-                monster_x -= 50
+                monster_x -= 65
                 self.monster.add(m)
                 self.all_sprites.add(m)
             self.tutorial, self.stage1 = False, True
@@ -329,11 +329,18 @@ class Game():
         string_high_score = "00"
         if(self.high_score !=0):
                 string_high_score = str(self.high_score)
-        self.printword(18,string_high_score,(465,56),WHITE)
+        self.printword(18,string_high_score,(495,56),WHITE)
         self.printword(25,"1UP",(170,26),GREEN)
-        self.printword(25,"HIGH SCORE",(375,26),RED)
-        self.printword(18,'00',(815,56),WHITE)
-        self.printword(25,'2UP',(785,26),BLUE)
+        self.printword(25,"HIGH SCORE",(405,26),RED)
+        if(self.playerHealth == 3):
+            self.loadimage(LIFE3,(745,18))
+        elif(self.playerHealth ==2):
+            self.loadimage(LIFE2,(745,18))
+        elif(self.playerHealth ==1):
+            self.loadimage(LIFE1,(745,18))
+        else:
+            self.loadimage(LIFE0,(745,18))
+
         if(self.stage_time <=60):
             if(self.tutorial ==False and self.stage1 == True):
                 self.printword(20, "SPACE : Shoot the Bubble",(300.88,250),WHITE)
