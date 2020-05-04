@@ -59,7 +59,7 @@ class Game():
                 self.all_sprites.add(m)
                 #gameStart.stop() # 노래 겹치지 않도록
         elif(self.stage1 == True): # stage1을 실행 할 차례면 stage1 map을 만든다
-            self.playerHealth = 1000
+            self.playerHealth = 3
             self.stage_num += 1
             self.stage1,self.stage2= False,True
             self.score = 0 # tutorial에서 시험해본 점수는 실제 게임에 반영되지 않아서 score를 초기화 시켜준다.
@@ -319,7 +319,7 @@ class Game():
             self.item = Item(self,item_image,item_location)
             self.items.add(self.item)
             self.all_sprites.add(self.items)
-            """if(self.stage_num == 3):
+            if(self.stage_num == 3):
                 if(self.monster_num[self.stage_num] >=4  and self.monster_num[self.stage_num] %4 == 0):
                     m1 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'live')
                     m2 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'live')
@@ -329,7 +329,7 @@ class Game():
                     self.monster.add(m2)
                     self.all_sprites.add(m2)
                     self.monster.add(m3)
-                    self.all_sprites.add(m3)"""
+                    self.all_sprites.add(m3)
 
         
         # item과 player가 충돌하면 사라지고 과일에 해당하는 점수가 추가되도록 하는 것
@@ -341,6 +341,7 @@ class Game():
                 self.playing = False # map 변경할 때 필요
                 if(self.stage_num ==3):
                     self.ending1 = True
+                    self.ending = True
             
     def events(self): #Event 처리에 대한
         print("event function")
