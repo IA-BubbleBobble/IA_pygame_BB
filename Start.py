@@ -33,7 +33,7 @@ class Game():
         self.ending = False
         self.stage_time = 0 # stage_time 3이 초과하면 round와 ready 출력이 사라진다.
         # 스테이지별 몬스터 갯수
-        self.monster_num = [3,3,4,4]
+        self.monster_num = [3,3,4,10]
         self.stage_num = 0 # 몬스터 갯수를 찾을 때 쓰는 인덱스
 
     def new(self): #game start
@@ -47,7 +47,7 @@ class Game():
         if(self.tutorial == True): # 현재 tutorial 을 실행 할 차례면 tutorial map을 만든다
             self.playerHealth = 3
             print('tutotial start')
-            self.tutorial, self.stage1 = False, False
+            self.tutorial, self.stage1 = False, True
             self.stage_time = 0 # 각 스테이지 시작할 때 round와 ready를 출력 후 지워주기 위해 초기회 시켜준다.
             self.stage_num = 0
             self.platform() # making tutorial map method
@@ -59,7 +59,7 @@ class Game():
                 self.all_sprites.add(m)
                 #gameStart.stop() # 노래 겹치지 않도록
         elif(self.stage1 == True): # stage1을 실행 할 차례면 stage1 map을 만든다
-            self.playerHealth = 1000
+            self.playerHealth = 1000 # stage를 완료하기 위해 목숨을 많이 넣음
             self.stage_num += 1
             self.stage1,self.stage2= False,True
             self.score = 0 # tutorial에서 시험해본 점수는 실제 게임에 반영되지 않아서 score를 초기화 시켜준다.
@@ -304,10 +304,9 @@ class Game():
                 
         # bubbled monster와 player가 부딪혔을 때 => bubbled monster 사라짐, player score 상승
         monbub = pygame.sprite.spritecollide(self.player, self.bubbleMonster, True)
-        if (monbub):
+        for i in monbub:
             print("player pop bubbled monster!")
             self.score += 1000
-            self.monster.update(monbub)
             monstar_dic = random.choice(['left','right']) 
             m = Monster(self,(self.player.pos.x,self.player.pos.y),monstar_dic,'dead') 
             self.monster.add(m)
@@ -319,8 +318,8 @@ class Game():
             self.item = Item(self,item_image,item_location)
             self.items.add(self.item)
             self.all_sprites.add(self.items)
-            """if(self.stage_num == 3):
-                if(self.monster_num[self.stage_num] >=4  and self.monster_num[self.stage_num] %4 == 0):
+            if(self.stage_num == 3):
+                if(self.monster_num[self.stage_num] >=4  and self.monster_num[self.stage_num] % 4 == 0):
                     m1 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'live')
                     m2 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'live')
                     m3 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'jump')
@@ -329,7 +328,8 @@ class Game():
                     self.monster.add(m2)
                     self.all_sprites.add(m2)
                     self.monster.add(m3)
-                    self.all_sprites.add(m3)"""
+                    self.all_sprites.add(m3)
+        self.monster.update(monbub)
 
         
         # item과 player가 충돌하면 사라지고 과일에 해당하는 점수가 추가되도록 하는 것
@@ -337,10 +337,12 @@ class Game():
         for i in hit_item:
             self.score += self.item_score[i.type]
             self.monster_num[self.stage_num] -= 1
+            self.score += 1
             if (self.monster_num[self.stage_num] == 0):
                 self.playing = False # map 변경할 때 필요
                 if(self.stage_num ==3):
                     self.ending1 = True
+                    self.ending = True
             
     def events(self): #Event 처리에 대한
         print("event function")
@@ -397,12 +399,12 @@ class Game():
                 self.printword(20,"READY  !",(460,330),WHITE)
                 if(self.stage_time == 40):
                     self.stage_time = 70
-            elif(self.stage2 ==True):
+            elif(self.stage2 ==True and self.stage1 == False):
                 self.printword(20,"ROUND   2",(460,280),WHITE)
                 self.printword(20,"READY  !",(460,330),WHITE)
                 if(self.stage_time == 40):
                     self.stage_time = 70
-            elif(self.stage3 ==True):
+            elif(self.stage3 ==True and self.stage2 ==False):
                 self.printword(20,"ROUND   3",(460,280),WHITE)
                 self.printword(20,"READY  !",(460,330),WHITE)
                 if(self.stage_time == 40):
@@ -440,6 +442,8 @@ class Game():
         if (self.score > self.high_score):
             self.high_score = self.score
         # 재시작하는 경우를 생각해서 score를 초기화 시켜준다.
+        if(self.high_score != 0):
+            self.monster_num = [3,3,4,10] #재시작하는 경우를 위해 moster_num 수를 초기화시켜준다.
         self.score = 0
         color = 1
         progress_sec = 0
@@ -516,7 +520,7 @@ class Game():
             gameComplete.play() 
 
             color = 1
-            while (True):
+            while (ending1):
                 now_time = time.time()
                 progress_sec = now_time - start_time
                 self.screen.fill(WHITE)
@@ -574,11 +578,10 @@ class Game():
                 if (self.start_playing):
                     gameComplete.stop()
                     self.ending = False
-                    self.ending2 = False
+                    self.ending1 = False
                     print("self.ending", self.ending)
                     self.running = False
                     print("self.running", self.running)
-                    break
 
         elif(self.ending2 == True):
             gameOver.play()
