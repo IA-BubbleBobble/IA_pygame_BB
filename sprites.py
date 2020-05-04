@@ -118,16 +118,24 @@ class Bubble(pygame.sprite.Sprite):
     def update(self):
         if(self.lr == 0): # left
             self.rect.x += self.speedyL
-            if self.rect.x <= self.tempXL:
-                self.kill()
-            if self.rect.x <= 70:
-                self.kill()
+            if(self.rect.x <= self.tempXL+30):
+                self.image = pygame.transform.scale(pygame.image.load(pon), (35, 35)).convert_alpha()
+                if self.rect.x <= self.tempXL:
+                    self.kill()
+            if self.rect.x <= 90:
+                self.image = pygame.transform.scale(pygame.image.load(pon), (35, 35)).convert_alpha()
+                if self.rect.x <= 70:
+                    self.kill()
         elif(self.lr == 1): # right
             self.rect.x += self.speedyR
-            if self.rect.x >= self.tempXR:
-                self.kill()
-            if self.rect.x >= WIDTH - 140:
-                self.kill()
+            if(self.rect.x >= self.tempXR-30):
+                self.image = pygame.transform.scale(pygame.image.load(pon), (35, 35)).convert_alpha()
+                if self.rect.x >= self.tempXR:    
+                    self.kill()
+            if(self.rect.x >= WIDTH -110):
+                if self.rect.x >= WIDTH - 140:
+                    self.image = pygame.transform.scale(pygame.image.load(pon), (35, 35)).convert_alpha()
+                    self.kill()
 
 class Monster (pygame.sprite.Sprite):
     def __init__(self, game, location, direction, state): # 맵마다 나타나는 몬스터의 위치가 달라 location이라는 변수를 넣어주었다.
@@ -161,19 +169,19 @@ class Monster (pygame.sprite.Sprite):
         self.acc = vec(0,0)
 
     def update(self):
-        if(self.state == 'live'):
+        if(self.state == 'jump'):
             self.acc = vec(0, PLAYER_GRAVITY)
             if(self.direction == 'left') :
                 self.acc.x = - MONSTAR_ACC
             elif(self.direction == 'right'):
                 self.acc.x = MONSTAR_ACC
             if(self.direction == 'left'):
-                if(self.updown % 2 == 0) :
+                if(self.updown % 6 == 0  or self.updown %6 ==1 or self.updown%6 ==2) :
                     self.image = pygame.transform.scale(pygame.image.load(monstarLD), (45, 45)).convert_alpha()
                 else:
                     self.image = pygame.transform.scale(pygame.image.load(monstarLU), (45, 45)).convert_alpha()
             else :
-                if(self.updown%2== 0) :
+                if(self.updown % 6 == 0  or self.updown %6 ==1 or self.updown%6 ==2) :
                     self.image = pygame.transform.scale(pygame.image.load(monstarRD), (45, 45)).convert_alpha()
                 else:
                     self.image = pygame.transform.scale(pygame.image.load(monstarRU), (45, 45)).convert_alpha()
@@ -200,71 +208,106 @@ class Monster (pygame.sprite.Sprite):
             if hits:
                 print("hits!===============")
                 self.vel.y = -11  # 점프 높이
-            # hits = pygame.sprite.spritecollide(self, self.game.platforms, False)
-            # if hits:
-            #     print("hits!============================")
-            #     self.pos.y = hits[0].rect.y-45 + 0.1 # 벽돌위로 # ---45
-            #     self.vel.y -= 15.5
             self.rect.x = self.pos.x
             self.rect.y = self.pos.y
 
-        # elif (self.state == 'dead'):
-        #     if(self.slow %3 == 0) :
-        #         print(self.pos.y)
-        #         if(self.direction == 'left'):
-        #             if(self.updown % 4 == 1) :
-        #                 self.image = pygame.transform.scale(pygame.image.load(monstarDL1), (45, 45)).convert_alpha()
-        #             elif(self.updown % 4 ==2):
-        #                 self.image = pygame.transform.scale(pygame.image.load(monstarDL2), (45, 45)).convert_alpha()
-        #             elif (self.updown % 4 ==3):
-        #                 self.image = pygame.transform.scale(pygame.image.load(monstarDL3), (45, 45)).convert_alpha()
-        #             else:
-        #                 self.image = pygame.transform.scale(pygame.image.load(monstarDL4), (45, 45)).convert_alpha()
-        #         else :
-        #             if(self.updown % 4 == 1) :
-        #                 self.image = pygame.transform.scale(pygame.image.load(monstarDR1), (45, 45)).convert_alpha()
-        #             elif(self.updown % 4 ==2):
-        #                 self.image = pygame.transform.scale(pygame.image.load(monstarDR2), (45, 45)).convert_alpha()
-        #             elif (self.updown % 4 ==3):
-        #                 self.image = pygame.transform.scale(pygame.image.load(monstarDR3), (45, 45)).convert_alpha()
-        #             else:
-        #                 self.image = pygame.transform.scale(pygame.image.load(monstarDR4), (45, 45)).convert_alpha()
-        #
-        #         self.updown += 1
-        #         if(self.direction == 'left') :
-        #             self.acc.x = - (MONSTAR_ACC+ 0.8)
-        #         elif(self.direction == 'right'):
-        #             self.acc.x = (MONSTAR_ACC+0.8)
-        #
-        #         self.acc.x += self.vel.x * MONSTAR_FRICTION
-        #         self.vel += self.acc
-        #         self.pos += self.vel + 0.5 * self.acc
-        #
-        #         if self.pos.x >= WIDTH-140:
-        #             self.pos.x = WIDTH-140
-        #         elif self.pos.x <= 70:
-        #             self.pos.x = 70
-        #
-        #         if self.pos.y >= HEIGHT-68 :
-        #             self.pos.y -= 50
-        #         elif (self.pos.y <= 150):
-        #             self.pos.y == 150
-        #         else :
-        #             self.pos.y -= 50
-        #
-        #         hits = pygame.sprite.spritecollide(self, self.game.platforms, False)
-        #         if hits:
-        #             print("hits!============================")
-        #             self.pos.y = hits[0].rect.y-45
-        #             self.vel.y = 0
-        #
-        #         self.rect.x = self.pos.x
-        #         self.rect.y = self.pos.y
-        #
-        #         if(self.updown > 6):
-        #             print('monster kill')
-        #             self.kill()
-        #     self.slow += 1
+        elif (self.state == 'dead'):
+             if(self.slow %4 == 0) :
+                 print(self.pos.y)
+                 if(self.direction == 'left'):
+                     if(self.updown % 4 == 1) :
+                         self.image = pygame.transform.scale(pygame.image.load(monstarDL1), (45, 45)).convert_alpha()
+                     elif(self.updown % 4 ==2):
+                         self.image = pygame.transform.scale(pygame.image.load(monstarDL2), (45, 45)).convert_alpha()
+                     elif (self.updown % 4 ==3):
+                         self.image = pygame.transform.scale(pygame.image.load(monstarDL3), (45, 45)).convert_alpha()
+                     else:
+                         self.image = pygame.transform.scale(pygame.image.load(monstarDL4), (45, 45)).convert_alpha()
+                 else :
+                     if(self.updown % 4 == 1) :
+                         self.image = pygame.transform.scale(pygame.image.load(monstarDR1), (45, 45)).convert_alpha()
+                     elif(self.updown % 4 ==2):
+                         self.image = pygame.transform.scale(pygame.image.load(monstarDR2), (45, 45)).convert_alpha()
+                     elif (self.updown % 4 ==3):
+                         self.image = pygame.transform.scale(pygame.image.load(monstarDR3), (45, 45)).convert_alpha()
+                     else:
+                         self.image = pygame.transform.scale(pygame.image.load(monstarDR4), (45, 45)).convert_alpha()
+        
+                 self.updown += 1
+                 if(self.direction == 'left') :
+                     self.acc.x = - (MONSTAR_ACC+ 0.9)
+                 elif(self.direction == 'right'):
+                     self.acc.x = (MONSTAR_ACC+0.9)
+        
+                 self.acc.x += self.vel.x * MONSTAR_FRICTION
+                 self.vel += self.acc
+                 self.pos += self.vel + 0.5 * self.acc
+        
+                 if self.pos.x >= WIDTH-140:
+                     self.pos.x = WIDTH-140
+                 elif self.pos.x <= 70:
+                     self.pos.x = 70
+        
+                 if self.pos.y >= HEIGHT-68 :
+                     self.pos.y -= 50
+                 elif (self.pos.y <= 150):
+                     self.pos.y == 150
+                 else :
+                     self.pos.y -= 50
+        
+                 hits = pygame.sprite.spritecollide(self, self.game.platforms, False)
+                 if hits:
+                     print("hits!============================")
+                     self.pos.y = hits[0].rect.y-45
+                     self.vel.y = 0
+        
+                 self.rect.x = self.pos.x
+                 self.rect.y = self.pos.y
+        
+                 if(self.updown > 6):
+                     print('monster kill')
+                     self.kill()
+             self.slow += 1
+        elif(self.state == 'live'):
+            self.acc = vec(0, PLAYER_GRAVITY)
+            if(self.direction == 'left') :
+                self.acc.x = - MONSTAR_ACC
+            elif(self.direction == 'right'):
+                self.acc.x = MONSTAR_ACC
+                
+            if(self.direction == 'left'):
+                if(self.updown % 6 == 0  or self.updown %6 ==1 or self.updown%6 ==2) :
+                    self.image = pygame.transform.scale(pygame.image.load(monstarLD), (45, 45)).convert_alpha()
+                else:
+                    self.image = pygame.transform.scale(pygame.image.load(monstarLU), (45, 45)).convert_alpha()
+            else :
+                if(self.updown % 6 == 0  or self.updown %6 ==1 or self.updown%6 ==2) :
+                    self.image = pygame.transform.scale(pygame.image.load(monstarRD), (45, 45)).convert_alpha()
+                else:
+                    self.image = pygame.transform.scale(pygame.image.load(monstarRU), (45, 45)).convert_alpha()
+            self.updown += 1
+
+            self.acc.x += self.vel.x * MONSTAR_FRICTION
+            self.vel += self.acc
+            self.pos += self.vel + 0.5 * self.acc
+    
+            if self.pos.x >= WIDTH-140:
+                self.pos.x = WIDTH-140
+                self.direction = 'left'
+            elif self.pos.x <= 70:
+                self.pos.x = 70
+                self.direction = 'right'
+            if self.pos.y >= HEIGHT-68 :
+                self.pos.y = HEIGHT-68
+            elif self.pos.y <= 150:
+                self.pos.y = 150
+            hits = pygame.sprite.spritecollide(self, self.game.platforms, False)
+            if hits:
+                print("hits!============================")
+                self.pos.y = hits[0].rect.y-45 + 0.1 # 벽돌위로
+                self.vel.y = 0
+            self.rect.x = self.pos.x
+            self.rect.y = self.pos.y
 
 class BubbleMonster(pygame.sprite.Sprite):
     def __init__(self, game, location):
@@ -313,7 +356,7 @@ class Item(pygame.sprite.Sprite): # character는 단일 객체
         self.hit = False # item이 내려 오다가 충돌하면 움직이지 않게 하기 위해서
 
     def update(self):
-        if(self.count > 21):
+        if(self.count > 28):
             if(not self.hit) :
                 self.image = pygame.transform.scale(pygame.image.load(self.item_image), (45, 45)).convert_alpha()
                 if self.pos.y >= HEIGHT-68 :
@@ -329,7 +372,7 @@ class Item(pygame.sprite.Sprite): # character는 단일 객체
                     self.pos.y = hits[0].rect.y-45 + 0.1 # 벽돌위로
                     self.vel.y = 0
                     self.hit = True
-            plus = random.choice([i for i in range(0,40,5)])
+            plus = random.choice([i for i in range(0,100,20)])
             if(self.count == 22):
                 self.rect.x = self.pos.x + plus
             self.rect.x = self.pos.x

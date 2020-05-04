@@ -101,6 +101,7 @@ LIFE2 = 'image/life2.png'
 LIFE3 = 'image/life3.png'
 LIFE0 = 'image/empty_heart.png'
 monstarBb = "image/green_monstar_bubble2.png" # 몬스터가 버블에 갇혔을 때
+pon = 'image/pon.png'
 
 #sound
 pygame.mixer.init() # to use music
