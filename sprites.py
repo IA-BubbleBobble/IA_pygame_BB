@@ -3,6 +3,7 @@ import pygame
 import random
 from setting import *
 vec = pygame.math.Vector2
+import time
 
 class Player(pygame.sprite.Sprite): # character는 단일 객체
     def __init__(self, game):
@@ -13,9 +14,9 @@ class Player(pygame.sprite.Sprite): # character는 단일 객체
         self.imageLoad = charR[self.imageRNum]
         self.image = pygame.transform.scale(pygame.image.load(self.imageLoad), (45, 45)).convert_alpha()
         self.rect = self.image.get_rect()
-        self.rect.x = player_pos[0]
-        self.rect.y = player_pos[1]
-        self.pos = vec(player_pos[0]+20, player_pos[1]+20)
+        self.rect.x = 70
+        self.rect.y = 620
+        self.pos = vec(player_pos[0], player_pos[1])
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
 
@@ -63,7 +64,6 @@ class Player(pygame.sprite.Sprite): # character는 단일 객체
         elif self.pos.y <= 150:
             self.pos.y = 150
 
-
         self.rect.x = self.pos.x
         self.rect.y = self.pos.y
 
@@ -85,9 +85,9 @@ class Bubble(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.tempXL = x - 300
+        self.tempXL = x - 300 
         self.tempXR = x + 300
-        self.speedyR = 10
+        self.speedyR = 10 
         self.speedyL = -10
         self.lr = lr
 
@@ -104,78 +104,9 @@ class Bubble(pygame.sprite.Sprite):
                 self.kill()
             if self.rect.x >= WIDTH - 140:
                 self.kill()
-        # if(self.imageLoad == bubble1):
-        #     self.tempXL = self.rect.x - 70
-        #     self.tempXR = self.rect.x + 70
-        #     print("tempXL:", self.tempXL)
-        #     if(self.lr == 0): # plyaer가 왼쪽 보고있을 때
-        #         self.rect.x += self.speedyL
-        #         if self.rect.x < self.tempXL:
-        #             self.kill()
-        #         if self.rect.x <= 70:
-        #             self.kill()
-        #     elif(self.lr == 1): #player가 오른쪽 보고있을 때
-        #         self.rect.x += self.speedyR
-        #         if self.rect.x >= self.tempXR:
-        #             self.kill()
-        #         if self.rect.x >= WIDTH - 70:
-        #             self.kill()
-        #
-        # elif (self.imageLoad == bubble2):
-        #     self.rect.x += 70
-        #     self.tempXL = self.rect.x - 140
-        #     self.tempXR += self.rect.x + 140
-        #     print("tempXL:", self.tempXL)
-        #     if (self.lr == 0):  # plyaer가 왼쪽 보고있을 때
-        #         self.rect.x += self.speedyL
-        #         if self.rect.x < self.tempXL:
-        #             self.kill()
-        #         if self.rect.x <= 70:
-        #             self.kill()
-        #     elif (self.lr == 1):  # player가 오른쪽 보고있을 때
-        #         self.rect.x += self.speedyR
-        #         if self.rect.x >= self.tempXR:
-        #             self.kill()
-        #         if self.rect.x >= WIDTH - 70:
-        #             self.kill()
-        #
-        # elif (self.imageLoad == bubble3):
-        #     self.rect.x += 140
-        #     self.tempXL = self.rect.x - 210
-        #     self.tempXR = self.rect.x + 210
-        #     print("tempXL:", self.tempXL)
-        #     if (self.lr == 0):  # plyaer가 왼쪽 보고있을 때
-        #         self.rect.x += self.speedyL
-        #         if self.rect.x < self.tempXL:
-        #             self.kill()
-        #         if self.rect.x <= 70:
-        #             self.kill()
-        #     elif (self.lr == 1):  # player가 오른쪽 보고있을 때
-        #         self.rect.x += self.speedyR
-        #         if self.rect.x >= self.tempXR:
-        #             self.kill()
-        #         if self.rect.x >= WIDTH - 70:
-        #             self.kill()
-        #
-        # elif (self.imageLoad == bubble4):
-        #     self.rect.x += 210
-        #     self.tempXL = self.rect.x - 280
-        #     self.tempXR = self.rect.x + 280
-        #     if (self.lr == 0):  # plyaer가 왼쪽 보고있을 때
-        #         self.rect.x += self.speedyL
-        #         if self.rect.x < self.tempXL:
-        #             self.kill()
-        #         if self.rect.x <= 70:
-        #             self.kill()
-        #     elif (self.lr == 1):  # player가 오른쪽 보고있을 때
-        #         self.rect.x += self.speedyR
-        #         if self.rect.x >= self.tempXR:
-        #             self.kill()
-        #         if self.rect.x >= WIDTH - 70:
-        #             self.kill()
 
-class Monstar (pygame.sprite.Sprite):
-    def __init__(self, game,location,direction,state): # 맵마다 나타나는 몬스터의 위치가 달라 location이라는 변수를 넣어주었다.
+class Monster (pygame.sprite.Sprite):
+    def __init__(self, game, location, direction, state): # 맵마다 나타나는 몬스터의 위치가 달라 location이라는 변수를 넣어주었다.
         pygame.sprite.Sprite.__init__(self)
         self.game = game 
         self.groups = game.all_sprites, game.platforms
@@ -311,9 +242,10 @@ class Monstar (pygame.sprite.Sprite):
         else:
             pass
             # monstar가 버블 상태이지만 죽지는 않았을 때
+        self.mask = pygame.mask.from_surface(self.image)
 
 class Item(pygame.sprite.Sprite): # character는 단일 객체
-    def __init__(self, game,image,location,x_plus): 
+    def __init__(self, game,image,location): 
         pygame.sprite.Sprite.__init__(self)
         self.game = game 
         self.groups = game.all_sprites, game.platforms
@@ -329,7 +261,6 @@ class Item(pygame.sprite.Sprite): # character는 단일 객체
         self.vel = vec(0,0)
         self.acc = vec(0,0)
         self.hit = False # item이 내려 오다가 충돌하면 움직이지 않게 하기 위해서
-        self.plus = x_plus
 
     def update(self):
         if(self.count > 21):
@@ -348,8 +279,9 @@ class Item(pygame.sprite.Sprite): # character는 단일 객체
                     self.pos.y = hits[0].rect.y-45 + 0.1 # 벽돌위로
                     self.vel.y = 0
                     self.hit = True
+            plus = random.choice([i for i in range(0,40,5)])
             if(self.count == 22):
-                self.rect.x = self.pos.x + self.plus
+                self.rect.x = self.pos.x + plus
             self.rect.x = self.pos.x
             self.rect.y = self.pos.y
         self.count += 1

@@ -11,7 +11,6 @@ CHARSIZE = 45
 
 #Font
 BUBBLE_FONT = "PressStart2P.ttf"
-#Player properties
 
 #define colors
 WHITE = (255, 255, 255)
@@ -55,13 +54,17 @@ s1MapS = "image/s1MapS.PNG"
 s2MapBig = "image/s2MapBig.PNG"
 s2MapStop = "image/s2MapStop.PNG"
 s2MapS = "image/s2MapS.PNG"
+s3MapBig = "image/s3MapBig.png"
+s3MapStop = "image/s3MapStop.PNG"
+s3MapS = "image/s3MapS.PNG"
 charL = [charL1, charL2, charL3, charL3]
 charR = [charR1, charR2, charR3, charR3]
 bubble1 = "image/bubble1.png"
 bubble2 = "image/bubble2.png"
 bubble3 = "image/bubble3.png"
 bubble4 = "image/bubble4.png"
-# bubble = [bubble1, bubble2, bubble3, bubble4]
+plymonL = "image/plymonL.png"
+plymonR = "image/plymonR.png"
 
 YELLOW_BUBBLE = "./image/yellow_bubble.png"
 PINK_BUBBLE = "./image/pink_bubble.png"
@@ -99,15 +102,19 @@ mainTheme = pygame.mixer.Sound("sound/MainTheme.ogg")
 playerJump = pygame.mixer.Sound("sound/playerJump.wav")
 gameStart = pygame.mixer.Sound("sound/GameStart.ogg")
 shootBubble = pygame.mixer.Sound("sound/shootBubble.wav")
+gameOver = pygame.mixer.Sound("sound/GameOver.ogg")
+gameComplete = pygame.mixer.Sound("sound/GameTurnedOn.ogg")
 
 
 # about map
 mapFile = ["map/tut_map.txt", "map/stage1_map.txt"]
 mapTxt = [("q", "a", "z"), ("q", "a", "z")] # (big, small_top, small_bottom, shadow)
-mapImage = [(tutMapBig, tutMapStop, tutMapS), (s1MapBig, s1MapStop, s1MapS)] # (big, small_top, small_bottom)
+mapImage = [(tutMapBig, tutMapStop, tutMapS), (s1MapBig, s1MapStop, s1MapS), (s2MapBig, s2MapStop, s2MapS), (s3MapBig, s3MapStop, s3MapS)] # (big, small_top, small_bottom)
 PLATFORM_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14,140, TILESIZE, TILESIZE), (70, 675, 70, 25),
                  (70*3, 70*8, 70, 25), (70*3, 70*6+25, 70, 25), (70*10, 70*4+35, 70, 25)] # tutorial map
 PLATFORM1_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14,140, TILESIZE, TILESIZE), (70, 675, 70, 25),
                  (70, 70*8, 70, 25), (70, 70*6+25, 70, 25), (70, 70*4+35, 70, 25)] # stage1 map
 PLATFORM2_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14,140, TILESIZE, TILESIZE), (70, 675, 70, 25),
-                 (70, 70*9-45, 70, 25), (70, 70*7-35, 70, 25), (70, 70*5, 70, 25), (70, 70*4-35, 70, 25)] # stage1 map
+                 (70, 70*9-45, 70, 25), (70, 70*7-35, 70, 25), (70, 70*5, 70, 25), (70, 70*4-35, 70, 25)] # stage2 map
+PLATFORM3_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14,140, TILESIZE, TILESIZE), (70, 675, 70, 25),
+                 (70, 70*8, 70, 25), (70, 70*7, 70, 25), (70, 70*6, 70, 25), (70, 70*4+35, 70, 25), (70, 70*2, 70, 25)] # stage3 map
