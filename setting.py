@@ -34,7 +34,7 @@ PLAYER_GRAVITY = 0.8
 PLAYER_JUMP = 15.5
 
 #Monstar properties
-MONSTAR_ACC = 1.3
+MONSTAR_ACC = 0.5
 MONSTAR_FRICTION = -0.2
 
 # Image
@@ -66,9 +66,6 @@ bubble3 = "image/bubble3.png"
 bubble4 = "image/bubble4.png"
 plymonL = "image/plymonL.png"
 plymonR = "image/plymonR.png"
-life1 = "image/life1.png"
-life2 = "image/life2.png"
-life3 = "image/life3.png"
 
 YELLOW_BUBBLE = "./image/yellow_bubble.png"
 PINK_BUBBLE = "./image/pink_bubble.png"
@@ -96,6 +93,14 @@ monstarDR1 = "./image/monstarDR1.png" # 몬스터가 죽었을때 오른쪽을 �
 monstarDR2 = "./image/monstarDR2.png" # 몬스터가 죽었을때 오른쪽을 움직일 때 움직임 2"
 monstarDR3 = "./image/monstarDR3.png" # 몬스터가 죽었을때 오른쪽을 움직일 때 움직임 3"
 monstarDR4 = "./image/monstarDR4.png" # 몬스터가 죽었을때 오른쪽을 움직일 때 움직임 4"
+item_dic = {'banana':'./image/item_icon/banana.png', 'orange':'./image/item_icon/orange.png', 'strawberry':'./image/item_icon/strawberry.png',
+'watermelon':'./image/item_icon/watermelon.png', 'shell':'./image/item_icon/shell.png', 'pudding':'./image/item_icon/pudding.png'}
+EMPTY = "image/empty.png" # item이 몬스터가 죽어서 날라가서 사라진후 나오기 위해 empty에서 item으로 바뀔 때 사용
+LIFE1 = 'image/life1.png'
+LIFE2 = 'image/life2.png'
+LIFE3 = 'image/life3.png'
+LIFE0 = 'image/empty_heart.png'
+monstarBb = "image/green_monstar_bubble2.png" # 몬스터가 버블에 갇혔을 때
 
 #sound
 pygame.mixer.init() # to use music
@@ -104,6 +109,8 @@ playerJump = pygame.mixer.Sound("sound/playerJump.wav")
 gameStart = pygame.mixer.Sound("sound/GameStart.ogg")
 shootBubble = pygame.mixer.Sound("sound/shootBubble.wav")
 gameOver = pygame.mixer.Sound("sound/GameOver.ogg")
+gameComplete = pygame.mixer.Sound("sound/GameTurnedOn.ogg")
+
 
 
 # about map
@@ -117,4 +124,4 @@ PLATFORM1_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14
 PLATFORM2_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14,140, TILESIZE, TILESIZE), (70, 675, 70, 25),
                  (70, 70*9-45, 70, 25), (70, 70*7-35, 70, 25), (70, 70*5, 70, 25), (70, 70*4-35, 70, 25)] # stage2 map
 PLATFORM3_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14,140, TILESIZE, TILESIZE), (70, 675, 70, 25),
-                 (70, 70*8, 70, 25), (70, 70*7, 70, 25), (70, 70*6, 70, 25), (70, 70*4+35, 70, 25), (70, 70*2, 70, 25)] # stage3 map
+                  (70, 70 * 8, 70, 25), (70, 70 * 6 + 35, 70, 25), (70, 70 * 5, 70, 25), (70, 70 * 3, 70, 25)] # stage3 map
