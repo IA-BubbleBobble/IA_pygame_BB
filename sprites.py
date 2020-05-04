@@ -148,7 +148,7 @@ class Monster (pygame.sprite.Sprite):
         # 몬스터가 죽을 때 속도를 늦춰주기 위해 사용하는 변수
         self.slow = 0
         self.updown = 0
-        if(self.state == 'live'): # 살아 있을 때
+        if(self.state == 'live' or self.state == 'jump'): # 살아 있을 때
             if(self.direction == 'left'):
                 self.image = pygame.transform.scale(pygame.image.load(monstarLD), (45, 45)).convert_alpha()
             elif(self.direction == 'right'):
@@ -249,11 +249,11 @@ class Monster (pygame.sprite.Sprite):
                      self.pos.x = 70
         
                  if self.pos.y >= HEIGHT-68 :
-                     self.pos.y -= 50
+                     self.pos.y -= 60
                  elif (self.pos.y <= 150):
                      self.pos.y == 150
                  else :
-                     self.pos.y -= 50
+                     self.pos.y -= 60
         
                  hits = pygame.sprite.spritecollide(self, self.game.platforms, False)
                  if hits:
@@ -362,7 +362,7 @@ class Item(pygame.sprite.Sprite): # character는 단일 객체
                 if self.pos.y >= HEIGHT-68 :
                     self.pos.y = HEIGHT-68
                 elif self.pos.y <= 150:
-                    self.pos.y = 150
+                    self.pos.y = 200
                 else:
                     self.pos.y +=50
                 

@@ -32,7 +32,8 @@ class Game():
         self.ending2 = False #플레이도중 목숨을 다 잃어 종료하였을 때
         self.ending = False
         self.stage_time = 0 # stage_time 3이 초과하면 round와 ready 출력이 사라진다.
-        self.monster_num = [3,3,4,20] # 스테이지별 몬스터 갯수
+        # 스테이지별 몬스터 갯수
+        self.monster_num = [3,3,4,10]
         self.stage_num = 0 # 몬스터 갯수를 찾을 때 쓰는 인덱스
 
     def new(self): #game start
@@ -48,6 +49,7 @@ class Game():
             print('tutotial start')
             self.tutorial, self.stage1 = False, True
             self.stage_time = 0 # 각 스테이지 시작할 때 round와 ready를 출력 후 지워주기 위해 초기회 시켜준다.
+            self.stage_num = 0
             self.platform() # making tutorial map method
             monster_x = 700
             for i in range(self.monster_num[0]): # tutorial에서는 monster 3마리만
@@ -95,9 +97,24 @@ class Game():
             self.stage_time = 0 # 각 스테이지 시작할 때 round와 ready를 출력 후 지워주기 위해 초기회 시켜준다.
             self.stage_num += 1
             self.stage3 = False
+            m1 = Monster(self, (280,70),'left','live')
+            m2 = Monster(self, (700,70),'right','live')
+            m3 = Monster(self, (490,280),'left','jump')
+            m4 = Monster(self, (210,420),'left','live')
+            m5 = Monster(self, (630,420),'right', 'live')
+            self.monster.add(m1)
+            self.all_sprites.add(m1)
+            self.monster.add(m2)
+            self.all_sprites.add(m2)
+            self.monster.add(m3)
+            self.all_sprites.add(m3)
+            self.monster.add(m4)
+            self.all_sprites.add(m4)
+            self.monster.add(m5)
+            self.all_sprites.add(m5)
             self.platform3() # making stage3 map method
         elif(self.ending == True):
-            self.monster_num = [3,3,4,20] # 스테이지별 몬스터 갯수
+            self.monster_num = [3,3,4,10] # 스테이지별 몬스터 갯수
             gameStart.stop()
             self.show_go_screen()
         elif(self.ending == False):
@@ -304,6 +321,18 @@ class Game():
             self.item = Item(self,item_image,item_location)
             self.items.add(self.item)
             self.all_sprites.add(self.items)
+            if(self.stage_num == 3):
+                if(self.monster_num[self.stage_num] >=3  and self.monster_num[self.stage_num] %3 == 0):
+                    m1 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'live')
+                    m2 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'live')
+                    m3 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'jump')
+                    self.monster.add(m1)
+                    self.all_sprites.add(m1)
+                    self.monster.add(m2)
+                    self.all_sprites.add(m2)
+                    self.monster.add(m3)
+                    self.all_sprites.add(m3)
+
         
         # item과 player가 충돌하면 사라지고 과일에 해당하는 점수가 추가되도록 하는 것
         hit_item = pygame.sprite.spritecollide(self.player,self.items, True)
@@ -455,13 +484,11 @@ class Game():
                         print("start_a")
                         # self.running = True # 다음 loop 실행
                         self.stage1 = True
-                        self.stage_num = 1
                         break
                     elif (event.key == pygame.K_b):
                         print('start_b')
                         # self.running = True # 다음 loop 실행
                         self.tutorial = True # b를 누르면 tutorial 실행
-                        self.stage_num = 0
                         break
 
             if (self.tutorial): # tutorial을 실행 할 차례면
