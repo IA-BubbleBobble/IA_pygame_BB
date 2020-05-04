@@ -186,29 +186,24 @@ class Game():
             self.all_sprites.add(p)
             self.platforms.add(p)
         for i in range(13):
-            if (i != 6 and i != 7):  # 밑에서 첫번째
+            if (i != 5 and i != 6 and i != 7):  # 밑에서 첫번째
                 p = Platform(s3MapS, PLATFORM3_LIST[4][0] + 70 * i, PLATFORM3_LIST[4][1], PLATFORM3_LIST[4][2],
                              PLATFORM3_LIST[4][3])
                 self.all_sprites.add(p)
                 self.platforms.add(p)
-            if (i != 0 and i != 1 and i != 2 and i != 3 and i != 9 and i != 10 and i != 11 and i != 12):  # 밑에서 두번째
+            if (i != 3 and i != 4 and i !=8  and i != 9):#밑에서 두번째
                 p = Platform(s3MapS, PLATFORM3_LIST[5][0] + 70 * i, PLATFORM3_LIST[5][1], PLATFORM3_LIST[5][2],
                              PLATFORM3_LIST[5][3])
                 self.all_sprites.add(p)
                 self.platforms.add(p)
-            if (i != 5 and i != 6 and i != 3 and i != 12):
+            if (i != 1 and i != 2 and i != 3 and i != 5 and i !=6 and i != 7 and i != 9 and i != 10 and i !=11):
                 p = Platform(s3MapS, PLATFORM3_LIST[6][0] + 70 * i, PLATFORM3_LIST[6][1], PLATFORM3_LIST[6][2],
                              PLATFORM3_LIST[6][3])
                 self.all_sprites.add(p)
                 self.platforms.add(p)
-            if (i != 1 and i != 2 and i != 3 and i != 4 and i != 8 and i !=9 and i != 10 and i != 11):
+            if (i != 5 and i != 6 and i != 7):
                 p = Platform(s3MapS, PLATFORM3_LIST[7][0] + 70 * i, PLATFORM3_LIST[7][1], PLATFORM3_LIST[7][2],
                              PLATFORM3_LIST[7][3])
-                self.all_sprites.add(p)
-                self.platforms.add(p)
-            if (i != 5 and i != 6 and i != 7):
-                p = Platform(s3MapS, PLATFORM3_LIST[8][0] + 70 * i, PLATFORM3_LIST[8][1], PLATFORM3_LIST[8][2],
-                             PLATFORM3_LIST[8][3])
                 self.all_sprites.add(p)
                 self.platforms.add(p)
 
@@ -408,6 +403,7 @@ class Game():
                 if (event.type == pygame.KEYDOWN):
                     if (event.key == pygame.K_a): # a를 누르면 stage1 실행
                         print("a")
+                        #self.stage1 = True
                         self.stage1 = True
                         break
                     elif (event.key == pygame.K_b):
@@ -420,7 +416,7 @@ class Game():
                 self.start_playing = False # start screen을 띄우는 while loop를 벗어난다
                 break
 
-            elif (self.stage1):
+            elif (self.stage1): #self.stage1
                 mainTheme.stop()  # start 음악을 멈추고
                 self.start_playing = False  # start screen을 띄우는 while loop를 벗어난다
                 break
