@@ -252,8 +252,11 @@ class Game():
         plymon = pygame.sprite.spritecollide(self.player, self.monster, False, pygame.sprite.collide_mask) # True 하면 닿이면 사라짐
         if (plymon):
             print("player and monster collide!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
-            self.playerCollide = True
-            self.playerHealth -= 1
+            #display life3
+            while(self.playerHealth > 0):
+                if(self.playerCollide == True):
+                    self.playerHealth -= 1
+                    #display life2
             if(self.playerHealth == 0):
                 self.tutorial = self.stage1 = self.stage2 = self.playing = False # 모든걸 중지
                 self.ending = True # ending 화면으로
