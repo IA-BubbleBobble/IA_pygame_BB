@@ -148,7 +148,7 @@ class Monster (pygame.sprite.Sprite):
                 self.acc.x = - MONSTAR_ACC
             elif(self.direction == 'right'):
                 self.acc.x = MONSTAR_ACC
-            
+                
             if(self.direction == 'left'):
                 if(self.updown % 2 == 0) :
                     self.image = pygame.transform.scale(pygame.image.load(monstarLD), (45, 45)).convert_alpha()
@@ -182,7 +182,6 @@ class Monster (pygame.sprite.Sprite):
                 self.vel.y = 0
             self.rect.x = self.pos.x
             self.rect.y = self.pos.y
-
         elif (self.state == 'dead'):
             if(self.slow %3 == 0) :
                 if(self.direction == 'left'):

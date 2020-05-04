@@ -33,7 +33,7 @@ PLAYER_GRAVITY = 0.8
 PLAYER_JUMP = 15.5
 
 #Monstar properties
-MONSTAR_ACC = 1.3
+MONSTAR_ACC = 1.2
 MONSTAR_FRICTION = -0.2
 
 # Image
