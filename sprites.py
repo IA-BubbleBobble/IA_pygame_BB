@@ -168,7 +168,9 @@ class Monster (pygame.sprite.Sprite):
         self.vel = vec(0,0)
         self.acc = vec(0,0)
 
-    def update(self):
+    def update(self,hit_list = []):
+        if(self in hit_list):
+            self.kill()
         if(self.state == 'jump'):
             self.acc = vec(0, PLAYER_GRAVITY)
             if(self.direction == 'left') :
@@ -365,13 +367,20 @@ class Item(pygame.sprite.Sprite): # character는 단일 객체
                     self.pos.y = 200
                 else:
                     self.pos.y +=50
-                
+
                 hits = pygame.sprite.spritecollide(self, self.game.platforms, False)
                 if hits:
                     print("hits!============================")
                     self.pos.y = hits[0].rect.y-45 + 0.1 # 벽돌위로
                     self.vel.y = 0
                     self.hit = True
+                    if(self.pos.y<= 150):
+                        self.pos.y = 200
+                        self.hit = False
+
+                
+
+                
             plus = random.choice([i for i in range(0,100,20)])
             if(self.count == 22):
                 self.rect.x = self.pos.x + plus

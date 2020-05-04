@@ -4,7 +4,7 @@ import pygame
 TITLE = "Bubble Bobble"
 WIDTH = 1050
 HEIGHT = 700
-FPS = 120
+FPS = 200
 
 TILESIZE = 70
 CHARSIZE = 45

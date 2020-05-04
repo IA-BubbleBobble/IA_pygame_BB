@@ -33,7 +33,7 @@ class Game():
         self.ending = False
         self.stage_time = 0 # stage_time 3이 초과하면 round와 ready 출력이 사라진다.
         # 스테이지별 몬스터 갯수
-        self.monster_num = [3,3,4,10]
+        self.monster_num = [3,3,4,4]
         self.stage_num = 0 # 몬스터 갯수를 찾을 때 쓰는 인덱스
 
     def new(self): #game start
@@ -44,10 +44,10 @@ class Game():
         self.player = Player(self)  # self.character, Character 객체 생성
         self.monster = pygame.sprite.Group()
         self.bubbleMonster = pygame.sprite.Group()
-
         if(self.tutorial == True): # 현재 tutorial 을 실행 할 차례면 tutorial map을 만든다
+            self.playerHealth = 3
             print('tutotial start')
-            self.tutorial, self.stage1 = False, True
+            self.tutorial, self.stage1 = False, False
             self.stage_time = 0 # 각 스테이지 시작할 때 round와 ready를 출력 후 지워주기 위해 초기회 시켜준다.
             self.stage_num = 0
             self.platform() # making tutorial map method
@@ -58,8 +58,8 @@ class Game():
                 self.monster.add(m)
                 self.all_sprites.add(m)
                 #gameStart.stop() # 노래 겹치지 않도록
-
         elif(self.stage1 == True): # stage1을 실행 할 차례면 stage1 map을 만든다
+            self.playerHealth = 1000
             self.stage_num += 1
             self.stage1,self.stage2= False,True
             self.score = 0 # tutorial에서 시험해본 점수는 실제 게임에 반영되지 않아서 score를 초기화 시켜준다.
@@ -95,12 +95,11 @@ class Game():
             self.all_sprites.add(m4)
         elif(self.stage3 == True):
             self.stage_time = 0 # 각 스테이지 시작할 때 round와 ready를 출력 후 지워주기 위해 초기회 시켜준다.
-            self.stage_num += 1
+            self.stage_num =3
             self.stage3 = False
             m1 = Monster(self, (280,70),'left','live')
             m2 = Monster(self, (700,70),'right','live')
             m3 = Monster(self, (490,280),'left','jump')
-            m4 = Monster(self, (210,420),'left','live')
             m5 = Monster(self, (630,420),'right', 'live')
             self.monster.add(m1)
             self.all_sprites.add(m1)
@@ -108,8 +107,6 @@ class Game():
             self.all_sprites.add(m2)
             self.monster.add(m3)
             self.all_sprites.add(m3)
-            self.monster.add(m4)
-            self.all_sprites.add(m4)
             self.monster.add(m5)
             self.all_sprites.add(m5)
             self.platform3() # making stage3 map method
@@ -310,6 +307,7 @@ class Game():
         if (monbub):
             print("player pop bubbled monster!")
             self.score += 1000
+            self.monster.update(monbub)
             monstar_dic = random.choice(['left','right']) 
             m = Monster(self,(self.player.pos.x,self.player.pos.y),monstar_dic,'dead') 
             self.monster.add(m)
@@ -321,8 +319,8 @@ class Game():
             self.item = Item(self,item_image,item_location)
             self.items.add(self.item)
             self.all_sprites.add(self.items)
-            if(self.stage_num == 3):
-                if(self.monster_num[self.stage_num] >=3  and self.monster_num[self.stage_num] %3 == 0):
+            """if(self.stage_num == 3):
+                if(self.monster_num[self.stage_num] >=4  and self.monster_num[self.stage_num] %4 == 0):
                     m1 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'live')
                     m2 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'live')
                     m3 = Monster(self, (random.choice([i for i in range(70,910)]),random.choice([i for i in range(140,680)])),'right', 'jump')
@@ -331,7 +329,7 @@ class Game():
                     self.monster.add(m2)
                     self.all_sprites.add(m2)
                     self.monster.add(m3)
-                    self.all_sprites.add(m3)
+                    self.all_sprites.add(m3)"""
 
         
         # item과 player가 충돌하면 사라지고 과일에 해당하는 점수가 추가되도록 하는 것
@@ -341,6 +339,8 @@ class Game():
             self.monster_num[self.stage_num] -= 1
             if (self.monster_num[self.stage_num] == 0):
                 self.playing = False # map 변경할 때 필요
+                if(self.stage_num ==3):
+                    self.ending1 = True
             
     def events(self): #Event 처리에 대한
         print("event function")
