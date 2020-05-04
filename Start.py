@@ -45,15 +45,16 @@ class Game():
 
         if(self.tutorial == True): # 현재 tutorial 을 실행 할 차례면 tutorial map을 만든다
             print('tutotial start')
+            self.tutorial, self.stage1 = False, True
             self.stage_time = 0 # 각 스테이지 시작할 때 round와 ready를 출력 후 지워주기 위해 초기회 시켜준다.
             self.platform() # making tutorial map method
             monster_x = 700
-            for i in range(3): # tutorial에서는 monster 3마리만
-                m = Monster(self, (monster_x, 180), 'left', 'live')  # (game, location, direction, state)
+            for i in range(self.monster_num[0]): # tutorial에서는 monster 3마리만
+                m = Monster(self, (monster_x, 200), 'left', 'live')  # (game, location, direction, state)
                 monster_x -= 100
                 self.monster.add(m)
                 self.all_sprites.add(m)
-                gameStart.stop() # 노래 겹치지 않도록
+                #gameStart.stop() # 노래 겹치지 않도록
 
         elif(self.stage1 == True): # stage1을 실행 할 차례면 stage1 map을 만든다
             self.stage_num += 1
@@ -63,7 +64,7 @@ class Game():
             self.platform1()  # making stage1 map method
             monster_y = 200
             monster_x = 525
-            for i in range(3):
+            for i in range(self.monster_num[1]):
                 direction = random.choice(['left','right'])
                 m = Monster(self, (monster_x,monster_y),direction,'live')
                 monster_x -= 55
@@ -71,6 +72,7 @@ class Game():
                 self.monster.add(m)
                 self.all_sprites.add(m)
             gameStart.stop()
+
         elif(self.stage2 == True): # stage2 를 실행 할 차례면 stage2 map을 만든다
             self.stage_num += 1
             self.stage2,self.stage3= False,True
@@ -98,19 +100,11 @@ class Game():
             self.stage_num = 0
             gameStart.stop()
             self.show_go_screen()
+        elif(self.ending == False):
+            gameStart.play(-1)
         self.player = Player(self)  # self.character, Character 객체 생성
         self.all_sprites.add(self.player)
         self.items = pygame.sprite.Group()
-
-        elif(self.stage3 == True):
-            self.platform3() # making stage3 map method
-        # elif(self.ending == True):
-        #     self.show_go_screen() # ending page
-        self.player = Player(self)  # self.character, Character 객체 생성
-        self.all_sprites.add(self.player)
-
-        if(self.ending == False):
-            gameStart.play(-1) #음악 계속 실행
         self.run() # run game method
 
     def platform(self): # make tutorial map
@@ -282,7 +276,7 @@ class Game():
                 self.bubbleMonster.add(m)
                 self.all_sprites.add(m)
 
-        # monster와 player와의 충돌 => player 가 원점으로(목숨하나 감소)
+        # monster와 player와의 충돌 => player가 원점으로(목숨하나 감소)
         plydie = pygame.sprite.spritecollide(self.player, self.monster, False, pygame.sprite.collide_mask) # True 하면 닿이면 사라짐
         if (plydie):
             print("player and monster collide!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
@@ -291,7 +285,7 @@ class Game():
             print("player Health:", self.playerHealth)
             if(self.playerHealth == 0): # 목숨을 다 잃엇을 때
                 self.tutorial = self.stage1 = self.stage2 = self.running = self.playing = False # 모든걸 중지, loop 빠져나옴
-                self.ending = True # ending 화면으로
+                # self.ending = True # ending 화면으로
                 self.ending2 = True # ending 화면으로 간다.    
                 
         # bubbled monster와 player가 부딪혔을 때 => bubbled monster 사라짐, player score 상승
@@ -563,6 +557,7 @@ class Game():
                     self.ending1 = False
                     gameComplete.stop()
                     break
+
         elif(self.ending2 == True):
             gameOver.play()
             start_time = time.time() # 7초 뒤에 다시 시작화면으로 가기 위해 쓰는 변수
@@ -621,6 +616,7 @@ class Game():
             rect.y = pos.y
         return (pos.x, pos.y)
 
+        '''
             if (self.start_playing):
                 gameOver.stop()
                 self.ending = False
@@ -629,6 +625,7 @@ class Game():
                 print("self.running", self.running)
                 break
                 #self.show_start_screen()
+                '''
 g = Game()
 while g.start:
     print("************************1****************************")

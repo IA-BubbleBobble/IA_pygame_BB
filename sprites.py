@@ -200,11 +200,7 @@ class Monster (pygame.sprite.Sprite):
             if hits:
                 print("hits!===============")
                 self.vel.y = -11  # 점프 높이
-            # hits = pygame.sprite.spritecollide(self, self.game.platforms, False)
-            # if hits:
-            #     print("hits!============================")
-            #     self.pos.y = hits[0].rect.y-45 + 0.1 # 벽돌위로 # ---45
-            #     self.vel.y -= 15.5
+
             self.rect.x = self.pos.x
             self.rect.y = self.pos.y
 
