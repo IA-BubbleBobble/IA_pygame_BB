@@ -21,8 +21,8 @@ class Game():
         self.ending = False # ending 화면 실행
         self.start_playing = True # run함수 돌리는거. False되면 new로 돌아가 새로운 platform 그림
         self.playerHealth = 3 # player목숨 3개
-        self.score = 0
         self.high_score = 0
+        self.score = 0
         self._display_start = None
         self.playerCollide = False
         self.lr = 1 # 0이면 player가 왼쪽보는거, 1이면 player가 오른쪽 보는거
@@ -37,6 +37,10 @@ class Game():
         self.bubble = pygame.sprite.Group()  # platform(tutorial map) sprite group 생성
         self.player = Player(self)  # self.character, Character 객체 생성
         self.monster = pygame.sprite.Group()
+        """self.word = pygame.sprite.Group()
+        score = Word(self, str(SCORE), 18, (175, 56), 'score')# 처음에는 0이지만 몬스터를 죽이고 아이템을 먹을 때만다 점수가 증가하는 것을 보여주기 위해서
+        self.word.add(score)
+        self.all_sprites.add(score)"""
         if(self.tutorial == True): # 현재 tutorial 을 실행 할 차례면 tutorial map을 만든다
             self.platform() # making tutorial map method
             monster_x = 700
@@ -257,7 +261,7 @@ class Game():
 
         item_image = random.choice(list(self.item_score))
         # monstar가 죽었을 때 확인해 보려고 player랑 부딪치게 확인해봄
-        """hit_bubble = pygame.sprite.spritecollide(self.player,self.monster, True)
+        hit_bubble = pygame.sprite.spritecollide(self.player,self.monster, True)
         if(hit_bubble):
             print('monstar dead')
             self.score += 1000
@@ -276,7 +280,7 @@ class Game():
         hit_item = pygame.sprite.spritecollide(self.player,self.items, True)
         for i in hit_item:
             self.score += self.item_score[i.type]
-            print(self.score)"""
+            print(self.score)
         
     def events(self): #Event 처리에 대한
         print("event function")
@@ -316,12 +320,25 @@ class Game():
         self.screen.fill(BLACK)
         self.monster.draw(self.screen)
         self.all_sprites.draw(self.screen)
+        string_score = "00"
+        # 만약에 self.score가 0이면 00을 print 해주기 위해서 비교
+        if(self.score !=0):
+            string_score = str(self.score)
+        self.printword(18,string_score,(171,56),WHITE)
+        string_high_score = "00"
+        if(self.high_score !=0):
+                string_high_score = str(self.high_score)
+        self.printword(18,string_high_score,(465,56),WHITE)
+        self.printword(25,"1UP",(170,26),GREEN)
+        self.printword(25,"HIGH SCORE",(375,26),RED)
+        self.printword(18,'00',(815,56),WHITE)
+        self.printword(25,'2UP',(785,26),BLUE)
         pygame.display.flip()  # 화면 초기화
 
 # ============================START=============================
-    def printword_white(self,size, word,location): # making letter white function
+    def printword(self,size, word,location,color): # making letter white function
         font = pygame.font.Font(BUBBLE_FONT,size)
-        text = font.render(word,True,WHITE)
+        text = font.render(word,True,color)
         self.screen.blit(text, location)
 
     def on_cleanup(self):
@@ -354,16 +371,6 @@ class Game():
             progress_sec += 1
             self.screen.fill(WHITE)
             self.loadimage(START_SCREEND, (0, 0))
-            string_score = "00"
-            string_high_score = "00"
-            # 만약에 self.score가 0이면 00을 print 해주기 위해서 비교
-            if(self.score !=0):
-                string_score = str(self.score)
-            if(self.high_score !=0):
-                string_high_score = str(self.high_score)
-            self.printword_white(18,string_score,(175,56))
-            self.printword_white(18,"A.START            B.TUTORIAL",(273,600))
-            self.printword_white(18,str(string_high_score),(490,56))
             #color 변수를 사용하여 두개의 이미지를 번갈아가면 수행시켜 준다
             if(progress_sec>60):
                 if(color == 1):
@@ -379,6 +386,16 @@ class Game():
                 else:
                     self.loadimage(YELLOW_BUBBLE, (260, 70))
                     color = 1
+            string_score = "00"
+            string_high_score = "00"
+            # 만약에 self.score가 0이면 00을 print 해주기 위해서 비교
+            if(self.score !=0):
+                string_score = str(self.score)  
+            self.printword(18,string_score,(175,56),WHITE)
+            self.printword(18,"A.START            B.TUTORIAL",(273,600),WHITE)
+            if(self.high_score !=0):
+                string_high_score = str(self.high_score)
+            self.printword(18,str(string_high_score),(490,56),WHITE)
             pygame.display.flip()
             self.clock.tick(FPS)
 
@@ -441,19 +458,19 @@ class Game():
             if(self.score !=0):
                 string_score = str(self.score)
             # 현재 플레이어의 점수 화면에 출력
-            self.printword_white(18,string_score,(175,56))
+            self.printword(18,string_score,(175,56),WHITE)
             # 현재 플레이어의 최고 점수를 화면에 출력
-            self.printword_white(18,str(self.high_score),(490,56))
+            self.printword(18,str(self.high_score),(490,56),WHITE)
             # 화면에 메인으로 보여질 점수를 가운데에 출력하기 위해 구하는 변수
             word_location = 1050/2 - (len(string_score)/2)*70 +13
-            self.printword_white(36,string_score,(word_location,140))
+            self.printword(36,string_score,(word_location,140),WHITE)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
             # 7초후부터 continue 화면 출력
             if(progress_sec >= 7):
-                self.printword_white(22,"A.RESTART           B.EXIT",(249,640))
+                self.printword(22,"A.RESTART           B.EXIT",(249,640),WHITE)
             pygame.display.flip()
             # 7초후부터 continue 화면에 대해서 a키를 누르면 시작화면으로, b키를 누르면 게임을 종료하게 된다.
             if(progress_sec >= 7):
@@ -515,17 +532,14 @@ class Game():
     def show_gameover_screen(self):
         gameOver.play()
         start_time = time.time() # 7초 뒤에 다시 시작화면으로 가기 위해 쓰는 변수
-        font = pygame.font.Font(BUBBLE_FONT,20)
-        text = font.render("Game Over",True,RED)
-        self.screen.blit(text, (1050/2 - (4/2)*70 +13,200))
+        self.printword(25,"Game Over",(1050/2 - (4/2)*70 +13,200),RED)
         string_score = "00"
         # 만약에 self.score가 0이면 00을 print 해주기 위해서 비교
         if(self.score !=0) :
             string_score = str(self.score)
         # 현재 플레이어의 점수 화면에 출력
-        player_score = font.render(string_score,True, RED)
-        word_x = 1050/2 - len(string_score)*35 +13
-        self.screen.blit(player_score,(word_x, 250))
+        word_x = 1050/2 - len(string_score)*35 +25
+        self.printword(25,string_score,(word_x, 250),RED)
         # game over 창이 뜨고 7초가 지나면 시작페이지로 가도록 하기 위해
         pygame.display.flip()
         while (True) :

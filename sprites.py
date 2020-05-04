@@ -286,3 +286,35 @@ class Item(pygame.sprite.Sprite): # character는 단일 객체
             self.rect.y = self.pos.y
         self.count += 1
 
+"""class Word(pygame.sprite.Sprite): # character는 단일 객체
+    def __init__(self, game,word,size,location,type): 
+        pygame.sprite.Sprite.__init__(self)
+        self.game = game 
+        self.groups = game.all_sprites, game.platforms
+        self.location = location
+        self.type = type #계속 남아있을 것인지 사라질 것인지
+        self.word = word
+        color = ''
+        if(self.type == 'stage'):
+            color = RED
+        elif (self.type == 'score'):
+            color = WHITE
+        self.font = pygame.font.Font(BUBBLE_FONT,size)
+        self.t = self.font.render(word,True,color)
+        self.image = self.screen.blit(self.t, self.location)
+        self.rect = self.image.get_rect()
+        self.rect.x = self.location[0]
+        self.rect.y = self.location[1]   
+        self.time = 0
+
+    def update(self):
+        time += 1
+        if (self.type == 'score'):
+            self.t = self.font.render(SCORE,True,WHITE)
+            self.image = self.screen.blit(self.t, self.location)   
+        elif (self.type == 'stage'):
+            self.t = self.font.render(word, True, RED)
+            self.image = self.screen.bilt(self.t,self.location)
+            if(self.time >4):
+                self.kill      """              
+        

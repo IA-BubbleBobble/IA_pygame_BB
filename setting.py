@@ -5,6 +5,7 @@ TITLE = "Bubble Bobble"
 WIDTH = 1050
 HEIGHT = 700
 FPS = 60
+#SCORE = 0 # 중간에 더해주고 나타내주기 위해
 
 TILESIZE = 70
 CHARSIZE = 45
