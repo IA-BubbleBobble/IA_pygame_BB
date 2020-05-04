@@ -30,7 +30,6 @@ class Game():
         self.item_score = {'banana':500, 'orange':1000, 'strawberry':2000, 'watermelon':3000, 'shell':4000, 'pudding':5000}
         self.ending1 = False #죽지 않고 스테이지를 맞친후에 종료 되었을 때
         self.ending2 = False #플레이도중 목숨을 다 잃어 종료하였을 때
-        self.ending = False
         self.stage_time = 0 # stage_time 3이 초과하면 round와 ready 출력이 사라진다.
         self.monster_num = [3,3,4,20] # 스테이지별 몬스터 갯수
         self.stage_num = 0 # 몬스터 갯수를 찾을 때 쓰는 인덱스
@@ -98,6 +97,7 @@ class Game():
             self.platform3() # making stage3 map method
         elif(self.ending == True):
             self.monster_num = [3,3,4,20] # 스테이지별 몬스터 갯수
+            self.stage_num = 0
             gameStart.stop()
             self.show_go_screen()
         elif(self.ending == False):
@@ -136,6 +136,14 @@ class Game():
             p = Platform(tutMapS, PLATFORM_LIST[6][0] + 70 * i, PLATFORM_LIST[6][1], PLATFORM_LIST[6][2],PLATFORM_LIST[6][3])
             self.all_sprites.add(p)
             self.platforms.add(p)
+        for i in range(2): # 4번째 줄
+            p = Platform(tutMapS, PLATFORM_LIST[7][0] + 70 * i, PLATFORM_LIST[7][1], PLATFORM_LIST[7][2], PLATFORM_LIST[7][3])
+            self.all_sprites.add(p)
+            self.platforms.add(p)
+        for i in range(2): # 5번째 줄
+            p = Platform(tutMapS, PLATFORM_LIST[8][0] + 70 * i, PLATFORM_LIST[8][1], PLATFORM_LIST[8][2],PLATFORM_LIST[8][3])
+            self.all_sprites.add(p)
+            self.platforms.add(p)    
 
     def platform1(self): # make stage1 map
         for i in range(15): #  맨 윗줄
@@ -276,7 +284,7 @@ class Game():
                 self.bubbleMonster.add(m)
                 self.all_sprites.add(m)
 
-        # monster와 player와의 충돌 => player 가 원점으로(목숨하나 감소)
+        # monster와 player와의 충돌 => player가 원점으로(목숨하나 감소)
         plydie = pygame.sprite.spritecollide(self.player, self.monster, False, pygame.sprite.collide_mask) # True 하면 닿이면 사라짐
         if (plydie):
             print("player and monster collide!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
@@ -285,34 +293,42 @@ class Game():
             print("player Health:", self.playerHealth)
             if(self.playerHealth == 0): # 목숨을 다 잃엇을 때
                 self.tutorial = self.stage1 = self.stage2 = self.running = self.playing = False # 모든걸 중지, loop 빠져나옴
-                self.ending = True # ending 화면으로
+                # self.ending = True # ending 화면으로
                 self.ending2 = True # ending 화면으로 간다.    
                 
         # bubbled monster와 player가 부딪혔을 때 => bubbled monster 사라짐, player score 상승
         monbub = pygame.sprite.spritecollide(self.player, self.bubbleMonster, True)
         if (monbub):
             print("player pop bubbled monster!")
+            self.score += 10 # 임의로 점수
+            print("player score:", self.score)
+            if(self.score == 30):
+                self.tutorial = False
+                self.stage1 =  True
+                self.playing = False
+        # ---------------- 
+        """item_image = random.choice(list(self.item_score))
+        # monstar가 죽었을 때 확인해 보려고 player랑 부딪치게 확인해봄
+        hit_bubble = pygame.sprite.spritecollide(self.player,self.monster, True)
+        if(hit_bubble):
+            print('monstar dead')
             self.score += 1000
-            monstar_dic = random.choice(['left','right']) 
-            m = Monster(self,(self.player.pos.x,self.player.pos.y),monstar_dic,'dead') 
+            monstar_dic = random.choice(['left','right'])
+            m = Monster(self,(self.player.pos.x,self.player.pos.y),monstar_dic,'dead')
             self.monster.add(m)
             self.all_sprites.add(m)
-            #몬스터가 같은 곳에서 죽어서 같은 곳에 item이 생기는 것을 막기 위해서
-            item_image = random.choice(list(self.item_score))
-            item_location = self.cal_item_location(monstar_dic,(self.player.pos.x,self.player.pos.y))
             #몬스터가 죽으면 아이템 생성
+            #몬스터가 같은 곳에서 죽어서 같은 곳에 item이 생기는 것을 막기 위해서
+            item_location = self.cal_item_location(monstar_dic,(self.player.pos.x,self.player.pos.y))
             self.item = Item(self,item_image,item_location)
             self.items.add(self.item)
             self.all_sprites.add(self.items)
-        
         # item과 player가 충돌하면 사라지고 과일에 해당하는 점수가 추가되도록 하는 것
         hit_item = pygame.sprite.spritecollide(self.player,self.items, True)
         for i in hit_item:
             self.score += self.item_score[i.type]
-            self.monster_num[self.stage_num] -= 1
-            if (self.monster_num[self.stage_num] == 0):
-                self.playing = False # map 변경할 때 필요
-            
+            print(self.score)"""
+        
     def events(self): #Event 처리에 대한
         print("event function")
         for event in pygame.event.get():
@@ -455,13 +471,11 @@ class Game():
                         print("start_a")
                         # self.running = True # 다음 loop 실행
                         self.stage1 = True
-                        self.stage_num = 1
                         break
                     elif (event.key == pygame.K_b):
                         print('start_b')
                         # self.running = True # 다음 loop 실행
                         self.tutorial = True # b를 누르면 tutorial 실행
-                        self.stage_num = 0
                         break
 
             if (self.tutorial): # tutorial을 실행 할 차례면
@@ -540,17 +554,15 @@ class Game():
                                 break
                             elif(event.key == pygame.K_b):
                                 print('ending_b')
-                                gameComplete.stop()
+                                gameOver.stop()
                                 pygame.quit()
                                 exit()
                                 break
+                
                 if (self.start_playing):
-                    gameComplete.stop()
                     self.ending = False
-                    self.ending2 = False
-                    print("self.ending", self.ending)
-                    self.running = False
-                    print("self.running", self.running)
+                    self.ending1 = False
+                    gameComplete.stop()
                     break
 
         elif(self.ending2 == True):
@@ -572,9 +584,9 @@ class Game():
                 if(progress_time>5):
                     self.ending = False
                     self.ending2 = False
-                    self.running = False
                     self.start_playing = True
                     gameOver.stop()
+                    self.show_start_screen()
                     break
 
     # 몬스터가 움직이며 죽다가 죽은 위치를 찾는 함수
@@ -611,6 +623,16 @@ class Game():
             rect.y = pos.y
         return (pos.x, pos.y)
 
+        '''
+            if (self.start_playing):
+                gameOver.stop()
+                self.ending = False
+                print("self.ending", self.ending)
+                self.running = False
+                print("self.running", self.running)
+                break
+                #self.show_start_screen()
+                '''
 g = Game()
 while g.start:
     print("************************1****************************")
