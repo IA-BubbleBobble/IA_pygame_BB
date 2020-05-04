@@ -1,4 +1,4 @@
-import pygame
+#import pygame 
 from setting import *
 from sprites import *
 import time
@@ -278,7 +278,7 @@ class Game():
         self.screen.fill(BLACK)
         self.monster.draw(self.screen)
         self.all_sprites.draw(self.screen)
-        self.
+        # life 집어넣기
         pygame.display.flip()  # 화면 초기화
 
 # ============================START=============================
