@@ -24,6 +24,7 @@ BROWN = (111, 109, 81)
 
 # key (pushed or not)
 keys = [False, False, False, False, False] # [K_UP(jump), K_LEFT(move left), K_SPACE(shoot bubble), K_RIGHT(move right)]
+
 #Player properties
 player_pos = [70, 620]
 bubble_pos = [80, 630]
@@ -33,7 +34,7 @@ PLAYER_GRAVITY = 0.8
 PLAYER_JUMP = 15.5
 
 #Monstar properties
-MONSTAR_ACC = 1.2
+MONSTAR_ACC = 0.5
 MONSTAR_FRICTION = -0.2
 
 # Image
@@ -99,7 +100,7 @@ LIFE1 = 'image/life1.png'
 LIFE2 = 'image/life2.png'
 LIFE3 = 'image/life3.png'
 LIFE0 = 'image/empty_heart.png'
-
+monstarBb = "image/green_monstar_bubble2.png" # 몬스터가 버블에 갇혔을 때
 
 #sound
 pygame.mixer.init() # to use music
@@ -109,6 +110,7 @@ gameStart = pygame.mixer.Sound("sound/GameStart.ogg")
 shootBubble = pygame.mixer.Sound("sound/shootBubble.wav")
 gameOver = pygame.mixer.Sound("sound/GameOver.ogg")
 gameComplete = pygame.mixer.Sound("sound/GameTurnedOn.ogg")
+
 
 
 # about map
@@ -122,4 +124,4 @@ PLATFORM1_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14
 PLATFORM2_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14,140, TILESIZE, TILESIZE), (70, 675, 70, 25),
                  (70, 70*9-45, 70, 25), (70, 70*7-35, 70, 25), (70, 70*5, 70, 25), (70, 70*4-35, 70, 25)] # stage2 map
 PLATFORM3_LIST = [(0,70,TILESIZE, TILESIZE), (0,140, TILESIZE, TILESIZE), (70*14,140, TILESIZE, TILESIZE), (70, 675, 70, 25),
-                 (70, 70*8, 70, 25), (70, 70*7, 70, 25), (70, 70*6, 70, 25), (70, 70*4+35, 70, 25), (70, 70*2, 70, 25)] # stage3 map
+                  (70, 70 * 8, 70, 25), (70, 70 * 6 + 35, 70, 25), (70, 70 * 5, 70, 25), (70, 70 * 3, 70, 25)] # stage3 map
