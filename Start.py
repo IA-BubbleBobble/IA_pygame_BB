@@ -373,7 +373,6 @@ class Game():
         for i in hit_item:
             self.score += self.item_score[i.type]
             self.monster_num[self.stage_num] -= 1
-            self.score += 1
             if (self.monster_num[self.stage_num] == 0):
                 self.playing = False # map 변경할 때 필요
                 if(self.stage_num ==3):
