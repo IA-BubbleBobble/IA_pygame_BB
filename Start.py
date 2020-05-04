@@ -278,6 +278,7 @@ class Game():
         self.screen.fill(BLACK)
         self.monster.draw(self.screen)
         self.all_sprites.draw(self.screen)
+        self.
         pygame.display.flip()  # 화면 초기화
 
 # ============================START=============================
@@ -285,6 +286,12 @@ class Game():
         font = pygame.font.Font(BUBBLE_FONT,size)
         text = font.render(word,True,WHITE)
         self.screen.blit(text, location)
+
+    def show_life(self, size, location):
+        player_life1 = pygame.image.load(life1)
+        player_life2 = pygame.image.load(life2)
+        player_life3 = pygame.image.load(life3)
+        self.screen.blit(size, location)
 
     def on_cleanup(self):
         self.running = False
