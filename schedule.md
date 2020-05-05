@@ -27,13 +27,14 @@
  * 다음 진행할 것 회의
  
 ## 2020/05/04
- * 이유진 : 캐릭터 움직임 구현, bubble, bubbled monster구현
- * 이채영 : 몬스터 생성, item생성, score, ending page
- * 신동현 : stage3맵 만들기, tutorial맵 수정
+ * 이유진 : 캐릭터 움직임 구현, bubble, bubbled monster구현 ---ok
+ * 이채영 : 몬스터 생성, item생성, score, ending page ---ok
+ * 신동현 : stage3맵 만들기, tutorial맵 수정 ---ok
  
 ## 2020/05/05
- * 이유진 : 코드 수정
- * 신동현 : 발표 대본 작성, 영상녹화, 게임시현
+ * 이유진 : 코드 수정 ---ok
+ * 이채영 : 코드 수정 ---ok
+ * 신동현 : 발표 대본 작성, 영상녹화, 게임시연
 <hr>
 
 ##### 20200501 update(youjin)
