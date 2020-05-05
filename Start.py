@@ -34,8 +34,10 @@ class Game():
         self.ending2 = False  # 플레이도중 목숨을 다 잃어 종료하였을 때
         self.ending = False
         self.stage_time = 0  # stage_time 3이 초과하면 round와 ready 출력이 사라진다.
-        self.monster_num = [3, 3, 4, 20]  # 스테이지별 몬스터 갯수
+        # 스테이지별 몬스터 갯수
+        self.monster_num = [3, 3, 4, 10]
         self.stage_num = 0  # 몬스터 갯수를 찾을 때 쓰는 인덱스
+        self.stage3_grow = 2  # stage3에서 자가 증식을 2번하는데 그것을 하게 만들기 위한 변수
 
     def new(self):  # game start
         print("new function")
@@ -45,11 +47,12 @@ class Game():
         self.player = Player(self)  # self.character, Character 객체 생성
         self.monster = pygame.sprite.Group()
         self.bubbleMonster = pygame.sprite.Group()
-
         if (self.tutorial == True):  # 현재 tutorial 을 실행 할 차례면 tutorial map을 만든다
+            self.playerHealth = 3
             print('tutotial start')
             self.tutorial, self.stage1 = False, True
             self.stage_time = 0  # 각 스테이지 시작할 때 round와 ready를 출력 후 지워주기 위해 초기회 시켜준다.
+            self.stage_num = 0
             self.platform()  # making tutorial map method
             monster_x = 700
             for i in range(self.monster_num[0]):  # tutorial에서는 monster 3마리만
@@ -58,8 +61,8 @@ class Game():
                 self.monster.add(m)
                 self.all_sprites.add(m)
                 # gameStart.stop() # 노래 겹치지 않도록
-
         elif (self.stage1 == True):  # stage1을 실행 할 차례면 stage1 map을 만든다
+            self.playerHealth = 3  # stage를 완료하기 위해 목숨을 많이 넣음
             self.stage_num += 1
             self.stage1, self.stage2 = False, True
             self.score = 0  # tutorial에서 시험해본 점수는 실제 게임에 반영되지 않아서 score를 초기화 시켜준다.
@@ -95,11 +98,24 @@ class Game():
             self.all_sprites.add(m4)
         elif (self.stage3 == True):
             self.stage_time = 0  # 각 스테이지 시작할 때 round와 ready를 출력 후 지워주기 위해 초기회 시켜준다.
-            self.stage_num += 1
+            self.stage3_grow = 2  # 재시작하는 경우를 생각해서 초기화 시켜준다.
+            self.stage_num = 3
             self.stage3 = False
+            m1 = Monster(self, (280, 70), 'left', 'live')
+            m2 = Monster(self, (700, 70), 'right', 'live')
+            m3 = Monster(self, (490, 280), 'left', 'jump')
+            m5 = Monster(self, (630, 420), 'right', 'live')
+            self.monster.add(m1)
+            self.all_sprites.add(m1)
+            self.monster.add(m2)
+            self.all_sprites.add(m2)
+            self.monster.add(m3)
+            self.all_sprites.add(m3)
+            self.monster.add(m5)
+            self.all_sprites.add(m5)
             self.platform3()  # making stage3 map method
         elif (self.ending == True):
-            self.monster_num = [3, 3, 4, 20]  # 스테이지별 몬스터 갯수
+            self.monster_num = [3, 3, 4, 10]  # 스테이지별 몬스터 갯수
             gameStart.stop()
             self.show_go_screen()
         elif (self.ending == False):
@@ -145,14 +161,6 @@ class Game():
                          PLATFORM_LIST[6][3])
             self.all_sprites.add(p)
             self.platforms.add(p)
-        for i in range(2): # 4번째 줄
-            p = Platform(tutMapS, PLATFORM_LIST[7][0] + 70 * i, PLATFORM_LIST[7][1], PLATFORM_LIST[7][2], PLATFORM_LIST[7][3])
-            self.all_sprites.add(p)
-            self.platforms.add(p)
-        for i in range(2): # 5번째 줄
-            p = Platform(tutMapS, PLATFORM_LIST[8][0] + 70 * i, PLATFORM_LIST[8][1], PLATFORM_LIST[8][2],PLATFORM_LIST[8][3])
-            self.all_sprites.add(p)
-            self.platforms.add(p)    
 
     def platform1(self):  # make stage1 map
         for i in range(15):  # 맨 윗줄
@@ -313,17 +321,19 @@ class Game():
                                              pygame.sprite.collide_mask)  # True 하면 닿이면 사라짐
         if (plydie):
             print("player and monster collide!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
-            self.playerCollide = True  # class Player에서 player를 원점으로 이동시킨다
-            self.playerHealth -= 1  # player의 목숨이 하나 줄어든다
-            print("player Health:", self.playerHealth)
-            if (self.playerHealth == 0):  # 목숨을 다 잃엇을 때
-                self.tutorial = self.stage1 = self.stage2 = self.running = self.playing = False  # 모든걸 중지, loop 빠져나옴
-                self.ending = True  # ending 화면으로
-                self.ending2 = True  # ending 화면으로 간다.
+            for i in plydie:
+                if (i.state == 'live'):
+                    self.playerCollide = True  # class Player에서 player를 원점으로 이동시킨다
+                    self.playerHealth -= 1  # player의 목숨이 하나 줄어든다
+                print("player Health:", self.playerHealth)
+                if (self.playerHealth == 0):  # 목숨을 다 잃엇을 때
+                    self.tutorial = self.stage1 = self.stage2 = self.running = self.playing = False  # 모든걸 중지, loop 빠져나옴
+                    self.ending = True  # ending 화면으로
+                    self.ending2 = True  # ending 화면으로 간다.
 
         # bubbled monster와 player가 부딪혔을 때 => bubbled monster 사라짐, player score 상승
         monbub = pygame.sprite.spritecollide(self.player, self.bubbleMonster, True)
-        if (monbub):
+        for i in monbub:
             print("player pop bubbled monster!")
             self.score += 1000
             monstar_dic = random.choice(['left', 'right'])
@@ -337,6 +347,73 @@ class Game():
             self.item = Item(self, item_image, item_location)
             self.items.add(self.item)
             self.all_sprites.add(self.items)
+            if (self.stage_num == 3):
+                if (self.monster_num[self.stage_num] <= 8 and self.monster_num[
+                    self.stage_num] > 6 and self.stage3_grow == 2):
+                    m1 = Monster(self, (
+                    random.choice([i for i in range(70, 910)]), random.choice([i for i in range(140, 680)])), 'right',
+                                 'live')
+                    m2 = Monster(self, (
+                    random.choice([i for i in range(70, 910)]), random.choice([i for i in range(140, 680)])), 'right',
+                                 'live')
+                    m3 = Monster(self, (
+                    random.choice([i for i in range(70, 910)]), random.choice([i for i in range(140, 680)])), 'right',
+                                 'jump')
+                    # 자가 증식하지 않는 이유가 한번에 2개 먹으면 그 숫자부분에 증식을 못하기 때문이다.
+                    self.monster.add(m1)
+                    self.all_sprites.add(m1)
+                    self.monster.add(m2)
+                    self.all_sprites.add(m2)
+                    self.monster.add(m3)
+                    self.all_sprites.add(m3)
+                    self.stage3_grow -= 1
+                elif (self.monster_num[self.stage_num] >= 6 and self.monster_num[
+                    self.stage_num] >= 4 and self.stage3_grow >= 1):
+                    m1 = Monster(self, (
+                    random.choice([i for i in range(70, 910)]), random.choice([i for i in range(140, 680)])), 'right',
+                                 'live')
+                    m2 = Monster(self, (
+                    random.choice([i for i in range(70, 910)]), random.choice([i for i in range(140, 680)])), 'right',
+                                 'live')
+                    m3 = Monster(self, (
+                    random.choice([i for i in range(70, 910)]), random.choice([i for i in range(140, 680)])), 'right',
+                                 'jump')
+                    self.monster.add(m1)
+                    self.all_sprites.add(m1)
+                    self.monster.add(m2)
+                    self.all_sprites.add(m2)
+                    self.monster.add(m3)
+                    self.all_sprites.add(m3)
+                    self.stage3_grow -= 1
+                else:
+                    if (self.stage3_grow == 1):
+                        m1 = Monster(self, (
+                        random.choice([i for i in range(70, 910)]), random.choice([i for i in range(140, 680)])),
+                                     'right', 'live')
+                        m2 = Monster(self, (
+                        random.choice([i for i in range(70, 910)]), random.choice([i for i in range(140, 680)])),
+                                     'right', 'live')
+                        m3 = Monster(self, (
+                        random.choice([i for i in range(70, 910)]), random.choice([i for i in range(140, 680)])),
+                                     'right', 'jump')
+                        # 자가 증식하지 않는 이유가 한번에 2개 먹으면 그 숫자부분에 증식을 못하기 때문이다.
+                        self.monster.add(m1)
+                        self.all_sprites.add(m1)
+                        self.monster.add(m2)
+                        self.all_sprites.add(m2)
+                        self.monster.add(m3)
+                        self.all_sprites.add(m3)
+                        self.stage3_grow -= 1
+                        # 자가 증식하지 않는 이유가 한번에 2개 먹으면 그 숫자부분에 증식을 못하기 때문이다.
+                        self.monster.add(m1)
+                        self.all_sprites.add(m1)
+                        self.monster.add(m2)
+                        self.all_sprites.add(m2)
+                        self.monster.add(m3)
+                        self.all_sprites.add(m3)
+                        self.stage3_grow -= 1
+        self.monster.update(monbub)
+
         # item과 player가 충돌하면 사라지고 과일에 해당하는 점수가 추가되도록 하는 것
         hit_item = pygame.sprite.spritecollide(self.player, self.items, True)
         for i in hit_item:
@@ -344,6 +421,9 @@ class Game():
             self.monster_num[self.stage_num] -= 1
             if (self.monster_num[self.stage_num] == 0):
                 self.playing = False  # map 변경할 때 필요
+                if (self.stage_num == 3):
+                    self.ending1 = True
+                    self.ending = True
 
     def events(self):  # Event 처리에 대한
         print("event function")
@@ -392,20 +472,21 @@ class Game():
 
         if (self.stage_time <= 60):
             if (self.tutorial == False and self.stage1 == True):
-                self.printword(20, "SPACE : Shoot the Bubble", (300.88, 250), WHITE)
-                self.printword(20, "LEFT : Move LEFT", (300, 300), WHITE)
-                self.printword(20, "RIGHT : Move RIGHT", (300, 350), WHITE)
+                self.printword(20, "SPACE : Shoot the Bubble", (300.88, 220), WHITE)
+                self.printword(20, "LEFT : Move LEFT", (300, 270), WHITE)
+                self.printword(20, "RIGHT : Move RIGHT", (300, 320), WHITE)
+                self.printword(20, "UP : Player JUMP", (300, 370), WHITE) #이거 추가됨! -유진
             elif (self.stage1 == False and self.stage2 == True):
                 self.printword(20, "ROUND   1", (460, 280), WHITE)
                 self.printword(20, "READY  !", (460, 330), WHITE)
                 if (self.stage_time == 40):
                     self.stage_time = 70
-            elif (self.stage2 == True):
+            elif (self.stage2 == True and self.stage1 == False):
                 self.printword(20, "ROUND   2", (460, 280), WHITE)
                 self.printword(20, "READY  !", (460, 330), WHITE)
                 if (self.stage_time == 40):
                     self.stage_time = 70
-            elif (self.stage3 == True):
+            elif (self.stage3 == True and self.stage2 == False):
                 self.printword(20, "ROUND   3", (460, 280), WHITE)
                 self.printword(20, "READY  !", (460, 330), WHITE)
                 if (self.stage_time == 40):
@@ -443,6 +524,8 @@ class Game():
         if (self.score > self.high_score):
             self.high_score = self.score
         # 재시작하는 경우를 생각해서 score를 초기화 시켜준다.
+        if (self.high_score != 0):
+            self.monster_num = [3, 3, 4, 10]  # 재시작하는 경우를 위해 moster_num 수를 초기화시켜준다.
         self.score = 0
         color = 1
         progress_sec = 0
@@ -487,13 +570,11 @@ class Game():
                         print("start_a")
                         # self.running = True # 다음 loop 실행
                         self.stage1 = True
-                        self.stage_num = 1
                         break
                     elif (event.key == pygame.K_b):
                         print('start_b')
                         # self.running = True # 다음 loop 실행
                         self.tutorial = True  # b를 누르면 tutorial 실행
-                        self.stage_num = 0
                         break
 
             if (self.tutorial):  # tutorial을 실행 할 차례면
@@ -523,7 +604,7 @@ class Game():
             gameComplete.play()
 
             color = 1
-            while (True):
+            while (self.ending1):
                 now_time = time.time()
                 progress_sec = now_time - start_time
                 self.screen.fill(WHITE)
@@ -547,45 +628,51 @@ class Game():
                 if (self.score != 0):
                     string_score = str(self.score)
                 # 현재 플레이어의 점수 화면에 출력
-                self.printword(18, string_score, (175, 56), WHITE)
+                self.printword(18, string_score, (155, 56), WHITE)
                 # 현재 플레이어의 최고 점수를 화면에 출력
                 self.printword(18, str(self.high_score), (490, 56), WHITE)
                 # 화면에 메인으로 보여질 점수를 가운데에 출력하기 위해 구하는 변수
-                word_location = 1050 / 2 - (len(string_score) / 2) * 70 + 13
+                word_location = 1050 / 2 - (len(string_score) / 2) * 70 + 60
                 self.printword(36, string_score, (word_location, 140), WHITE)
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        pygame.quit()
-                        exit()
+                #for event in pygame.event.get(): # 이거삭제! -유진
+                #    if event.type == pygame.QUIT:
+                #        pygame.quit()
+                #        exit()
                 # 7초후부터 continue 화면 출력
-                if (progress_sec >= 7):
-                    self.printword(22, "A.RESTART           B.EXIT", (249, 640), WHITE)
+                #if (progress_sec >= 7): # 7초 없앴어요! -유진
+                self.printword(22, "A.RESTART           B.EXIT", (249, 640), WHITE)
                 pygame.display.flip()
                 # 7초후부터 continue 화면에 대해서 a키를 누르면 시작화면으로, b키를 누르면 게임을 종료하게 된다.
-                if (progress_sec >= 7):
-                    for event in pygame.event.get():
-                        if event.type == pygame.QUIT:
+                # 8초후에 시작화면으면으로
+                # if(progress_sec >= 8):
+                # self.ending = False
+                # self.ending2 = False
+                # self.running = False
+                # self.start_playing = True
+                # gameComplete.stop()
+                # break
+
+                for event in pygame.event.get():
+                    # if event.type == pygame.QUIT:
+                    # pygame.quit()
+                    # exit()
+                    if event.type == pygame.KEYDOWN:
+                        if (event.key == pygame.K_a):
+                            print("ending_a")
+                            self.start_playing = True  # 재시작을 한다.
+                            gameComplete.stop()
+                            self.ending = False
+                            self.ending1 = False
+                            print("self.ending", self.ending)
+                            self.running = False
+                            print("self.running", self.running)
+                            break
+                        elif (event.key == pygame.K_b):
+                            print('ending_b')
+                            gameComplete.stop()
                             pygame.quit()
                             exit()
-                        if event.type == pygame.KEYDOWN:
-                            if (event.key == pygame.K_a):
-                                print("ending_a")
-                                self.start_playing = True  # 재시작을 한다.
-                                break
-                            elif (event.key == pygame.K_b):
-                                print('ending_b')
-                                gameComplete.stop()
-                                pygame.quit()
-                                exit()
-                                break
-                if (self.start_playing):
-                    gameComplete.stop()
-                    self.ending = False
-                    self.ending2 = False
-                    print("self.ending", self.ending)
-                    self.running = False
-                    print("self.running", self.running)
-                    break
+                            break
 
         elif (self.ending2 == True):
             gameOver.play()
