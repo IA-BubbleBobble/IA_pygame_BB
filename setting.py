@@ -9,7 +9,7 @@ TILESIZE = 70
 CHARSIZE = 45
 
 #Font
-BUBBLE_FONT = "PressStart2P.ttf"
+BUBBLE_FONT = "bbFont.ttf"
 
 #define colors
 WHITE = (255, 255, 255)
