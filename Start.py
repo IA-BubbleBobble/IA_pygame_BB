@@ -4,7 +4,6 @@ from sprites import *
 import random
 import time
 
-
 class Game():
     def __init__(self):
         print("Game init function")
@@ -38,8 +37,8 @@ class Game():
 
         # 스테이지별 몬스터 갯수
         self.monster_num = [3, 3, 4, 10]
-        self.stage_num = 0  # 몬스터 갯수를 찾을 때 쓰는 인덱스
-        self.stage3_grow = 2  # stage3에서 자가 증식을 2번하는데 그것을 하게 만들기 위한 변수
+        self.stage_num = 0 # 몬스터 갯수를 찾을 때 쓰는 인덱스
+        self.stage3_grow = 2 # stage3에서 자가 증식을 2번하는데 그것을 하게 만들기 위한 변수
 
     def new(self):  # game start
         print("new function")
@@ -115,7 +114,7 @@ class Game():
             self.monster.add(m3)
             self.all_sprites.add(m3)
             self.monster.add(m5)
-            self.all_sprites.add(m5)2
+            self.all_sprites.add(m5)
             self.platform3() # making stage3 map method
         elif(self.ending == True):
             self.stage3_num == False
@@ -418,6 +417,7 @@ class Game():
                         self.stage3_grow -= 1
         self.monster.update(monbub)
 
+
         # item과 player가 충돌하면 사라지고 과일에 해당하는 점수가 추가되도록 하는 것
         hit_item = pygame.sprite.spritecollide(self.player, self.items, True)
         for i in hit_item:
@@ -522,7 +522,7 @@ class Game():
             self.clock.tick(FPS)
             self.start_draw()
 
-    def start_draw(self):  # START 화면
+    def start_draw(self):  #START 화면
         print("start_draw function")
         self.stage3_word == False
         self.stage_num = 0
