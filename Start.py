@@ -38,8 +38,8 @@ class Game():
 
         # 스테이지별 몬스터 갯수
         self.monster_num = [3, 3, 4, 10]
-        self.stage_num = 0  # 몬스터 갯수를 찾을 때 쓰는 인덱스
-        self.stage3_grow = 2  # stage3에서 자가 증식을 2번하는데 그것을 하게 만들기 위한 변수
+        self.stage_num = 0 # 몬스터 갯수를 찾을 때 쓰는 인덱스
+        self.stage3_grow = 2 # stage3에서 자가 증식을 2번하는데 그것을 하게 만들기 위한 변수
 
     def new(self):  # game start
         print("new function")
@@ -498,9 +498,15 @@ class Game():
             self.stage_time += 1
         pygame.display.flip()  # 화면 초기화
 
+<<<<<<< HEAD
+# ============================START=============================
+    def printword(self,size, word,location,color): # making letter white function
+        font = pygame.font.Font(BUBBLE_FONT,size)
+=======
     # ============================START=============================
     def printword(self, size, word, location, color):  # making letter white function
         font = pygame.font.Font(BUBBLE_FONT, size)
+>>>>>>> f812727c179eb9e951b960e08387be06785306cb
         text = font.render(word, True, color)
         self.screen.blit(text, location)
 
@@ -522,7 +528,11 @@ class Game():
             self.clock.tick(FPS)
             self.start_draw()
 
+<<<<<<< HEAD
+    def start_draw(self):  #START 화면
+=======
     def start_draw(self):  # START 화면
+>>>>>>> f812727c179eb9e951b960e08387be06785306cb
         print("start_draw function")
         self.stage3_word == False
         self.stage_num = 0
@@ -564,7 +574,11 @@ class Game():
             self.printword(18, "A.START            B.TUTORIAL", (273, 600), WHITE)
             if (self.high_score != 0):
                 string_high_score = str(self.high_score)
+<<<<<<< HEAD
+            self.printword(18,str(string_high_score), (490, 56), WHITE)
+=======
             self.printword(18, str(string_high_score), (490, 56), WHITE)
+>>>>>>> f812727c179eb9e951b960e08387be06785306cb
             pygame.display.flip()
             self.clock.tick(FPS)
 
@@ -614,6 +628,19 @@ class Game():
                 now_time = time.time()
                 progress_sec = now_time - start_time
                 self.screen.fill(WHITE)
+<<<<<<< HEAD
+                self.loadimage(ENDING_IMAGE, (0,0))
+                # 4개의 이미지를 반복적으로 수행
+                if(color % 4 == 1):
+                    self.loadimage(YELLOW_HEART,(360,155))
+                    self.loadimage(S_YELLOW_HEART,(0,580))
+                elif(color % 4 ==2):
+                    self.loadimage(ORANGE_HEART,(360,155))
+                    self.loadimage(S_ORANGE_HEART,(0,580))
+                elif(color % 4 ==3):
+                    self.loadimage(RED_HEART,(360,155))
+                    self.loadimage(S_RED_HEART,(0,580))
+=======
                 self.loadimage(ENDING_IMAGE, (0, 0))
                 # 4개의 이미지를 반복적으로 수행
                 if (color % 4 == 1):
@@ -625,6 +652,7 @@ class Game():
                 elif (color % 4 == 3):
                     self.loadimage(RED_HEART, (360, 155))
                     self.loadimage(S_RED_HEART, (0, 580))
+>>>>>>> f812727c179eb9e951b960e08387be06785306cb
                 else:
                     self.loadimage(PINK_HEART, (360, 155))
                     self.loadimage(S_PINK_HEART, (0, 580))
@@ -638,6 +666,14 @@ class Game():
                 # 현재 플레이어의 최고 점수를 화면에 출력
                 self.printword(18, str(self.high_score), (490, 56), WHITE)
                 # 화면에 메인으로 보여질 점수를 가운데에 출력하기 위해 구하는 변수
+<<<<<<< HEAD
+                word_location = 1050/2 - (len(string_score)/2)*70 +60
+                self.printword(36,string_score,(word_location,140),WHITE)
+                
+                # 7초후부터 continue 화면 출력
+                #if(progress_sec >= 7):
+                self.printword(22,"A.RESTART           B.EXIT",(249,640),WHITE)
+=======
                 word_location = 1050 / 2 - (len(string_score) / 2) * 70 + 60
                 self.printword(36, string_score, (word_location, 140), WHITE)
                 #for event in pygame.event.get(): # 이거삭제! -유진
@@ -647,6 +683,7 @@ class Game():
                 # 7초후부터 continue 화면 출력
                 #if (progress_sec >= 7): # 7초 없앴어요! -유진
                 self.printword(22, "A.RESTART           B.EXIT", (249, 640), WHITE)
+>>>>>>> f812727c179eb9e951b960e08387be06785306cb
                 pygame.display.flip()
              
                 for event in pygame.event.get():
@@ -670,6 +707,17 @@ class Game():
 
         elif (self.ending2 == True):
             gameOver.play()
+<<<<<<< HEAD
+            start_time = time.time() # 7초 뒤에 다시 시작화면으로 가기 위해 쓰는 변수
+            self.printword(25, "Game Over",(1050 / 2 - (4 / 2) * 70 +13,200),RED)
+            string_score = "00"
+            # 만약에 self.score가 0이면 00을 print 해주기 위해서 비교
+            if (self.score != 0) :
+                string_score = str(self.score)
+            # 현재 플레이어의 점수 화면에 출력
+            word_x = 1050 / 2 - len(string_score) * 35 +60
+            self.printword(25,string_score,(word_x, 250),RED)
+=======
             start_time = time.time()  # 7초 뒤에 다시 시작화면으로 가기 위해 쓰는 변수
             self.printword(25, "Game Over", (1050 / 2 - (4 / 2) * 70 + 13, 200), RED)
             string_score = "00"
@@ -679,12 +727,17 @@ class Game():
             # 현재 플레이어의 점수 화면에 출력
             word_x = 1050 / 2 - len(string_score) * 35 + 60
             self.printword(25, string_score, (word_x, 250), RED)
+>>>>>>> f812727c179eb9e951b960e08387be06785306cb
             # game over 창이 뜨고 7초가 지나면 시작페이지로 가도록 하기 위해
             pygame.display.flip()
             while (True):
                 now_time = time.time()
                 progress_time = now_time - start_time
+<<<<<<< HEAD
+                if(progress_time > 5):
+=======
                 if (progress_time > 5):
+>>>>>>> f812727c179eb9e951b960e08387be06785306cb
                     self.ending = False
                     self.ending2 = False
                     self.running = False
@@ -702,6 +755,17 @@ class Game():
         vel = vec(0, 0)
         acc = vec(0, 0)
         for i in range(7):
+<<<<<<< HEAD
+            if(dic == 'left')  :
+                acc.x = - (MONSTAR_ACC+ 0.8)
+            elif(dic == 'right'):
+                acc.x = (MONSTAR_ACC + 0.8)   
+                    
+            acc.x += vel.x * MONSTAR_FRICTION
+            vel += acc
+            pos += vel + 0.5 * acc
+            
+=======
             if (dic == 'left'):
                 acc.x = - (MONSTAR_ACC + 0.8)
             elif (dic == 'right'):
@@ -711,6 +775,7 @@ class Game():
             vel += acc
             pos += vel + 0.5 * acc
 
+>>>>>>> f812727c179eb9e951b960e08387be06785306cb
             if pos.x >= WIDTH - 140:
                 pos.x = WIDTH - 140
             elif pos.x <= 70:
