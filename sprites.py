@@ -88,9 +88,6 @@ class Player(pygame.sprite.Sprite):  # character는 단일 객체
                 self.game.all_sprites.add(self.game.player)
                 self.game.playerCollide = False
 
-        # self.mask = pygame.mask.from_surface(self.image)
-
-
 class Platform(pygame.sprite.Sprite):
     def __init__(self, image, x, y, w, h):  # (x좌표, y좌표, width, height)
         pygame.sprite.Sprite.__init__(self)

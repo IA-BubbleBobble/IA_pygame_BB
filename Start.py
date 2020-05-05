@@ -512,7 +512,7 @@ class Game():
     def show_start_screen(self):  # music play and call start_run function
         print('show_start_screen function')
         self.running = True
-        mainTheme.play()
+        mainTheme.play(-1)
         self.playerHealth = 3
         self.start_run()
 
@@ -599,9 +599,7 @@ class Game():
         load_image = pygame.image.load(image).convert()
         self.screen.blit(load_image, location)
 
-    # -------------마지막 화면 하트이미지 하나 수정, stage도중에 끝났을 때 ending page 만들어주세용
-    def show_go_screen(
-            self):  # game over, continue 화면 # -------------마지막 화면 하트이미지 하나 수정, stage도중에 끝났을 때 ending page 만들어주세용
+    def show_go_screen(self):  # game over, continue 화면
         print('show_go_screen fuction')
         # 시작 7초후에 continue화면을 띄워주기 위해 시작할 때 현재 시간 저장
         self.start_playing = False  # 재시작 할 때 True로 바꾸기 위해
@@ -640,12 +638,6 @@ class Game():
                 # 화면에 메인으로 보여질 점수를 가운데에 출력하기 위해 구하는 변수
                 word_location = 1050 / 2 - (len(string_score) / 2) * 70 + 60
                 self.printword(36, string_score, (word_location, 140), WHITE)
-                #for event in pygame.event.get(): # 이거삭제! -유진
-                #    if event.type == pygame.QUIT:
-                #        pygame.quit()
-                #        exit()
-                # 7초후부터 continue 화면 출력
-                #if (progress_sec >= 7): # 7초 없앴어요! -유진
                 self.printword(22, "A.RESTART           B.EXIT", (249, 640), WHITE)
                 pygame.display.flip()
              
@@ -663,6 +655,7 @@ class Game():
                             break
                         elif (event.key == pygame.K_b):
                             print('ending_b')
+                            self.running = False
                             gameComplete.stop()
                             pygame.quit()
                             exit()
