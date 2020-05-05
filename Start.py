@@ -31,6 +31,7 @@ class Game():
         self.ending1 = False #죽지 않고 스테이지를 맞친후에 종료 되었을 때
         self.ending2 = False #플레이도중 목숨을 다 잃어 종료하였을 때
         self.ending = False
+        self.stage3_word = False # 스테이지 3들어갈 때 round 뜨게 해주는 거
         self.stage_time = 0 # stage_time 3이 초과하면 round와 ready 출력이 사라진다.
         # 스테이지별 몬스터 갯수
         self.monster_num = [3,3,4,10]
@@ -95,6 +96,7 @@ class Game():
             self.monster.add(m4)
             self.all_sprites.add(m4)
         elif(self.stage3 == True):
+            self.stage3_word = True
             self.stage_time = 0 # 각 스테이지 시작할 때 round와 ready를 출력 후 지워주기 위해 초기회 시켜준다.
             self.stage3_grow = 2 # 재시작하는 경우를 생각해서 초기화 시켜준다.
             self.stage_num =3
@@ -113,6 +115,7 @@ class Game():
             self.all_sprites.add(m5)
             self.platform3() # making stage3 map method
         elif(self.ending == True):
+            self.stage3_num == False
             self.monster_num = [3,3,4,10] # 스테이지별 몬스터 갯수
             gameStart.stop()
             self.show_go_screen()
@@ -436,12 +439,12 @@ class Game():
                 self.printword(20,"READY  !",(460,330),WHITE)
                 if(self.stage_time == 40):
                     self.stage_time = 70
-            elif(self.stage2 ==True and self.stage1 == False):
+            elif(self.stage2 ==False and self.stage3 == True):
                 self.printword(20,"ROUND   2",(460,280),WHITE)
                 self.printword(20,"READY  !",(460,330),WHITE)
                 if(self.stage_time == 40):
                     self.stage_time = 70
-            elif(self.stage3 ==True and self.stage2 ==False):
+            elif(self.stage3_word ==True ):
                 self.printword(20,"ROUND   3",(460,280),WHITE)
                 self.printword(20,"READY  !",(460,330),WHITE)
                 if(self.stage_time == 40):
@@ -475,6 +478,8 @@ class Game():
 
     def start_draw(self): #START 화면
         print("start_draw function")
+        self.stage3_word == False
+        self.stage_num = 0
         # 재시작하였을 때 다시 시작하기 전 점수를 high_score에 넣어준다.
         if (self.score > self.high_score):
             self.high_score = self.score

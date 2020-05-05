@@ -251,11 +251,11 @@ class Monster (pygame.sprite.Sprite):
                      self.pos.x = 70
         
                  if self.pos.y >= HEIGHT-68 :
-                     self.pos.y -= 60
+                     self.pos.y -= 50
                  elif (self.pos.y <= 150):
                      self.pos.y == 150
                  else :
-                     self.pos.y -= 60
+                     self.pos.y -= 50
         
                  hits = pygame.sprite.spritecollide(self, self.game.platforms, False)
                  if hits:
