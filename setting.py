@@ -4,7 +4,7 @@ import pygame
 TITLE = "Bubble Bobble"
 WIDTH = 1050
 HEIGHT = 700
-FPS = 200
+FPS = 60
 
 TILESIZE = 70
 CHARSIZE = 45
@@ -110,7 +110,7 @@ playerJump = pygame.mixer.Sound("sound/playerJump.wav")
 gameStart = pygame.mixer.Sound("sound/GameStart.ogg")
 shootBubble = pygame.mixer.Sound("sound/shootBubble.wav")
 gameOver = pygame.mixer.Sound("sound/GameOver.ogg")
-gameComplete = pygame.mixer.Sound("sound/GameTurnedOn.ogg")
+gameComplete = pygame.mixer.Sound("sound/GameEnding.ogg")
 
 
 
