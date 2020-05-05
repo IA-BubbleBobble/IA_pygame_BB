@@ -60,7 +60,7 @@ class Game():
                 self.all_sprites.add(m)
                 #gameStart.stop() # 노래 겹치지 않도록
         elif(self.stage1 == True): # stage1을 실행 할 차례면 stage1 map을 만든다
-            self.playerHealth = 1000 # stage를 완료하기 위해 목숨을 많이 넣음
+            self.playerHealth = 3 # stage를 완료하기 위해 목숨을 많이 넣음
             self.stage_num += 1
             self.stage1,self.stage2= False,True
             self.score = 0 # tutorial에서 시험해본 점수는 실제 게임에 반영되지 않아서 score를 초기화 시켜준다.
@@ -296,13 +296,15 @@ class Game():
         plydie = pygame.sprite.spritecollide(self.player, self.monster, False, pygame.sprite.collide_mask) # True 하면 닿이면 사라짐
         if (plydie):
             print("player and monster collide!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1")
-            self.playerCollide = True # class Player에서 player를 원점으로 이동시킨다
-            self.playerHealth -= 1 # player의 목숨이 하나 줄어든다
-            print("player Health:", self.playerHealth)
-            if(self.playerHealth == 0): # 목숨을 다 잃엇을 때
-                self.tutorial = self.stage1 = self.stage2 = self.running = self.playing = False # 모든걸 중지, loop 빠져나옴
-                self.ending = True # ending 화면으로
-                self.ending2 = True # ending 화면으로 간다.    
+            for i in plydie :
+                if(i.state =='live'): 
+                    self.playerCollide = True # class Player에서 player를 원점으로 이동시킨다
+                    self.playerHealth -= 1 # player의 목숨이 하나 줄어든다
+                print("player Health:", self.playerHealth)
+                if(self.playerHealth == 0): # 목숨을 다 잃엇을 때
+                    self.tutorial = self.stage1 = self.stage2 = self.running = self.playing = False # 모든걸 중지, loop 빠져나옴
+                    self.ending = True # ending 화면으로
+                    self.ending2 = True # ending 화면으로 간다.    
                 
         # bubbled monster와 player가 부딪혔을 때 => bubbled monster 사라짐, player score 상승
         monbub = pygame.sprite.spritecollide(self.player, self.bubbleMonster, True)
@@ -590,15 +592,23 @@ class Game():
                         pygame.quit()
                         exit()
                 # 7초후부터 continue 화면 출력
-                if(progress_sec >= 8):
+                if(progress_sec >= 7):
                     self.printword(22,"A.RESTART           B.EXIT",(249,640),WHITE)
                 pygame.display.flip()
                 # 7초후부터 continue 화면에 대해서 a키를 누르면 시작화면으로, b키를 누르면 게임을 종료하게 된다.
+                # 8초후에 시작화면으면으로
+                #if(progress_sec >= 8):
+                    #self.ending = False
+                    #self.ending2 = False
+                    #self.running = False
+                    #self.start_playing = True
+                    #gameComplete.stop()
+                    #break
                 
                 for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                      pygame.quit()
-                      exit()
+                    #if event.type == pygame.QUIT:
+                      #pygame.quit()
+                      #exit()
                     if event.type == pygame.KEYDOWN:
                         if(event.key ==pygame.K_a):
                             print("ending_a")
