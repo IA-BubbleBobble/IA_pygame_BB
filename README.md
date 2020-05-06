@@ -1,7 +1,8 @@
 # Python - Pygame
 HUFS ICE 인터넷응용 <br>
 Team Project 4조<br>
-이유진, 이채영, 신동현<br>
+이유진(팀장), 이채영, 신동현<br>
+게임 설명, 시연영상 : https://youtu.be/FULAe9zhJ1A
 ## 1. 게임기획, 구조
 ### 모듈
   * Start.py : 게임의 전반적인 실행 구조(main loop, game class, 화면 구현 함수들)
