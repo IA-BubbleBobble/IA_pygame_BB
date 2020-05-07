@@ -5,6 +5,7 @@ Team Project 4조<br>
 게임 설명, 시연영상 : https://youtu.be/FULAe9zhJ1A
 ## repository 전체(sound, image, sprite.py, setting.py, Start.py, ttf파일)를 clone 후 Start.py 모듈을 실행하면 됨.
 <hr>
+
 ## 1. 게임기획, 구조
 ### 모듈
   * Start.py : 게임의 전반적인 실행 구조(main loop, game class, 화면 구현 함수들)
@@ -39,3 +40,4 @@ Team Project 4조<br>
 > 현재 실행중인 화면을 멈춤.<br>
 > 화면에 현재 Game Over 문구와 score를 띄워줌.<br>
 > 7초뒤 시작화면으로 이동.<br>
+
