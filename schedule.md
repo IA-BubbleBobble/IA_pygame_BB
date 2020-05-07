@@ -1,6 +1,6 @@
 # Bubble Bobble
 ## 최종
- * 이유진 : platform, player, bubbleMonster, 초반 merge작업, 코드관리, 영상편집
+ * 이유진 : platform, player, bubbleMonster, merge, 코드관리, 영상편집
  * 이채영 : Monster, Item, start page, ending page, 코드관리
  * 신동현 : git, stage3 map, 영상 녹화, image찾기, 코드관리
 ## 2020/04/29
